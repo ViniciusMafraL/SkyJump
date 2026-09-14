@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="TransitionSettings" format=3]
+
+[ext_resource type="Script" path="res://scripts/transitions/transition_settings.gd" id="1_script"]
+[ext_resource type="Resource" path="res://config/transitions/default_fade.tres" id="2_default"]
+[ext_resource type="Resource" path="res://config/transitions/fade_in.tres" id="3_fade_in"]
+[ext_resource type="Resource" path="res://config/transitions/gameplay_transition.tres" id="4_gameplay"]
+[ext_resource type="Resource" path="res://config/transitions/death_transition.tres" id="5_death"]
+[ext_resource type="Resource" path="res://config/transitions/menu_transition.tres" id="6_menu"]
+[ext_resource type="Resource" path="res://config/transitions/region_transition.tres" id="7_region"]
+[ext_resource type="Resource" path="res://config/transitions/checkpoint_transition.tres" id="8_checkpoint"]
+[ext_resource type="Resource" path="res://config/transitions/teleport_transition.tres" id="9_teleport"]
+[ext_resource type="Resource" path="res://config/transitions/pattern_transition.tres" id="10_pattern"]
+
+[resource]
+script = ExtResource("1_script")
+default_config = ExtResource("2_default")
+debug_transitions = false
+lock_input = true
+cover_on_start = true
+scene_ready_frames = 2
+game_start = ExtResource("3_fade_in")
+screen_change = ExtResource("2_default")
+play = ExtResource("4_gameplay")
+open_test_room = ExtResource("2_default")
+exit_test_room = ExtResource("2_default")
+death = ExtResource("5_death")
+restart = ExtResource("4_gameplay")
+back_to_menu = ExtResource("6_menu")
+region_change = ExtResource("7_region")
+checkpoint = ExtResource("8_checkpoint")
+teleport = ExtResource("9_teleport")
+special_event = ExtResource("10_pattern")

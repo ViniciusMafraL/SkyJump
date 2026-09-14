@@ -1,0 +1,215 @@
+[gd_resource type="Resource" script_class="TestSettingsSchema" format=3 uid="uid://cdwadk2iir4bb"]
+
+[ext_resource type="Script" uid="uid://dtgnsqubk26ri" path="res://scripts/test_room/test_settings_schema.gd" id="1_schema"]
+[ext_resource type="Script" uid="uid://4lauou2obwg8" path="res://scripts/test_room/setting_definition.gd" id="2_definition"]
+
+[sub_resource type="Resource" id="Resource_speed"]
+script = ExtResource("2_definition")
+label = "Velocidade"
+path = "movement.horizontal_speed"
+min_value = 1.0
+max_value = 20.0
+step = 0.1
+
+[sub_resource type="Resource" id="Resource_acceleration"]
+script = ExtResource("2_definition")
+label = "Aceleração"
+path = "movement.ground_acceleration"
+min_value = 5.0
+max_value = 150.0
+step = 1.0
+
+[sub_resource type="Resource" id="Resource_deceleration"]
+script = ExtResource("2_definition")
+label = "Desaceleração"
+path = "movement.ground_deceleration"
+min_value = 5.0
+max_value = 150.0
+step = 1.0
+
+[sub_resource type="Resource" id="Resource_air_control"]
+script = ExtResource("2_definition")
+label = "Controle no ar"
+path = "movement.air_control"
+
+[sub_resource type="Resource" id="Resource_jump_height"]
+script = ExtResource("2_definition")
+section_title = "CONTROLES DE PULO"
+label = "Altura do pulo"
+path = "movement.jump_height"
+min_value = 0.5
+max_value = 12.0
+hint = "Calculada: altura = força² / (2 × gravidade). Alterar a altura recalcula a Força do pulo."
+
+[sub_resource type="Resource" id="Resource_jump_force"]
+script = ExtResource("2_definition")
+section_title = "CONTROLES DE PULO"
+label = "Força do pulo"
+path = "movement.jump_force"
+min_value = 4.0
+max_value = 40.0
+step = 0.1
+
+[sub_resource type="Resource" id="Resource_jump_cooldown"]
+script = ExtResource("2_definition")
+section_title = "CONTROLES DE PULO"
+label = "Cooldown do pulo"
+path = "movement.jump_cooldown"
+suffix = "s"
+
+[sub_resource type="Resource" id="Resource_coyote"]
+script = ExtResource("2_definition")
+section_title = "CONTROLES DE PULO"
+label = "Coyote time"
+path = "movement.coyote_time"
+max_value = 0.4
+suffix = "s"
+
+[sub_resource type="Resource" id="Resource_buffer"]
+script = ExtResource("2_definition")
+section_title = "CONTROLES DE PULO"
+label = "Buffer do pulo"
+path = "movement.jump_buffer_time"
+max_value = 0.4
+suffix = "s"
+
+[sub_resource type="Resource" id="Resource_gravity"]
+script = ExtResource("2_definition")
+section_title = "GRAVIDADE"
+label = "Gravidade"
+path = "movement.gravity"
+min_value = 5.0
+max_value = 100.0
+step = 0.5
+hint = "Baixa (~16): pulo longo e flutuante. Normal (~32). Alta (~56): queda rápida."
+
+[sub_resource type="Resource" id="Resource_fall_limit"]
+script = ExtResource("2_definition")
+section_title = "GRAVIDADE"
+label = "Velocidade máx. de queda"
+path = "movement.fall_speed_limit"
+min_value = 5.0
+max_value = 100.0
+step = 0.5
+
+[sub_resource type="Resource" id="Resource_trampoline_force"]
+script = ExtResource("2_definition")
+section_title = "TRAMPOLIM"
+label = "Força"
+path = "trampoline.trampoline_force"
+min_value = 5.0
+max_value = 60.0
+step = 0.5
+
+[sub_resource type="Resource" id="Resource_trampoline_horizontal"]
+script = ExtResource("2_definition")
+section_title = "TRAMPOLIM"
+label = "Força horizontal"
+path = "trampoline.trampoline_horizontal_force"
+max_value = 20.0
+step = 0.5
+
+[sub_resource type="Resource" id="Resource_trampoline_cooldown"]
+script = ExtResource("2_definition")
+section_title = "TRAMPOLIM"
+label = "Cooldown"
+path = "trampoline.trampoline_cooldown"
+max_value = 2.0
+step = 0.05
+suffix = "s"
+
+[sub_resource type="Resource" id="Resource_trampoline_bounce"]
+script = ExtResource("2_definition")
+section_title = "TRAMPOLIM"
+label = "Multiplicador de quique"
+path = "trampoline.trampoline_bounce_multiplier"
+max_value = 1.5
+step = 0.05
+
+[sub_resource type="Resource" id="Resource_camera_distance"]
+script = ExtResource("2_definition")
+section_title = "CÂMERA"
+label = "Distância"
+path = "camera.camera_distance"
+min_value = 8.0
+max_value = 50.0
+step = 0.5
+
+[sub_resource type="Resource" id="Resource_camera_height"]
+script = ExtResource("2_definition")
+section_title = "CÂMERA"
+label = "Altura"
+path = "camera.camera_height"
+max_value = 15.0
+step = 0.1
+
+[sub_resource type="Resource" id="Resource_camera_offset"]
+script = ExtResource("2_definition")
+section_title = "CÂMERA"
+label = "Ponto observado (altura)"
+path = "camera.camera_vertical_offset"
+min_value = -5.0
+max_value = 10.0
+step = 0.1
+
+[sub_resource type="Resource" id="Resource_camera_fov"]
+script = ExtResource("2_definition")
+section_title = "CÂMERA"
+label = "FOV"
+path = "camera.camera_fov"
+min_value = 30.0
+max_value = 100.0
+step = 1.0
+suffix = "°"
+
+[sub_resource type="Resource" id="Resource_camera_smoothing"]
+script = ExtResource("2_definition")
+section_title = "CÂMERA"
+label = "Suavização vertical"
+path = "camera.camera_smoothing"
+min_value = 0.5
+max_value = 20.0
+step = 0.1
+
+[sub_resource type="Resource" id="Resource_camera_rotation"]
+script = ExtResource("2_definition")
+section_title = "CÂMERA"
+label = "Suavização de rotação"
+path = "camera.rotation_smoothing"
+min_value = 0.5
+max_value = 20.0
+step = 0.1
+
+[sub_resource type="Resource" id="Resource_items_enabled"]
+script = ExtResource("2_definition")
+section_title = "ITENS"
+label = "Permitir itens"
+path = "item.items_enabled"
+kind = 1
+
+[sub_resource type="Resource" id="Resource_item_categories"]
+script = ExtResource("2_definition")
+section_title = "ITENS"
+label = "Categorias habilitadas"
+path = "item.enabled_categories"
+kind = 2
+hint = "Infraestrutura apenas: nenhum item implementado ainda."
+
+[sub_resource type="Resource" id="Resource_abilities_enabled"]
+script = ExtResource("2_definition")
+section_title = "HABILIDADES"
+label = "Permitir habilidades"
+path = "ability.abilities_enabled"
+kind = 1
+
+[sub_resource type="Resource" id="Resource_ability_list"]
+script = ExtResource("2_definition")
+section_title = "HABILIDADES"
+label = "Habilidades disponíveis"
+path = "ability.allowed_abilities"
+kind = 2
+hint = "Infraestrutura apenas: nenhuma habilidade implementada ainda."
+
+[resource]
+script = ExtResource("1_schema")
+settings = Array[ExtResource("2_definition")]([SubResource("Resource_speed"), SubResource("Resource_acceleration"), SubResource("Resource_deceleration"), SubResource("Resource_air_control"), SubResource("Resource_jump_height"), SubResource("Resource_jump_force"), SubResource("Resource_jump_cooldown"), SubResource("Resource_coyote"), SubResource("Resource_buffer"), SubResource("Resource_gravity"), SubResource("Resource_fall_limit"), SubResource("Resource_trampoline_force"), SubResource("Resource_trampoline_horizontal"), SubResource("Resource_trampoline_cooldown"), SubResource("Resource_trampoline_bounce"), SubResource("Resource_camera_distance"), SubResource("Resource_camera_height"), SubResource("Resource_camera_offset"), SubResource("Resource_camera_fov"), SubResource("Resource_camera_smoothing"), SubResource("Resource_camera_rotation"), SubResource("Resource_items_enabled"), SubResource("Resource_item_categories"), SubResource("Resource_abilities_enabled"), SubResource("Resource_ability_list")])

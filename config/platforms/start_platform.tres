@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PlatformConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/platform_config.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"start"
+platform_type = 2
+width = 7.0
+depth = 3.6
+min_width = 7.0
+weight = 0.0
+minimum_height = 0.0
+maximum_height = -1.0

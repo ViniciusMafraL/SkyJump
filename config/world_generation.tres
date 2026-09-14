@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="WorldGenerationConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/world_generation_config.gd" id="1_script"]
+[ext_resource type="Resource" path="res://config/chunk.tres" id="2_chunk"]
+[ext_resource type="Script" path="res://scripts/resources/platform_config.gd" id="3_platform_script"]
+[ext_resource type="Resource" path="res://config/platforms/normal_platform.tres" id="4_normal"]
+[ext_resource type="Resource" path="res://config/platforms/small_platform.tres" id="5_small"]
+[ext_resource type="Resource" path="res://config/platforms/large_platform.tres" id="6_large"]
+[ext_resource type="Resource" path="res://config/platforms/start_platform.tres" id="7_start"]
+[ext_resource type="Resource" path="res://config/difficulty.tres" id="8_difficulty"]
+[ext_resource type="Resource" path="res://config/theme.tres" id="9_theme"]
+[ext_resource type="Resource" path="res://config/platforms/trampoline_platform.tres" id="10_trampoline"]
+[ext_resource type="Resource" path="res://config/trampoline.tres" id="11_trampoline_config"]
+
+[resource]
+script = ExtResource("1_script")
+world_seed = 12345
+randomize_seed_each_run = true
+pillar_radius = 6.0
+player_surface_offset = 1.2
+platform_embed_depth = 0.3
+meters_per_world_unit = 1.0
+chunk_config = ExtResource("2_chunk")
+platform_configs = Array[ExtResource("3_platform_script")]([ExtResource("4_normal"), ExtResource("5_small"), ExtResource("6_large"), ExtResource("10_trampoline")])
+start_platform = ExtResource("7_start")
+chunk_start_platform = ExtResource("6_large")
+trampoline_config = ExtResource("11_trampoline_config")
+boost_min_gap_fraction = 0.6
+start_angle_degrees = 0.0
+minimum_vertical_distance = 1.6
+maximum_vertical_distance = 2.6
+minimum_angular_distance = 20.0
+maximum_angular_distance = 55.0
+minimum_edge_gap = 0.4
+maximum_horizontal_jump_distance = 0.0
+reachability_margin = 0.85
+maximum_visible_angular_distance = 60.0
+direction_change_chance = 0.25
+difficulty = ExtResource("8_difficulty")
+theme_config = ExtResource("9_theme")

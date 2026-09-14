@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TouchControlConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/controls/touch_control_config.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+touch_sensitivity = 1.0
+split_ratio = 0.5
+control_hint_enabled = true
+control_hint_timeout = 2.5
+control_hint_repeat_delay = 6.0
+feedback_enabled = true
+feedback_opacity = 0.12

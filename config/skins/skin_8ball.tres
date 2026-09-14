@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PlayerSkin" format=3 uid="uid://gjh1veq7t7la"]
+
+[ext_resource type="Script" uid="uid://hymkj42l4ibf" path="res://scripts/skins/player_skin.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+skin_id = &"8ball"
+display_name = "8 Ball"
+base_color = Color(0, 0, 0, 1)
+roughness = 0.72
+metallic = 0.42
+emission_energy = 0.6

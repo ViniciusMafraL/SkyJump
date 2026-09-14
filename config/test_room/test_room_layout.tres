@@ -1,0 +1,62 @@
+[gd_resource type="Resource" script_class="TestRoomLayout" format=3 uid="uid://dp4xlmbyxnsqs"]
+
+[ext_resource type="Script" uid="uid://fyblkgwa221m" path="res://scripts/test_room/test_room_layout.gd" id="1_layout"]
+[ext_resource type="Script" uid="uid://btopl77vw2us6" path="res://scripts/test_room/platform_placement.gd" id="2_placement"]
+[ext_resource type="Resource" path="res://config/platforms/normal_platform.tres" id="3_normal"]
+[ext_resource type="Resource" path="res://config/platforms/small_platform.tres" id="4_small"]
+[ext_resource type="Resource" path="res://config/platforms/large_platform.tres" id="5_large"]
+[ext_resource type="Resource" path="res://config/platforms/trampoline_platform.tres" id="6_trampoline"]
+[ext_resource type="Resource" uid="uid://dn3istn0owvt8" path="res://config/theme.tres" id="7_theme"]
+
+[sub_resource type="Resource" id="Resource_step_1"]
+script = ExtResource("2_placement")
+platform_config = ExtResource("3_normal")
+angle_degrees = 50.0
+
+[sub_resource type="Resource" id="Resource_step_2"]
+script = ExtResource("2_placement")
+platform_config = ExtResource("3_normal")
+height = 4.0
+angle_degrees = 100.0
+
+[sub_resource type="Resource" id="Resource_step_3"]
+script = ExtResource("2_placement")
+platform_config = ExtResource("4_small")
+height = 6.0
+angle_degrees = 145.0
+
+[sub_resource type="Resource" id="Resource_step_4"]
+script = ExtResource("2_placement")
+platform_config = ExtResource("3_normal")
+height = 8.0
+angle_degrees = 195.0
+
+[sub_resource type="Resource" id="Resource_step_5"]
+script = ExtResource("2_placement")
+platform_config = ExtResource("5_large")
+height = 10.0
+angle_degrees = 260.0
+
+[sub_resource type="Resource" id="Resource_trampoline"]
+script = ExtResource("2_placement")
+platform_config = ExtResource("6_trampoline")
+height = 0.8
+angle_degrees = 300.0
+
+[sub_resource type="Resource" id="Resource_trampoline_landing"]
+script = ExtResource("2_placement")
+platform_config = ExtResource("3_normal")
+height = 7.0
+angle_degrees = 335.0
+
+[sub_resource type="Resource" id="Resource_trampoline_high"]
+script = ExtResource("2_placement")
+platform_config = ExtResource("5_large")
+height = 13.0
+angle_degrees = 300.0
+
+[resource]
+script = ExtResource("1_layout")
+floor_platform = ExtResource("3_normal")
+placements = Array[ExtResource("2_placement")]([SubResource("Resource_step_1"), SubResource("Resource_step_2"), SubResource("Resource_step_3"), SubResource("Resource_step_4"), SubResource("Resource_step_5"), SubResource("Resource_trampoline"), SubResource("Resource_trampoline_landing"), SubResource("Resource_trampoline_high")])
+theme_config = ExtResource("7_theme")

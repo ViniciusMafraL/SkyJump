@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ButtonControlConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/controls/button_control_config.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+button_size = 170.0
+jump_button_size = 200.0
+button_opacity = 0.5
+pressed_opacity = 0.9
+screen_margin = 32.0

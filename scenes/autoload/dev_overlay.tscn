@@ -1,0 +1,24 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/autoload/dev_overlay.gd" id="1_overlay"]
+[ext_resource type="Script" path="res://scripts/ui/safe_area_offsets.gd" id="2_safe_area"]
+
+[node name="DevOverlay" type="CanvasLayer"]
+process_mode = 3
+layer = 130
+script = ExtResource("1_overlay")
+
+[node name="FpsLabel" type="Label" parent="."]
+unique_name_in_owner = true
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 4.0
+offset_bottom = 30.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 20
+text = "-- FPS"
+horizontal_alignment = 1
+script = ExtResource("2_safe_area")

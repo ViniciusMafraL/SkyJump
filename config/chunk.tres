@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ChunkConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/chunk_config.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+chunk_height = 50.0
+chunks_ahead = 2
+chunks_behind = 1

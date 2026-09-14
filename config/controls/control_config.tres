@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ControlConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/controls/control_config.gd" id="1_script"]
+[ext_resource type="Resource" path="res://config/controls/touch_control.tres" id="2_touch"]
+[ext_resource type="Resource" path="res://config/controls/gyroscope.tres" id="3_gyro"]
+[ext_resource type="Resource" path="res://config/controls/button_control.tres" id="4_buttons"]
+
+[resource]
+script = ExtResource("1_script")
+selected_control_scheme = &"touch_invisible"
+auto_jump_enabled = true
+auto_jump_delay = 0.05
+camera_control_enabled = true
+keyboard_fallback_enabled = true
+show_control_debug = false
+haptics_enabled = true
+touch_config = ExtResource("2_touch")
+gyroscope_config = ExtResource("3_gyro")
+button_config = ExtResource("4_buttons")

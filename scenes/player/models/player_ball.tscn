@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://capaibvky280a"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_body"]
+albedo_color = Color(0.95, 0.95, 0.92, 1)
+roughness = 0.6
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_body"]
+material = SubResource("StandardMaterial3D_body")
+radius = 0.34176025
+height = 0.6835205
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nose"]
+albedo_color = Color(0.15, 0.16, 0.22, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nose"]
+material = SubResource("StandardMaterial3D_nose")
+size = Vector3(0.22, 0.2, 0.3)
+
+[node name="PlayerBall" type="Node3D" unique_id=1175861198]
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=746435797 groups=["skin_body"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.34176025, 0)
+mesh = SubResource("CapsuleMesh_body")
+
+[node name="Nose" type="MeshInstance3D" parent="." unique_id=1830855683]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.37711376, -0.21605052)
+mesh = SubResource("BoxMesh_nose")

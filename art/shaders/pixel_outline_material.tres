@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://lm6tlo2g8v0y"]
+
+[ext_resource type="Shader" uid="uid://c0h813ylj3vcq" path="res://art/shaders/pixel_outline.gdshader" id="1_shader"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_shader")
+shader_parameter/disable_shader = false
+shader_parameter/effect_strength = 0.1999999955296
+shader_parameter/pixelSize = 2
+shader_parameter/MAX_DEPTH = 1000.0
+shader_parameter/shadows_enabled = true
+shader_parameter/shadow_strength = 0.999999977648
+shader_parameter/shadow_color = Color(0, 0, 0, 1)
+shader_parameter/highlights_enabled = true
+shader_parameter/highlight_strength = 0.999999977648
+shader_parameter/highlight_color = Color(1, 1, 1, 1)

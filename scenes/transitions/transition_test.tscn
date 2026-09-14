@@ -1,0 +1,189 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/transitions/transition_test.gd" id="1_test"]
+[ext_resource type="Script" path="res://scripts/transitions/transition_config.gd" id="2_config_script"]
+[ext_resource type="Resource" path="res://config/transitions/default_fade.tres" id="3_fade"]
+[ext_resource type="Resource" path="res://config/transitions/quick_fade.tres" id="4_quick"]
+[ext_resource type="Resource" path="res://config/transitions/circle_transition.tres" id="5_circle"]
+[ext_resource type="Resource" path="res://config/transitions/radial_transition.tres" id="6_radial"]
+[ext_resource type="Resource" path="res://config/transitions/pattern_transition.tres" id="7_pattern"]
+[ext_resource type="Resource" path="res://config/transitions/pixel_transition.tres" id="8_pixel"]
+[ext_resource type="Resource" path="res://config/transitions/dissolve_transition.tres" id="9_dissolve"]
+[ext_resource type="Resource" path="res://config/transitions/directional_transition.tres" id="10_directional"]
+[ext_resource type="Resource" path="res://config/transitions/death_transition.tres" id="11_death"]
+[ext_resource type="Resource" path="res://config/transitions/region_transition.tres" id="12_region"]
+[ext_resource type="Resource" path="res://config/transitions/teleport_transition.tres" id="13_teleport"]
+[ext_resource type="Resource" path="res://config/transitions/menu_transition.tres" id="14_menu"]
+[ext_resource type="Resource" path="res://config/transitions/gameplay_transition.tres" id="15_gameplay"]
+[ext_resource type="Resource" path="res://config/transitions/checkpoint_transition.tres" id="16_checkpoint"]
+[ext_resource type="Script" path="res://scripts/ui/safe_area_offsets.gd" id="17_safe_area"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 12.0
+bg_color = Color(0.03, 0.05, 0.1, 0.85)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="Theme" id="Theme_test"]
+default_font_size = 24
+
+[node name="TransitionTest" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_test")
+script = ExtResource("1_test")
+presets = Array[ExtResource("2_config_script")]([ExtResource("3_fade"), ExtResource("4_quick"), ExtResource("5_circle"), ExtResource("6_radial"), ExtResource("7_pattern"), ExtResource("8_pixel"), ExtResource("9_dissolve"), ExtResource("10_directional"), ExtResource("11_death"), ExtResource("12_region"), ExtResource("13_teleport"), ExtResource("14_menu"), ExtResource("15_gameplay"), ExtResource("16_checkpoint")])
+
+[node name="StageBackground" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.16, 0.55, 0.62, 1)
+
+[node name="StageLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0.05, 0.07, 0.12, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/font_size = 110
+text = "TELA A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ControlsLayer" type="CanvasLayer" parent="."]
+layer = 129
+
+[node name="TopPanel" type="PanelContainer" parent="ControlsLayer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+mouse_filter = 2
+theme = SubResource("Theme_test")
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+script = ExtResource("17_safe_area")
+
+[node name="Layout" type="VBoxContainer" parent="ControlsLayer/TopPanel"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="ControlsLayer/TopPanel/Layout"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "TRANSITION TEST"
+horizontal_alignment = 1
+
+[node name="InfoLabel" type="Label" parent="ControlsLayer/TopPanel/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Preset: -"
+
+[node name="BottomPanel" type="PanelContainer" parent="ControlsLayer"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_test")
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+script = ExtResource("17_safe_area")
+
+[node name="Layout" type="VBoxContainer" parent="ControlsLayer/BottomPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PresetGrid" type="GridContainer" parent="ControlsLayer/BottomPanel/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 3
+
+[node name="HSeparator" type="HSeparator" parent="ControlsLayer/BottomPanel/Layout"]
+layout_mode = 2
+
+[node name="PlayRow" type="HBoxContainer" parent="ControlsLayer/BottomPanel/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="OutButton" type="Button" parent="ControlsLayer/BottomPanel/Layout/PlayRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 76)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 30
+text = "OUT"
+
+[node name="InButton" type="Button" parent="ControlsLayer/BottomPanel/Layout/PlayRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 76)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 30
+text = "IN"
+
+[node name="PlayButton" type="Button" parent="ControlsLayer/BottomPanel/Layout/PlayRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 76)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 30
+text = "OUT + IN"
+
+[node name="ToolRow" type="HBoxContainer" parent="ControlsLayer/BottomPanel/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ForceButton" type="Button" parent="ControlsLayer/BottomPanel/Layout/ToolRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "FORÇAR"
+
+[node name="DebugToggle" type="CheckButton" parent="ControlsLayer/BottomPanel/Layout/ToolRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "DEBUG"
+
+[node name="ExitButton" type="Button" parent="ControlsLayer/BottomPanel/Layout/ToolRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "VOLTAR"

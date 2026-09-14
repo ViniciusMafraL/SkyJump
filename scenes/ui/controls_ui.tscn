@@ -1,0 +1,221 @@
+[gd_scene format=3 uid="uid://bcy1g5v4uisvn"]
+
+[ext_resource type="Script" uid="uid://cy8blm12lxfuu" path="res://scripts/ui/controls/controls_ui.gd" id="1_ui"]
+[ext_resource type="Script" uid="uid://3teawqj3ab7e" path="res://scripts/input/touch_drag_area.gd" id="2_drag"]
+[ext_resource type="Script" uid="uid://cutkoqjdk8t30" path="res://scripts/ui/controls/touch_control_ui.gd" id="3_touch"]
+[ext_resource type="Script" uid="uid://bwwpnt41rf17q" path="res://scripts/ui/controls/button_control_ui.gd" id="4_buttons"]
+[ext_resource type="Script" uid="uid://f3uea12t4h2l" path="res://scripts/input/virtual_button.gd" id="5_button"]
+
+[node name="ControlsUI" type="Control" unique_id=837155161]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_ui")
+
+[node name="CameraDragArea" type="Control" parent="." unique_id=1242575626]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_drag")
+
+[node name="TouchUI" type="Control" parent="." unique_id=2080907566]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_touch")
+
+[node name="LeftFeedback" type="ColorRect" parent="TouchUI" unique_id=736998204]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="RightFeedback" type="ColorRect" parent="TouchUI" unique_id=248618224]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="Hint" type="VBoxContainer" parent="TouchUI" unique_id=1196073553]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -110.0
+offset_right = 320.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Arrows" type="Label" parent="TouchUI/Hint" unique_id=1819044451]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.05, 0.07, 0.12, 1)
+theme_override_constants/outline_size = 14
+theme_override_font_sizes/font_size = 120
+text = "<          >"
+horizontal_alignment = 1
+
+[node name="SafeArea" type="Control" parent="." unique_id=131624207]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ButtonUI" type="Control" parent="SafeArea" unique_id=840450408]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("4_buttons")
+
+[node name="LeftButton" type="Panel" parent="SafeArea/ButtonUI" unique_id=1033550698]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = -202.0
+offset_right = 202.0
+offset_bottom = -32.0
+grow_vertical = 0
+mouse_filter = 2
+script = ExtResource("5_button")
+
+[node name="Label" type="Label" parent="SafeArea/ButtonUI/LeftButton" unique_id=1860658600]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 72
+text = "<"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="JumpButton" type="Panel" parent="SafeArea/ButtonUI" unique_id=144786179]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -232.0
+offset_right = 100.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+script = ExtResource("5_button")
+
+[node name="Label" type="Label" parent="SafeArea/ButtonUI/JumpButton" unique_id=1337587034]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "PULAR"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RightButton" type="Panel" parent="SafeArea/ButtonUI" unique_id=930543308]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -202.0
+offset_top = -202.0
+offset_right = -32.0
+offset_bottom = -32.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+script = ExtResource("5_button")
+
+[node name="Label" type="Label" parent="SafeArea/ButtonUI/RightButton" unique_id=238533759]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 72
+text = ">"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GyroIndicator" type="HSlider" parent="SafeArea" unique_id=1199887512]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -180.0
+offset_top = -72.0
+offset_right = 180.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+focus_mode = 0
+mouse_filter = 2
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+editable = false
+scrollable = false
+
+[node name="DebugLabel" type="Label" parent="SafeArea" unique_id=690050978]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -480.0
+offset_top = -460.0
+offset_right = -24.0
+offset_bottom = -260.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0.05, 0.07, 0.12, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 20
+text = "CONTROL: -"
+horizontal_alignment = 2

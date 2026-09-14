@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="TransitionConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/transitions/transition_config.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://art/transitions/shapes/noise_shape.tres" id="2_noise"]
+
+[resource]
+script = ExtResource("1_script")
+display_name = "DissolveTransition"
+transition_type = 5
+base_color = Color(0, 0, 0, 1)
+duration = 0.5
+easing = 3
+curve = 1
+width = 1.0
+feathering = 0.15
+shape_texture = ExtResource("2_noise")
+pattern_scale = 1.0

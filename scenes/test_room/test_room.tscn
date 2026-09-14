@@ -1,0 +1,124 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/test_room/test_platform_set.gd" id="2_platform_set"]
+[ext_resource type="PackedScene" path="res://scenes/world/platform.tscn" id="3_platform"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="4_player"]
+[ext_resource type="PackedScene" path="res://scenes/camera/camera_rig.tscn" id="5_camera"]
+[ext_resource type="PackedScene" path="res://scenes/test_room/test_room_hud.tscn" id="6_hud"]
+[ext_resource type="Script" path="res://scripts/controls/control_manager.gd" id="7_controls"]
+[ext_resource type="Resource" path="res://config/controls/control_config.tres" id="20_control_config"]
+[ext_resource type="Script" path="res://scripts/controls/touch_invisible_control.gd" id="21_touch"]
+[ext_resource type="Script" path="res://scripts/controls/gyroscope_control.gd" id="22_gyro"]
+[ext_resource type="Script" path="res://scripts/controls/button_control.gd" id="23_buttons"]
+[ext_resource type="Script" path="res://scripts/systems/auto_jump_controller.gd" id="24_auto_jump"]
+[ext_resource type="Script" path="res://scripts/systems/haptic_manager.gd" id="25_haptics"]
+[ext_resource type="Script" path="res://scripts/test_room/test_settings_manager.gd" id="8_settings"]
+[ext_resource type="Resource" path="res://config/test_room/test_room_config.tres" id="9_config"]
+[ext_resource type="Script" path="res://scripts/test_room/test_room_preset.gd" id="10_preset_script"]
+[ext_resource type="Resource" path="res://config/test_room/presets/default.tres" id="11_default"]
+[ext_resource type="Resource" path="res://config/test_room/presets/low_gravity.tres" id="12_low_gravity"]
+[ext_resource type="Resource" path="res://config/test_room/presets/high_gravity.tres" id="13_high_gravity"]
+[ext_resource type="Resource" path="res://config/test_room/presets/high_jump.tres" id="14_high_jump"]
+[ext_resource type="Resource" path="res://config/test_room/presets/low_jump.tres" id="15_low_jump"]
+[ext_resource type="Resource" path="res://config/test_room/presets/trampoline_test.tres" id="16_trampoline_test"]
+[ext_resource type="Script" path="res://scripts/test_room/jump_metrics.gd" id="17_metrics"]
+[ext_resource type="Script" path="res://scripts/test_room/test_room_manager.gd" id="18_manager"]
+[ext_resource type="Resource" path="res://config/test_room/test_room_layout.tres" id="19_layout"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_room"]
+sky_top_color = Color(0.3, 0.32, 0.45, 1)
+sky_horizon_color = Color(0.68, 0.7, 0.78, 1)
+ground_bottom_color = Color(0.2, 0.22, 0.28, 1)
+ground_horizon_color = Color(0.68, 0.7, 0.78, 1)
+
+[sub_resource type="Sky" id="Sky_room"]
+sky_material = SubResource("ProceduralSkyMaterial_room")
+
+[sub_resource type="Environment" id="Environment_room"]
+background_mode = 2
+sky = SubResource("Sky_room")
+ambient_light_source = 3
+ambient_light_energy = 0.8
+
+[node name="TestRoom" type="Node3D"]
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_room")
+
+[node name="Sun" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(0.8660254, 0.2961981, -0.4029115, 0, 0.8057054, 0.5923159, 0.5, -0.5130302, 0.6978634, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_mode = 0
+directional_shadow_max_distance = 40.0
+
+[node name="World" type="Node3D" parent="."]
+
+[node name="Platforms" type="Node3D" parent="World"]
+script = ExtResource("2_platform_set")
+default_platform_scene = ExtResource("3_platform")
+
+[node name="Player" parent="." node_paths=PackedStringArray("input_controller") instance=ExtResource("4_player")]
+input_controller = NodePath("../Systems/ControlManager")
+
+[node name="CameraRig" parent="." node_paths=PackedStringArray("target", "input_controller") instance=ExtResource("5_camera")]
+target = NodePath("../Player")
+input_controller = NodePath("../Systems/ControlManager")
+
+[node name="UI" parent="." node_paths=PackedStringArray("room_manager", "settings", "control_manager", "player", "metrics") instance=ExtResource("6_hud")]
+room_manager = NodePath("../Systems/TestRoomManager")
+settings = NodePath("../Systems/TestSettingsManager")
+control_manager = NodePath("../Systems/ControlManager")
+player = NodePath("../Player")
+metrics = NodePath("../Systems/JumpMetrics")
+
+[node name="Systems" type="Node" parent="."]
+
+[node name="ControlManager" type="Node" parent="Systems" node_paths=PackedStringArray("controls_ui")]
+script = ExtResource("7_controls")
+default_config = ExtResource("20_control_config")
+controls_ui = NodePath("../../UI/ControlsUI")
+
+[node name="TouchInvisibleControl" type="Node" parent="Systems/ControlManager"]
+script = ExtResource("21_touch")
+scheme_id = &"touch_invisible"
+display_name = "Toque + Pulo Automático"
+
+[node name="GyroscopeControl" type="Node" parent="Systems/ControlManager"]
+script = ExtResource("22_gyro")
+scheme_id = &"gyroscope"
+display_name = "Giroscópio + Pulo Automático"
+
+[node name="ButtonControl" type="Node" parent="Systems/ControlManager"]
+script = ExtResource("23_buttons")
+scheme_id = &"buttons"
+display_name = "Botões + Pulo Manual"
+
+[node name="AutoJumpController" type="Node" parent="Systems" node_paths=PackedStringArray("player", "control_manager")]
+script = ExtResource("24_auto_jump")
+player = NodePath("../../Player")
+control_manager = NodePath("../ControlManager")
+
+[node name="HapticManager" type="Node" parent="Systems" node_paths=PackedStringArray("control_manager", "player")]
+script = ExtResource("25_haptics")
+control_manager = NodePath("../ControlManager")
+player = NodePath("../../Player")
+
+[node name="TestSettingsManager" type="Node" parent="Systems"]
+script = ExtResource("8_settings")
+default_config = ExtResource("9_config")
+presets = Array[ExtResource("10_preset_script")]([ExtResource("11_default"), ExtResource("12_low_gravity"), ExtResource("13_high_gravity"), ExtResource("14_high_jump"), ExtResource("15_low_jump"), ExtResource("16_trampoline_test")])
+
+[node name="JumpMetrics" type="Node" parent="Systems" node_paths=PackedStringArray("player")]
+script = ExtResource("17_metrics")
+player = NodePath("../../Player")
+
+[node name="TestRoomManager" type="Node" parent="Systems" node_paths=PackedStringArray("settings", "player", "camera_rig", "platform_set", "metrics")]
+script = ExtResource("18_manager")
+settings = NodePath("../TestSettingsManager")
+layout = ExtResource("19_layout")
+player = NodePath("../../Player")
+camera_rig = NodePath("../../CameraRig")
+platform_set = NodePath("../../World/Platforms")
+metrics = NodePath("../JumpMetrics")

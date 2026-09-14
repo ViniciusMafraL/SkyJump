@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/platform.gd" id="1_platform"]
+[ext_resource type="Script" path="res://scripts/world/platform_collision.gd" id="2_collision"]
+[ext_resource type="Script" path="res://scripts/world/platform_visual.gd" id="3_visual"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_unit"]
+
+[node name="Platform" type="Node3D"]
+script = ExtResource("1_platform")
+
+[node name="Collision" type="Node" parent="."]
+script = ExtResource("2_collision")
+
+[node name="Visual" type="Node3D" parent="."]
+script = ExtResource("3_visual")
+
+[node name="Mesh" type="MeshInstance3D" parent="Visual"]
+mesh = SubResource("BoxMesh_unit")

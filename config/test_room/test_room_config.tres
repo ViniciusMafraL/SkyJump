@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="TestRoomConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/test_room/test_room_config.gd" id="1_script"]
+[ext_resource type="Resource" path="res://config/player_movement.tres" id="2_movement"]
+[ext_resource type="Resource" path="res://config/trampoline.tres" id="3_trampoline"]
+[ext_resource type="Resource" path="res://config/camera.tres" id="4_camera"]
+[ext_resource type="Resource" path="res://config/items.tres" id="5_items"]
+[ext_resource type="Resource" path="res://config/abilities.tres" id="6_abilities"]
+
+[resource]
+script = ExtResource("1_script")
+movement_config = ExtResource("2_movement")
+trampoline_config = ExtResource("3_trampoline")
+camera_config = ExtResource("4_camera")
+item_config = ExtResource("5_items")
+ability_config = ExtResource("6_abilities")

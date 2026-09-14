@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="TransitionConfig" format=3 uid="uid://bpbjmw3ec6akb"]
+
+[ext_resource type="Script" uid="uid://clfbdop4aghhl" path="res://scripts/transitions/transition_config.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+display_name = "CircleTransition"
+transition_type = 2
+duration = 0.45
+curve = 4
+width = 0.02
+feathering = 0.1

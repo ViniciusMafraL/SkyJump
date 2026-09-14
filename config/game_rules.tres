@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GameRulesConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/game_rules_config.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+death_height_threshold = -8.0
+max_fall_distance = 30.0
+game_over_delay = 1.2
+checkpoints_enabled = false
+checkpoint_interval = 100.0

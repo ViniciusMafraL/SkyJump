@@ -1,0 +1,153 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/level_generator.gd" id="2_generator"]
+[ext_resource type="Resource" path="res://config/world_generation.tres" id="3_world"]
+[ext_resource type="Resource" path="res://config/player_movement.tres" id="4_movement"]
+[ext_resource type="Script" path="res://scripts/world/chunk_manager.gd" id="5_chunks"]
+[ext_resource type="PackedScene" path="res://scenes/world/platform.tscn" id="6_platform"]
+[ext_resource type="Script" path="res://scripts/world/theme_controller.gd" id="7_theme"]
+[ext_resource type="Resource" path="res://config/theme.tres" id="8_theme_config"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="9_player"]
+[ext_resource type="PackedScene" path="res://scenes/camera/camera_rig.tscn" id="10_camera"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="11_hud"]
+[ext_resource type="Script" path="res://scripts/controls/control_manager.gd" id="12_controls"]
+[ext_resource type="Resource" path="res://config/controls/control_config.tres" id="17_control_config"]
+[ext_resource type="Script" path="res://scripts/controls/touch_invisible_control.gd" id="18_touch"]
+[ext_resource type="Script" path="res://scripts/controls/gyroscope_control.gd" id="19_gyro"]
+[ext_resource type="Script" path="res://scripts/controls/button_control.gd" id="20_buttons"]
+[ext_resource type="Script" path="res://scripts/systems/auto_jump_controller.gd" id="21_auto_jump"]
+[ext_resource type="Script" path="res://scripts/systems/haptic_manager.gd" id="22_haptics"]
+[ext_resource type="Script" path="res://scripts/core/score_manager.gd" id="13_score"]
+[ext_resource type="Script" path="res://scripts/core/checkpoint_manager.gd" id="14_checkpoint"]
+[ext_resource type="Resource" path="res://config/game_rules.tres" id="15_rules"]
+[ext_resource type="Script" path="res://scripts/core/game_manager.gd" id="16_game"]
+[ext_resource type="Script" path="res://scripts/systems/progression_manager.gd" id="24_progression"]
+[ext_resource type="Resource" path="res://config/progression/progression_config.tres" id="25_progression_config"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_main"]
+sky_top_color = Color(0.25, 0.45, 0.8, 1)
+sky_horizon_color = Color(0.72, 0.82, 0.93, 1)
+ground_bottom_color = Color(0.22, 0.27, 0.36, 1)
+ground_horizon_color = Color(0.72, 0.82, 0.93, 1)
+
+[sub_resource type="Sky" id="Sky_main"]
+sky_material = SubResource("ProceduralSkyMaterial_main")
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 2
+sky = SubResource("Sky_main")
+ambient_light_source = 3
+ambient_light_energy = 0.8
+fog_enabled = true
+fog_light_color = Color(0.72, 0.82, 0.93, 1)
+fog_density = 0.006
+fog_sky_affect = 0.0
+
+[node name="Main" type="Node3D"]
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_main")
+
+[node name="Sun" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(0.8660254, 0.2961981, -0.4029115, 0, 0.8057054, 0.5923159, 0.5, -0.5130302, 0.6978634, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_mode = 0
+directional_shadow_max_distance = 40.0
+
+[node name="World" type="Node3D" parent="."]
+
+[node name="LevelGenerator" type="Node" parent="World"]
+script = ExtResource("2_generator")
+config = ExtResource("3_world")
+movement = ExtResource("4_movement")
+
+[node name="ChunkContainer" type="Node3D" parent="World" node_paths=PackedStringArray("generator")]
+script = ExtResource("5_chunks")
+generator = NodePath("../LevelGenerator")
+default_platform_scene = ExtResource("6_platform")
+
+[node name="ThemeController" type="Node" parent="World" node_paths=PackedStringArray("world_environment")]
+script = ExtResource("7_theme")
+theme_config = ExtResource("8_theme_config")
+world_environment = NodePath("../../Environment/WorldEnvironment")
+
+[node name="Player" parent="." node_paths=PackedStringArray("input_controller") instance=ExtResource("9_player")]
+input_controller = NodePath("../Systems/ControlManager")
+
+[node name="CameraRig" parent="." node_paths=PackedStringArray("target", "input_controller") instance=ExtResource("10_camera")]
+target = NodePath("../Player")
+input_controller = NodePath("../Systems/ControlManager")
+
+[node name="UI" parent="." node_paths=PackedStringArray("game_manager", "score_manager", "control_manager", "progression_manager") instance=ExtResource("11_hud")]
+game_manager = NodePath("../Systems/GameManager")
+score_manager = NodePath("../Systems/ScoreManager")
+control_manager = NodePath("../Systems/ControlManager")
+progression_manager = NodePath("../Systems/ProgressionManager")
+
+[node name="Systems" type="Node" parent="."]
+
+[node name="ControlManager" type="Node" parent="Systems" node_paths=PackedStringArray("controls_ui")]
+script = ExtResource("12_controls")
+default_config = ExtResource("17_control_config")
+controls_ui = NodePath("../../UI/ControlsUI")
+
+[node name="TouchInvisibleControl" type="Node" parent="Systems/ControlManager"]
+script = ExtResource("18_touch")
+scheme_id = &"touch_invisible"
+display_name = "Toque + Pulo Automático"
+
+[node name="GyroscopeControl" type="Node" parent="Systems/ControlManager"]
+script = ExtResource("19_gyro")
+scheme_id = &"gyroscope"
+display_name = "Giroscópio + Pulo Automático"
+
+[node name="ButtonControl" type="Node" parent="Systems/ControlManager"]
+script = ExtResource("20_buttons")
+scheme_id = &"buttons"
+display_name = "Botões + Pulo Manual"
+
+[node name="AutoJumpController" type="Node" parent="Systems" node_paths=PackedStringArray("player", "control_manager")]
+script = ExtResource("21_auto_jump")
+player = NodePath("../../Player")
+control_manager = NodePath("../ControlManager")
+
+[node name="ScoreManager" type="Node" parent="Systems" node_paths=PackedStringArray("player")]
+script = ExtResource("13_score")
+player = NodePath("../../Player")
+world_config = ExtResource("3_world")
+
+[node name="ProgressionManager" type="Node" parent="Systems" node_paths=PackedStringArray("score_manager")]
+script = ExtResource("24_progression")
+config = ExtResource("25_progression_config")
+score_manager = NodePath("../ScoreManager")
+
+[node name="CheckpointManager" type="Node" parent="Systems" node_paths=PackedStringArray("player")]
+script = ExtResource("14_checkpoint")
+rules = ExtResource("15_rules")
+player = NodePath("../../Player")
+world_config = ExtResource("3_world")
+
+[node name="GameManager" type="Node" parent="Systems" node_paths=PackedStringArray("player", "camera_rig", "chunk_manager", "theme_controller", "score_manager", "progression_manager", "checkpoint_manager", "input_controller")]
+script = ExtResource("16_game")
+rules = ExtResource("15_rules")
+world_config = ExtResource("3_world")
+player = NodePath("../../Player")
+camera_rig = NodePath("../../CameraRig")
+chunk_manager = NodePath("../../World/ChunkContainer")
+theme_controller = NodePath("../../World/ThemeController")
+score_manager = NodePath("../ScoreManager")
+progression_manager = NodePath("../ProgressionManager")
+checkpoint_manager = NodePath("../CheckpointManager")
+input_controller = NodePath("../ControlManager")
+
+[node name="HapticManager" type="Node" parent="Systems" node_paths=PackedStringArray("control_manager", "player", "game_manager", "score_manager", "progression_manager")]
+script = ExtResource("22_haptics")
+control_manager = NodePath("../ControlManager")
+player = NodePath("../../Player")
+game_manager = NodePath("../GameManager")
+score_manager = NodePath("../ScoreManager")
+progression_manager = NodePath("../ProgressionManager")
+
+[connection signal="current_height_changed" from="Systems/ScoreManager" to="World/ThemeController" method="apply_for_height"]

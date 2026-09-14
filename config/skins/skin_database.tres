@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SkinDatabase" format=3 uid="uid://b1rpwtp3agcod"]
+
+[ext_resource type="Script" uid="uid://bngh4h7iqu3gs" path="res://scripts/skins/skin_database.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://hymkj42l4ibf" path="res://scripts/skins/player_skin.gd" id="2_skin_script"]
+[ext_resource type="PackedScene" path="res://scenes/player/models/player_ball.tscn" id="3_model"]
+[ext_resource type="Resource" path="res://config/skins/skin_classic.tres" id="4_classic"]
+[ext_resource type="Resource" path="res://config/skins/skin_ocean.tres" id="5_ocean"]
+[ext_resource type="Resource" path="res://config/skins/skin_ruby.tres" id="6_ruby"]
+[ext_resource type="Resource" path="res://config/skins/skin_nature.tres" id="7_nature"]
+[ext_resource type="Resource" path="res://config/skins/skin_8ball.tres" id="8_sun"]
+
+[resource]
+script = ExtResource("1_script")
+skins = Array[ExtResource("2_skin_script")]([ExtResource("4_classic"), ExtResource("5_ocean"), ExtResource("6_ruby"), ExtResource("7_nature"), ExtResource("8_sun")])
+default_model_scene = ExtResource("3_model")

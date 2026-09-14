@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CameraConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/camera_config.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+camera_distance = 24.0
+camera_height = 5.0
+camera_angle = 0.0
+camera_vertical_offset = 3.0
+min_clearance = 5.0
+camera_fov = 50.0
+fov_is_horizontal = true
+far_distance = 300.0
+camera_smoothing = 5.0
+rotation_smoothing = 8.0
+camera_rotation_speed = 120.0
+drag_degrees_per_screen = 240.0
+auto_recenter_delay = 2.5
+recenter_speed = 2.0
+vertical_lookahead_factor = 0.15
+max_vertical_lookahead = 2.5

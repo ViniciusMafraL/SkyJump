@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="GyroscopeConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/controls/gyroscope_config.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+gyro_sensitivity = 1.0
+gyro_dead_zone = 0.1
+gyro_smoothing = 12.0
+max_tilt_degrees = 25.0
+invert = false
+neutral_orientation = 0.0
+auto_calibrate_on_activate = true
+show_indicator = true
+simulate_on_desktop = true
+simulated_tilt_speed = 90.0

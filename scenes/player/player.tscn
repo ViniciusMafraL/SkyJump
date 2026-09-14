@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://ckx8qn017whms"]
+
+[ext_resource type="Script" uid="uid://bjq6hijpdla2m" path="res://scripts/player/player_controller.gd" id="1_player"]
+[ext_resource type="Resource" path="res://config/player_movement.tres" id="2_movement"]
+[ext_resource type="Script" uid="uid://dfwrnwcgyv5h6" path="res://scripts/player/player_visual.gd" id="3_visual"]
+[ext_resource type="Script" uid="uid://bba4b4ml7ys38" path="res://scripts/player/ground_detector.gd" id="4_ground"]
+[ext_resource type="Script" path="res://scripts/player/player_appearance.gd" id="5_appearance"]
+[ext_resource type="PackedScene" path="res://scenes/player/models/player_ball.tscn" id="6_ball"]
+
+[node name="Player" type="Node3D" unique_id=786688603]
+script = ExtResource("1_player")
+movement = ExtResource("2_movement")
+
+[node name="Visual" type="Node3D" parent="." unique_id=1928255848]
+script = ExtResource("3_visual")
+
+[node name="Appearance" type="Node3D" parent="Visual"]
+script = ExtResource("5_appearance")
+
+[node name="PlayerBall" parent="Visual/Appearance" instance=ExtResource("6_ball")]
+
+[node name="GroundDetector" type="Node" parent="." unique_id=776935144]
+script = ExtResource("4_ground")
+
+[node name="OptionalEffects" type="Node3D" parent="." unique_id=1780220741]

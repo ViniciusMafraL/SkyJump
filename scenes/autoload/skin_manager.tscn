@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bjvsfdnkvpqth"]
+
+[ext_resource type="Script" uid="uid://c82ff74yps7ta" path="res://scripts/autoload/skin_manager.gd" id="1_manager"]
+[ext_resource type="Resource" uid="uid://b1rpwtp3agcod" path="res://config/skins/skin_database.tres" id="2_database"]
+
+[node name="SkinManager" type="Node" unique_id=1908507616]
+script = ExtResource("1_manager")
+database = ExtResource("2_database")

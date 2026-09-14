@@ -1,0 +1,209 @@
+[gd_scene format=3 uid="uid://bpg120r6p604i"]
+
+[ext_resource type="Script" uid="uid://b867h1ubfvcc8" path="res://scripts/ui/hud.gd" id="1_hud"]
+[ext_resource type="PackedScene" uid="uid://bcy1g5v4uisvn" path="res://scenes/ui/controls_ui.tscn" id="2_controls"]
+[ext_resource type="PackedScene" path="res://scenes/ui/control_settings_panel.tscn" id="3_control_panel"]
+[ext_resource type="PackedScene" path="res://scenes/ui/progress_hud.tscn" id="4_progress_hud"]
+[ext_resource type="Script" path="res://scripts/ui/safe_area_offsets.gd" id="5_safe_area"]
+
+[node name="UI" type="CanvasLayer" unique_id=2006935879]
+process_mode = 3
+script = ExtResource("1_hud")
+
+[node name="ControlsUI" parent="." unique_id=1361857886 instance=ExtResource("2_controls")]
+unique_name_in_owner = true
+
+[node name="ProgressHUD" parent="." instance=ExtResource("4_progress_hud")]
+unique_name_in_owner = true
+
+[node name="PauseButton" type="Button" parent="." unique_id=1837017150]
+unique_name_in_owner = true
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 100.0
+offset_bottom = 100.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 34
+text = "II"
+script = ExtResource("5_safe_area")
+
+[node name="FallFlash" type="ColorRect" parent="." unique_id=516205861]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0.25, 0.2, 0)
+
+[node name="PausePanel" type="Control" parent="." unique_id=1803984309]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="PausePanel" unique_id=1648444691]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.03, 0.05, 0.1, 0.6)
+
+[node name="Content" type="VBoxContainer" parent="PausePanel" unique_id=1127335150]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -320.0
+offset_right = 260.0
+offset_bottom = 320.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Title" type="Label" parent="PausePanel/Content" unique_id=398949327]
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+text = "PAUSADO"
+horizontal_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="PausePanel/Content" unique_id=1470609523]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 36
+text = "CONTINUAR"
+
+[node name="PauseRestartButton" type="Button" parent="PausePanel/Content" unique_id=1609904236]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 36
+text = "RECOMEÇAR"
+
+[node name="ControlsButton" type="Button" parent="PausePanel/Content" unique_id=1034674179]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 36
+text = "CONTROLES"
+
+[node name="TestRoomButton" type="Button" parent="PausePanel/Content" unique_id=1940043208]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 28
+text = "SALA DE TESTES (DEV)"
+
+[node name="PauseMenuButton" type="Button" parent="PausePanel/Content" unique_id=1917569450]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 36
+text = "MENU PRINCIPAL"
+
+[node name="ControlSettingsPanel" parent="." unique_id=1939024224 instance=ExtResource("3_control_panel")]
+unique_name_in_owner = true
+visible = false
+
+[node name="GameOverPanel" type="Control" parent="." unique_id=14983336]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="GameOverPanel" unique_id=526689577]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.03, 0.05, 0.1, 0.7)
+
+[node name="Content" type="VBoxContainer" parent="GameOverPanel" unique_id=549368632]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -300.0
+offset_right = 300.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Title" type="Label" parent="GameOverPanel/Content" unique_id=583360419]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "ALTURA ALCANÇADA"
+horizontal_alignment = 1
+
+[node name="ResultHeightLabel" type="Label" parent="GameOverPanel/Content" unique_id=539306742]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.05, 0.07, 0.12, 1)
+theme_override_constants/outline_size = 14
+theme_override_font_sizes/font_size = 88
+text = "0 m"
+horizontal_alignment = 1
+
+[node name="NewRecordLabel" type="Label" parent="GameOverPanel/Content" unique_id=1059197423]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.82, 0.25, 1)
+theme_override_font_sizes/font_size = 44
+text = "NOVO RECORDE!"
+horizontal_alignment = 1
+
+[node name="ResultBestLabel" type="Label" parent="GameOverPanel/Content" unique_id=153856209]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Melhor altura: 0 m"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="GameOverPanel/Content" unique_id=454957302]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RestartButton" type="Button" parent="GameOverPanel/Content" unique_id=1659293741]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 38
+text = "TENTAR NOVAMENTE"
+
+[node name="GameOverMenuButton" type="Button" parent="GameOverPanel/Content" unique_id=1614237138]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 84)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 32
+text = "MENU"

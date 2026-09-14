@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PlayerSkin" format=3]
+
+[ext_resource type="Script" path="res://scripts/skins/player_skin.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+skin_id = &"ruby"
+display_name = "Ruby"
+base_color = Color(0.85, 0.08, 0.15, 1)
+roughness = 0.25
+metallic = 0.35

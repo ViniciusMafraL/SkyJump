@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ProgressBarConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/progression/progress_bar_config.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+bar_width = 72.0
+bar_height_ratio = 0.55
+bar_top_offset = 150.0
+bar_margin = 16.0
+past_zone_fraction = 0.3
+max_past_milestones_shown = 3
+background_opacity = 0.35
+progress_width = 8.0
+player_icon_size = 30.0
+milestone_icon_size = 30.0
+record_marker_size = 16.0
+font_size = 22
+small_font_size = 18
+animation_speed = 8.0

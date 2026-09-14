@@ -1,0 +1,151 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/main_menu.gd" id="1_menu"]
+[ext_resource type="PackedScene" path="res://scenes/ui/controls_ui.tscn" id="2_controls_ui"]
+[ext_resource type="PackedScene" path="res://scenes/ui/control_settings_panel.tscn" id="3_control_panel"]
+[ext_resource type="Script" path="res://scripts/controls/control_manager.gd" id="4_controls"]
+[ext_resource type="Resource" path="res://config/controls/control_config.tres" id="5_control_config"]
+[ext_resource type="Script" path="res://scripts/controls/touch_invisible_control.gd" id="6_touch"]
+[ext_resource type="Script" path="res://scripts/controls/gyroscope_control.gd" id="7_gyro"]
+[ext_resource type="Script" path="res://scripts/controls/button_control.gd" id="8_buttons"]
+[ext_resource type="PackedScene" path="res://scenes/ui/skin_selector.tscn" id="9_skin_selector"]
+[ext_resource type="Script" path="res://scripts/ui/safe_area_offsets.gd" id="10_safe_area"]
+
+[sub_resource type="Gradient" id="Gradient_sky"]
+colors = PackedColorArray(0.12, 0.22, 0.48, 1, 0.72, 0.82, 0.93, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sky"]
+gradient = SubResource("Gradient_sky")
+width = 8
+height = 256
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 1)
+
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("control_manager")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+control_manager = NodePath("Systems/ControlManager")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_sky")
+expand_mode = 1
+
+[node name="ControlsUI" parent="." instance=ExtResource("2_controls_ui")]
+visible = false
+layout_mode = 1
+
+[node name="MainScreen" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("10_safe_area")
+
+[node name="Content" type="VBoxContainer" parent="MainScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 48.0
+offset_right = -40.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="MainScreen/Content"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.05, 0.07, 0.12, 1)
+theme_override_constants/outline_size = 14
+theme_override_font_sizes/font_size = 64
+text = "SKY JUMP"
+horizontal_alignment = 1
+
+[node name="BestLabel" type="Label" parent="MainScreen/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.05, 0.07, 0.12, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 30
+text = "Recorde: 0 m"
+horizontal_alignment = 1
+
+[node name="SkinSelector" parent="MainScreen/Content" instance=ExtResource("9_skin_selector")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PlayButton" type="Button" parent="MainScreen/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 48
+text = "JOGAR"
+
+[node name="SettingsButton" type="Button" parent="MainScreen/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 36
+text = "CONTROLES"
+
+[node name="TestRoomButton" type="Button" parent="MainScreen/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 28
+text = "SALA DE TESTES (DEV)"
+
+[node name="TransitionTestButton" type="Button" parent="MainScreen/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 28
+text = "TESTE DE TRANSIÇÕES (DEV)"
+
+[node name="ControlSettingsPanel" parent="." instance=ExtResource("3_control_panel")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[node name="Systems" type="Node" parent="."]
+
+[node name="ControlManager" type="Node" parent="Systems" node_paths=PackedStringArray("controls_ui")]
+script = ExtResource("4_controls")
+default_config = ExtResource("5_control_config")
+controls_ui = NodePath("../../ControlsUI")
+
+[node name="TouchInvisibleControl" type="Node" parent="Systems/ControlManager"]
+script = ExtResource("6_touch")
+scheme_id = &"touch_invisible"
+display_name = "Toque + Pulo Automático"
+
+[node name="GyroscopeControl" type="Node" parent="Systems/ControlManager"]
+script = ExtResource("7_gyro")
+scheme_id = &"gyroscope"
+display_name = "Giroscópio + Pulo Automático"
+
+[node name="ButtonControl" type="Node" parent="Systems/ControlManager"]
+script = ExtResource("8_buttons")
+scheme_id = &"buttons"
+display_name = "Botões + Pulo Manual"

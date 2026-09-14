@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PlatformConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/platform_config.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/world/trampoline_platform.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"trampoline"
+platform_type = 4
+width = 2.6
+depth = 2.6
+min_width = 2.0
+weight = 0.4
+minimum_height = 15.0
+maximum_height = -1.0
+scene_override = ExtResource("2_scene")

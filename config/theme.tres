@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ThemeConfig" format=3 uid="uid://dn3istn0owvt8"]
+
+[ext_resource type="Script" uid="uid://qmb8dyd26cik" path="res://scripts/resources/theme_config.gd" id="1_config"]
+[ext_resource type="Script" uid="uid://bawax5d4cjju4" path="res://scripts/resources/theme_data.gd" id="2_theme"]
+
+[sub_resource type="Resource" id="Resource_initial"]
+script = ExtResource("2_theme")
+platform_type_colors = {
+1: Color(0.9, 0.55, 0.3, 1),
+2: Color(0.3, 0.55, 0.85, 1),
+4: Color(0.95, 0.35, 0.65, 1)
+}
+
+[resource]
+script = ExtResource("1_config")
+themes = Array[ExtResource("2_theme")]([SubResource("Resource_initial")])

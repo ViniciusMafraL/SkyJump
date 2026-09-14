@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TestRoomPreset" format=3]
+
+[ext_resource type="Script" path="res://scripts/test_room/test_room_preset.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+display_name = "High Jump"
+overrides = {
+"movement.jump_force": 18.0
+}

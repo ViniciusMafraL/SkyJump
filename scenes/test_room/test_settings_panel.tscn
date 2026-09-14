@@ -1,0 +1,142 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/test_room/test_settings_panel.gd" id="1_panel"]
+[ext_resource type="Resource" path="res://config/test_room/settings_schema.tres" id="2_schema"]
+[ext_resource type="Script" path="res://scripts/ui/safe_area_offsets.gd" id="3_safe_area"]
+
+[sub_resource type="Theme" id="Theme_panel"]
+default_font_size = 24
+
+[node name="SettingsPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_panel")
+script = ExtResource("1_panel")
+schema = ExtResource("2_schema")
+
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.03, 0.07, 0.75)
+
+[node name="Window" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 32.0
+offset_right = -16.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_safe_area")
+
+[node name="Margin" type="MarginContainer" parent="Window"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="Layout" type="VBoxContainer" parent="Window/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Window/Margin/Layout"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "CONFIGURAÇÕES DA SALA"
+horizontal_alignment = 1
+
+[node name="PresetRow" type="HBoxContainer" parent="Window/Margin/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PresetLabel" type="Label" parent="Window/Margin/Layout/PresetRow"]
+layout_mode = 2
+text = "PRESET"
+
+[node name="PresetOption" type="OptionButton" parent="Window/Margin/Layout/PresetRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+
+[node name="LoadPresetButton" type="Button" parent="Window/Margin/Layout/PresetRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+focus_mode = 0
+text = "CARREGAR"
+
+[node name="Scroll" type="ScrollContainer" parent="Window/Margin/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Rows" type="VBoxContainer" parent="Window/Margin/Layout/Scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="AutoApplyCheck" type="CheckBox" parent="Window/Margin/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+text = "Aplicar ao mexer (tempo real)"
+
+[node name="StatusLabel" type="Label" parent="Window/Margin/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "Valores em uso no teste"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="ActionRow" type="HBoxContainer" parent="Window/Margin/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ApplyButton" type="Button" parent="Window/Margin/Layout/ActionRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 30
+text = "APLICAR"
+
+[node name="ResetButton" type="Button" parent="Window/Margin/Layout/ActionRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 30
+text = "RESETAR"
+
+[node name="SaveDefaultsButton" type="Button" parent="Window/Margin/Layout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+focus_mode = 0
+text = "SALVAR COMO PADRÃO DO JOGO"
+
+[node name="CloseButton" type="Button" parent="Window/Margin/Layout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+focus_mode = 0
+text = "FECHAR"

@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="Material" path="res://art/shaders/pixel_outline_material.tres" id="1_material"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_screen"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[node name="PixelOutlineEffect" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+material_override = ExtResource("1_material")
+cast_shadow = 0
+extra_cull_margin = 16384.0
+gi_mode = 0
+mesh = SubResource("QuadMesh_screen")

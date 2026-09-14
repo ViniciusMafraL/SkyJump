@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PlayerSkin" format=3]
+
+[ext_resource type="Script" path="res://scripts/skins/player_skin.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+skin_id = &"sun"
+display_name = "Sun"
+base_color = Color(1, 0.78, 0.12, 1)
+roughness = 0.45
+emission_enabled = true
+emission_color = Color(1, 0.6, 0.1, 1)
+emission_energy = 0.6

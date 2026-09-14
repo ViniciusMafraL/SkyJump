@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://bei5jefn7b4uj"]
+
+[ext_resource type="Script" uid="uid://bxfvv6eaixp3j" path="res://scripts/autoload/transition_manager.gd" id="1_manager"]
+[ext_resource type="Resource" path="res://config/transitions/transition_settings.tres" id="2_settings"]
+[ext_resource type="PackedScene" path="res://scenes/transitions/transition_overlay.tscn" id="3_overlay"]
+
+[node name="TransitionManager" type="Node" unique_id=2084912516]
+process_mode = 3
+script = ExtResource("1_manager")
+settings = ExtResource("2_settings")
+
+[node name="TransitionOverlay" parent="." unique_id=539190708 instance=ExtResource("3_overlay")]
