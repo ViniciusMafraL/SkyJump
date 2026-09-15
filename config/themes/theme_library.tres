@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ThemeLibrary" format=3]
+
+[ext_resource type="Script" path="res://scripts/themes/theme_library.gd" id="1_library"]
+[ext_resource type="PackedScene" path="res://themes/Castle/Theme_Castle.tscn" id="theme_0"]
+[ext_resource type="PackedScene" path="res://themes/Winter/Theme_Winter.tscn" id="theme_1"]
+[ext_resource type="PackedScene" path="res://themes/Forest/Theme_Forest.tscn" id="theme_2"]
+[ext_resource type="PackedScene" path="res://themes/Magma/Theme_Magma.tscn" id="theme_3"]
+[ext_resource type="PackedScene" path="res://themes/Spooky/Theme_Spooky.tscn" id="theme_4"]
+[ext_resource type="PackedScene" path="res://themes/Windy/Theme_Windy.tscn" id="theme_5"]
+[ext_resource type="PackedScene" path="res://themes/Electricity/Theme_Electricity.tscn" id="theme_6"]
+[ext_resource type="PackedScene" path="res://themes/Waterfall/Theme_Waterfall.tscn" id="theme_7"]
+[ext_resource type="PackedScene" path="res://themes/MudWorld/Theme_MudWorld.tscn" id="theme_8"]
+[ext_resource type="PackedScene" path="res://themes/Totem/Theme_Totem.tscn" id="theme_9"]
+
+[resource]
+script = ExtResource("1_library")
+themes = Array[PackedScene]([ExtResource("theme_0"), ExtResource("theme_1"), ExtResource("theme_2"), ExtResource("theme_3"), ExtResource("theme_4"), ExtResource("theme_5"), ExtResource("theme_6"), ExtResource("theme_7"), ExtResource("theme_8"), ExtResource("theme_9")])

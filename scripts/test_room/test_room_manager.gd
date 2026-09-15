@@ -13,6 +13,7 @@ signal station_changed(station: ObjectTestStation)
 @export var camera_rig: CameraRig
 @export var platform_set: TestPlatformSet
 @export var metrics: JumpMetrics
+@export var theme_controller: ThemeController
 @export_file("*.tscn") var exit_scene_path: String = "res://scenes/ui/main_menu.tscn"
 
 ## Estação atual. null = layout padrão.
@@ -25,6 +26,9 @@ func _ready() -> void:
 	camera_rig.config = active.camera_config
 	platform_set.active_config = active
 	GameplayObject.debug_movement = active.movement_config
+	if theme_controller:
+		platform_set.active_theme = theme_controller.get_theme_data()
+		theme_controller.theme_changed.connect(_on_theme_changed)
 	player.set_platform_source(platform_set)
 	camera_rig.setup(layout.get_player_orbit_radius())
 	settings.settings_applied.connect(_on_settings_applied)
@@ -66,6 +70,16 @@ func trigger_objects() -> void:
 
 func set_debug_vectors(enabled: bool) -> void:
 	platform_set.set_debug_draw(enabled)
+
+
+## Aplica uma Theme Scene da biblioteca (fundo, iluminação e materiais), mantendo o teste atual.
+func select_theme(index: int) -> void:
+	if theme_controller:
+		theme_controller.apply_theme_index(index)
+
+
+func _on_theme_changed(_theme: LevelTheme) -> void:
+	platform_set.apply_theme(theme_controller.get_theme_data())
 
 
 func exit_to_menu() -> void:

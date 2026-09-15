@@ -54,9 +54,6 @@ extends Resource
 @export_group("Difficulty")
 @export var difficulty: DifficultyConfig
 
-@export_group("Theme")
-@export var theme_config: ThemeConfig
-
 
 func get_player_orbit_radius() -> float:
 	return pillar_radius + player_surface_offset

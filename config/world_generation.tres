@@ -8,7 +8,6 @@
 [ext_resource type="Resource" path="res://config/platforms/large_platform.tres" id="6_large"]
 [ext_resource type="Resource" path="res://config/platforms/start_platform.tres" id="7_start"]
 [ext_resource type="Resource" path="res://config/difficulty.tres" id="8_difficulty"]
-[ext_resource type="Resource" path="res://config/theme.tres" id="9_theme"]
 [ext_resource type="Resource" path="res://config/platforms/trampoline_platform.tres" id="10_trampoline"]
 [ext_resource type="Resource" path="res://config/trampoline.tres" id="11_trampoline_config"]
 
@@ -37,4 +36,3 @@ reachability_margin = 0.85
 maximum_visible_angular_distance = 60.0
 direction_change_chance = 0.25
 difficulty = ExtResource("8_difficulty")
-theme_config = ExtResource("9_theme")

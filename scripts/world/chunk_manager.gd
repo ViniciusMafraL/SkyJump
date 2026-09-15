@@ -8,11 +8,18 @@ signal chunk_unloaded(index: int)
 
 @export var generator: LevelGenerator
 @export var default_platform_scene: PackedScene
+## Fonte do tema ativo: plataformas novas usam seus materiais e as carregadas são atualizadas na troca.
+@export var theme_controller: ThemeController
 
 var _chunks: Dictionary = {}
 var _active_platforms: Array[Platform] = []
 var _active_objects: Array[GameplayObject] = []
 var _focus_index: int = 0
+
+
+func _ready() -> void:
+	if theme_controller:
+		theme_controller.theme_changed.connect(_on_theme_changed)
 
 
 ## Recria o mundo. `focus_height` permite começar mais acima (checkpoints):
@@ -64,7 +71,7 @@ func _load_chunk(data: LevelChunkData) -> void:
 	var chunk := LevelChunk.new()
 	chunk.name = "Chunk_%d" % data.index
 	add_child(chunk)
-	chunk.build(data, default_platform_scene)
+	chunk.build(data, default_platform_scene, _current_theme())
 	_chunks[data.index] = chunk
 	_active_platforms.append_array(chunk.platforms)
 	_active_objects.append_array(chunk.objects)
@@ -81,6 +88,16 @@ func _unload_chunk(index: int) -> void:
 	remove_child(chunk)
 	chunk.queue_free()
 	chunk_unloaded.emit(index)
+
+
+func _current_theme() -> ThemeData:
+	return theme_controller.get_theme_data() if theme_controller else null
+
+
+func _on_theme_changed(_theme: LevelTheme) -> void:
+	var theme := _current_theme()
+	for object in _active_objects:
+		object.apply_theme(theme)
 
 
 func _index_for_height(height: float) -> int:

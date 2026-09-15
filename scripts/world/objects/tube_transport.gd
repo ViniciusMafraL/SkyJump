@@ -159,6 +159,10 @@ func _on_setup() -> void:
 	_build_visual()
 
 
+func _on_theme_applied() -> void:
+	_build_visual()
+
+
 func _surface(offset: Vector2) -> Vector3:
 	return CylinderSpace.surface_point(current_angle, current_height, current_radius, offset)
 
@@ -175,7 +179,7 @@ func _build_visual() -> void:
 	if _length <= 0.0 or config == null:
 		return
 	var tube_material := StandardMaterial3D.new()
-	tube_material.albedo_color = _theme_color(tube_color)
+	tube_material.albedo_color = theme_primary_color(tube_color)
 	tube_material.albedo_color.a = tube_color.a
 	tube_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	tube_material.cull_mode = BaseMaterial3D.CULL_DISABLED

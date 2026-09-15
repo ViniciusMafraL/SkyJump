@@ -77,6 +77,11 @@ func _on_setup() -> void:
 	_build_track()
 
 
+func _on_theme_applied() -> void:
+	super._on_theme_applied()
+	_build_track()
+
+
 func _physics_process(delta: float) -> void:
 	_previous_top = current_height
 	if config and _trajectory:
@@ -151,7 +156,7 @@ func _build_track() -> void:
 	_track.top_level = true
 	add_child(_track)
 	var material := StandardMaterial3D.new()
-	material.albedo_color = track_color
+	material.albedo_color = Color(theme_secondary_color(track_color), track_color.a)
 	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	var dot := SphereMesh.new()

@@ -148,11 +148,52 @@ func _draw_debug(_draw: ObjectDebugDraw) -> void:
 	pass
 
 
-func _theme_color(fallback: Color) -> Color:
-	var type := get_object_type()
-	if _theme and _theme.platform_type_colors.has(type):
-		return _theme.platform_type_colors[type]
-	return fallback
+## Troca de tema depois do setup: reaplica materiais/cores sem recriar o objeto nem mudar estado.
+func apply_theme(theme: ThemeData) -> void:
+	_theme = theme
+	if data:
+		_on_theme_applied()
+
+
+## Materiais que o tema ativo define para este tipo (plataformas ou objetos especiais).
+func get_theme_materials() -> ThemeMaterialSettings:
+	return _theme.get_material_settings(get_object_type()) if _theme else null
+
+
+func theme_primary_color(fallback: Color) -> Color:
+	var settings := get_theme_materials()
+	return settings.primary_color if settings else fallback
+
+
+func theme_secondary_color(fallback: Color) -> Color:
+	var settings := get_theme_materials()
+	return settings.secondary_color if settings else fallback
+
+
+func theme_primary_material(fallback: Color) -> Material:
+	var settings := get_theme_materials()
+	return settings.get_primary_material() if settings else _fallback_material(fallback)
+
+
+func theme_secondary_material(fallback: Color) -> Material:
+	var settings := get_theme_materials()
+	return settings.get_secondary_material() if settings else _fallback_material(fallback)
+
+
+## Reaplica os visuais que dependem do tema. Objetos com visual próprio sobrescrevem.
+func _on_theme_applied() -> void:
+	pass
+
+
+static var _fallback_materials: Dictionary = {}
+
+
+static func _fallback_material(color: Color) -> StandardMaterial3D:
+	if not _fallback_materials.has(color):
+		var material := StandardMaterial3D.new()
+		material.albedo_color = color
+		_fallback_materials[color] = material
+	return _fallback_materials[color]
 
 
 ## Eixo local X aponta para fora do cilindro; eixo Z segue a tangente.

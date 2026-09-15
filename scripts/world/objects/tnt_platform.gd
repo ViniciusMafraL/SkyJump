@@ -139,6 +139,12 @@ func _on_setup() -> void:
 	_blast.visible = false
 
 
+## A TNT mantém o próprio material de alerta mesmo quando o tema troca.
+func _on_theme_applied() -> void:
+	super._on_theme_applied()
+	_mesh.material_override = _material
+
+
 ## Pisca cada vez mais rápido durante a contagem, com número, faíscas e luz.
 func _update_visual() -> void:
 	if _mesh == null:

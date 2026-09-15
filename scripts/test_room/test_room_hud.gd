@@ -12,6 +12,8 @@ extends CanvasLayer
 @export var restart_key: Key = KEY_R
 ## Ativa manualmente os objetos (debug).
 @export var trigger_key: Key = KEY_T
+## Próximo tema.
+@export var next_theme_key: Key = KEY_Y
 
 @onready var _controls_ui: Control = %ControlsUI
 @onready var _settings_button: Button = %SettingsButton
@@ -20,6 +22,7 @@ extends CanvasLayer
 @onready var _debug_button: Button = %DebugButton
 @onready var _exit_button: Button = %ExitButton
 @onready var _object_option: OptionButton = %ObjectOption
+@onready var _theme_option: OptionButton = %ThemeOption
 @onready var _trigger_button: Button = %TriggerButton
 @onready var _reset_objects_button: Button = %ResetObjectsButton
 @onready var _vectors_button: Button = %VectorsButton
@@ -46,6 +49,7 @@ func _ready() -> void:
 	_reset_objects_button.pressed.connect(room_manager.reset_objects)
 	_vectors_button.toggled.connect(room_manager.set_debug_vectors)
 	_build_object_options()
+	_build_theme_options()
 	room_manager.station_changed.connect(_on_station_changed)
 	close_panels()
 
@@ -77,6 +81,19 @@ func _build_object_options() -> void:
 	_object_option.item_selected.connect(func(index: int) -> void: room_manager.select_station(index - 1))
 
 
+func _build_theme_options() -> void:
+	_theme_option.clear()
+	var controller := room_manager.theme_controller
+	if controller == null or controller.library == null:
+		_theme_option.visible = false
+		return
+	for theme_name in controller.library.get_display_names():
+		_theme_option.add_item("TEMA: %s" % theme_name.to_upper())
+	_theme_option.select(controller.get_current_index())
+	_theme_option.item_selected.connect(room_manager.select_theme)
+	controller.theme_changed.connect(func(_theme: LevelTheme) -> void: _theme_option.select(controller.get_current_index()))
+
+
 func _on_station_changed(station: ObjectTestStation) -> void:
 	var index := room_manager.get_stations().find(station) + 1 if station else 0
 	if _object_option.selected != index:
@@ -104,3 +121,5 @@ func _unhandled_input(event: InputEvent) -> void:
 		room_manager.restart_test()
 	elif key.physical_keycode == trigger_key and not is_panel_open():
 		room_manager.trigger_objects()
+	elif key.physical_keycode == next_theme_key and not is_panel_open() and room_manager.theme_controller:
+		room_manager.theme_controller.cycle_theme(1)

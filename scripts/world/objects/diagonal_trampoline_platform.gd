@@ -59,6 +59,11 @@ func _on_setup() -> void:
 	_update_visual()
 
 
+func _on_theme_applied() -> void:
+	super._on_theme_applied()
+	_update_visual()
+
+
 ## Pad inclinado e seta apontando para a direção real do lançamento.
 ## Local +Z = esquerda da tela, então uma direção tangencial positiva (direita) é -Z.
 func _update_visual() -> void:
@@ -69,7 +74,7 @@ func _update_visual() -> void:
 	_pad.scale = Vector3(data.depth * 0.8, 1.0, data.width * 0.8)
 	_pad.position = Vector3(0.0, 0.12, 0.0)
 	_pad.rotation = Vector3(-side * deg_to_rad(config.pad_tilt_degrees), 0.0, 0.0)
-	_pad.material_override = _material(pad_color)
+	_pad.material_override = theme_secondary_material(pad_color)
 	var direction := launch.normalized()
 	var length := 0.6 + launch.length() * 0.04
 	_arrow.scale = Vector3(1.0, length, 1.0)

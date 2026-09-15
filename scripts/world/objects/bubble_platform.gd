@@ -86,6 +86,11 @@ func _on_setup() -> void:
 	_ring.material_override = _ring_material
 
 
+func _on_theme_applied() -> void:
+	super._on_theme_applied()
+	_mesh.material_override = _material
+
+
 func _physics_process(delta: float) -> void:
 	if config:
 		_timer -= delta
@@ -136,7 +141,7 @@ func _enter(new_state: BubbleState) -> void:
 func _update_visual() -> void:
 	if _mesh == null:
 		return
-	var color := idle_color
+	var color := Color(theme_primary_color(idle_color), idle_color.a)
 	var mesh_factor := 1.0
 	match bubble_state:
 		BubbleState.ACTIVATED:

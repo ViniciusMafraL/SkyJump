@@ -17,8 +17,9 @@ var _bounce_tween: Tween
 func apply(data: PlatformData, theme: ThemeData) -> void:
 	_mesh.scale = Vector3(data.depth, thickness, data.width)
 	_mesh.position = Vector3(0.0, -thickness * 0.5, 0.0)
-	var color := theme.get_platform_color(data.platform_type) if theme else Color.WHITE
-	_mesh.material_override = _get_material(color)
+	# Material vem do tema ativo (plataformas comuns ou objetos especiais, conforme o tipo).
+	var settings := theme.get_material_settings(data.platform_type) if theme else null
+	_mesh.material_override = settings.get_primary_material() if settings else _get_material(Color.WHITE)
 
 
 ## Feedback de impulso (trampolins).

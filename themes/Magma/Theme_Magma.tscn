@@ -1,0 +1,48 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/themes/level_theme.gd" id="1_theme"]
+[ext_resource type="Script" path="res://scripts/resources/theme_data.gd" id="2_data"]
+[ext_resource type="Script" path="res://scripts/themes/theme_material_settings.gd" id="3_material"]
+[ext_resource type="Script" path="res://scripts/themes/theme_lighting_settings.gd" id="4_lighting"]
+[ext_resource type="Script" path="res://scripts/themes/theme_background.gd" id="5_background"]
+
+[sub_resource type="Resource" id="Resource_platforms"]
+script = ExtResource("3_material")
+primary_color = Color(0.227451, 0.164706, 0.164706, 1)
+secondary_color = Color(0.478431, 0.290196, 0.227451, 1)
+roughness = 0.95
+metallic = 0
+
+[sub_resource type="Resource" id="Resource_special_objects"]
+script = ExtResource("3_material")
+primary_color = Color(1, 0.701961, 0.278431, 1)
+secondary_color = Color(0.164706, 0.101961, 0.101961, 1)
+roughness = 0.5
+metallic = 0
+emission_color = Color(1, 0.478431, 0.101961, 1)
+emission_energy = 0.6
+
+[sub_resource type="Resource" id="Resource_lighting"]
+script = ExtResource("4_lighting")
+sun_color = Color(1, 0.815686, 0.627451, 1)
+sun_energy = 1.1
+ambient_energy = 0.7
+
+[sub_resource type="Resource" id="Resource_theme"]
+script = ExtResource("2_data")
+id = &"magma"
+display_name = "Magma"
+base_color = Color(1, 0.4, 0, 1)
+top_color = Color(0.8, 0, 0, 1)
+platform_material = SubResource("Resource_platforms")
+special_object_material = SubResource("Resource_special_objects")
+lighting = SubResource("Resource_lighting")
+
+[node name="Theme_Magma" type="Node3D"]
+script = ExtResource("1_theme")
+theme_data = SubResource("Resource_theme")
+
+[node name="Background" type="MeshInstance3D" parent="."]
+script = ExtResource("5_background")
+
+[node name="Lighting" type="Node3D" parent="."]

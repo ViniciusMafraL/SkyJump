@@ -80,10 +80,16 @@ func _on_setup() -> void:
 	_arrow_right.rotation = Vector3(-PI * 0.5, 0.0, 0.0)
 	_arrow_left.position = Vector3(0.0, 0.25, arrow_offset)
 	_arrow_left.rotation = Vector3(PI * 0.5, 0.0, 0.0)
-	var material := StandardMaterial3D.new()
-	material.albedo_color = arrow_color
-	material.emission_enabled = true
-	material.emission = arrow_color * 0.3
+	_apply_theme_visuals()
+
+
+func _on_theme_applied() -> void:
+	super._on_theme_applied()
+	_apply_theme_visuals()
+
+
+func _apply_theme_visuals() -> void:
+	var material := theme_secondary_material(arrow_color)
 	_arrow_right.material_override = material
 	_arrow_left.material_override = material
 	_build_limits()
@@ -132,7 +138,7 @@ func _build_limits() -> void:
 	if config == null:
 		return
 	var material := StandardMaterial3D.new()
-	material.albedo_color = limit_color
+	material.albedo_color = Color(theme_secondary_color(limit_color), limit_color.a)
 	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	var post := CylinderMesh.new()

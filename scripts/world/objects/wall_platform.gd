@@ -143,13 +143,17 @@ func _on_setup() -> void:
 	_update_visual()
 
 
+func _on_theme_applied() -> void:
+	_update_visual()
+
+
 ## Local: X radial, Y altura, Z = esquerda da tela.
 func _update_visual() -> void:
 	if config == null or data == null or _mesh == null:
 		return
 	_mesh.scale = Vector3(data.depth, config.wall_height, config.wall_thickness)
 	_mesh.position = Vector3(0.0, config.wall_height * 0.5, 0.0)
-	_mesh.material_override = _material(_theme_color(wall_color))
+	_mesh.material_override = theme_primary_material(wall_color)
 	var arrow_height := minf(config.wall_height * 0.5, 2.0)
 	for pair in [[_arrow_right, 1.0], [_arrow_left, -1.0]]:
 		var arrow: MeshInstance3D = pair[0]
@@ -157,13 +161,7 @@ func _update_visual() -> void:
 		var jump := get_jump_vector(side * get_object_sign()).normalized()
 		arrow.rotation = Vector3(atan2(-jump.x, jump.y), 0.0, 0.0)
 		arrow.position = Vector3(data.depth * 0.5 + 0.05, arrow_height, -side * get_object_sign() * (config.wall_thickness * 0.5 + 0.35))
-		arrow.material_override = _material(arrow_color)
-
-
-func _material(color: Color) -> StandardMaterial3D:
-	var material := StandardMaterial3D.new()
-	material.albedo_color = color
-	return material
+		arrow.material_override = theme_secondary_material(arrow_color)
 
 
 func _draw_debug(draw: ObjectDebugDraw) -> void:

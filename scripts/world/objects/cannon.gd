@@ -143,10 +143,7 @@ func _place_player(player: PlayerController) -> void:
 
 
 func _on_setup() -> void:
-	var base_material := StandardMaterial3D.new()
-	base_material.albedo_color = _theme_color(body_color)
-	_base.material_override = base_material
-	_barrel.material_override = base_material
+	_apply_theme_materials()
 	var arrow_material := StandardMaterial3D.new()
 	arrow_material.albedo_color = arrow_color
 	arrow_material.emission_enabled = true
@@ -155,6 +152,15 @@ func _on_setup() -> void:
 		(child as MeshInstance3D).material_override = arrow_material
 	_arrow_pivot.position = Vector3(0.6, mouth_height, 0.0)
 	_update_visual()
+
+
+func _on_theme_applied() -> void:
+	_apply_theme_materials()
+
+
+func _apply_theme_materials() -> void:
+	_base.material_override = theme_primary_material(body_color)
+	_barrel.material_override = theme_secondary_material(body_color)
 
 
 func _physics_process(delta: float) -> void:

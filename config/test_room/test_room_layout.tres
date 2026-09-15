@@ -6,7 +6,6 @@
 [ext_resource type="Resource" path="res://config/platforms/small_platform.tres" id="4_small"]
 [ext_resource type="Resource" path="res://config/platforms/large_platform.tres" id="5_large"]
 [ext_resource type="Resource" path="res://config/platforms/trampoline_platform.tres" id="6_trampoline"]
-[ext_resource type="Resource" uid="uid://dn3istn0owvt8" path="res://config/theme.tres" id="7_theme"]
 [ext_resource type="Script" path="res://scripts/test_room/object_test_station.gd" id="8_station"]
 [ext_resource type="Resource" path="res://config/test_room/stations/01_moving.tres" id="st_01_moving"]
 [ext_resource type="Resource" path="res://config/test_room/stations/02_trampoline.tres" id="st_02_trampoline"]
@@ -72,5 +71,4 @@ angle_degrees = 300.0
 script = ExtResource("1_layout")
 floor_platform = ExtResource("3_normal")
 placements = Array[ExtResource("2_placement")]([SubResource("Resource_step_1"), SubResource("Resource_step_2"), SubResource("Resource_step_3"), SubResource("Resource_step_4"), SubResource("Resource_step_5"), SubResource("Resource_trampoline"), SubResource("Resource_trampoline_landing"), SubResource("Resource_trampoline_high")])
-theme_config = ExtResource("7_theme")
 stations = Array[ExtResource("8_station")]([ExtResource("st_01_moving"), ExtResource("st_02_trampoline"), ExtResource("st_03_diagonal_trampoline"), ExtResource("st_04_wall"), ExtResource("st_05_bubble"), ExtResource("st_06_sliding"), ExtResource("st_07_stair"), ExtResource("st_08_tube"), ExtResource("st_09_vine"), ExtResource("st_10_portal"), ExtResource("st_11_tnt"), ExtResource("st_12_cannon")])

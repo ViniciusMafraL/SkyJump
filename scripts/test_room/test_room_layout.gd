@@ -24,7 +24,6 @@ extends Resource
 
 @export_group("Platforms")
 @export var placements: Array[PlatformPlacement] = []
-@export var theme_config: ThemeConfig
 
 @export_group("Object Stations")
 ## Testes individuais dos objetos especiais, selecionáveis na sala (ordem do seletor).
@@ -42,6 +41,3 @@ func get_platform_radius(depth: float) -> float:
 func get_floor_segment_width() -> float:
 	return TAU * get_player_orbit_radius() / maxi(floor_segments, 1) + floor_overlap
 
-
-func get_theme() -> ThemeData:
-	return theme_config.get_theme_for_height(0.0) if theme_config else null

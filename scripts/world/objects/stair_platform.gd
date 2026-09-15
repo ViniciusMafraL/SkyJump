@@ -25,6 +25,11 @@ func get_state_name() -> String:
 	return "%s %d degraus" % [StairConfig.StairType.keys()[config.stair_type], _steps.size()]
 
 
+func _on_theme_applied() -> void:
+	for step in _steps:
+		step.apply_theme(_theme)
+
+
 func _on_setup() -> void:
 	for step in _steps:
 		if is_instance_valid(step):

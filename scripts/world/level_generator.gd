@@ -37,7 +37,6 @@ func generate_next_chunk() -> LevelChunkData:
 	chunk.chunk_seed = hash(Vector2i(_world_seed, chunk.index))
 	var start_meters := config.to_meters(chunk.start_height)
 	chunk.difficulty = config.difficulty.evaluate(start_meters)
-	chunk.theme = config.theme_config.get_theme_for_height(start_meters) if config.theme_config else null
 	_rng.seed = chunk.chunk_seed
 	_next_chunk_index += 1
 

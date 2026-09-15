@@ -24,6 +24,9 @@
 [ext_resource type="Script" path="res://scripts/test_room/jump_metrics.gd" id="17_metrics"]
 [ext_resource type="Script" path="res://scripts/test_room/test_room_manager.gd" id="18_manager"]
 [ext_resource type="Resource" path="res://config/test_room/test_room_layout.tres" id="19_layout"]
+[ext_resource type="Script" path="res://scripts/world/theme_controller.gd" id="26_theme_controller"]
+[ext_resource type="Resource" path="res://config/themes/theme_library.tres" id="27_theme_library"]
+[ext_resource type="PackedScene" path="res://themes/Castle/Theme_Castle.tscn" id="28_default_theme"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_room"]
 sky_top_color = Color(0.3, 0.32, 0.45, 1)
@@ -58,6 +61,14 @@ directional_shadow_max_distance = 40.0
 [node name="Platforms" type="Node3D" parent="World"]
 script = ExtResource("2_platform_set")
 default_platform_scene = ExtResource("3_platform")
+
+[node name="ThemeController" type="Node" parent="World" node_paths=PackedStringArray("theme_parent", "world_environment", "sun")]
+script = ExtResource("26_theme_controller")
+library = ExtResource("27_theme_library")
+default_theme = ExtResource("28_default_theme")
+theme_parent = NodePath("..")
+world_environment = NodePath("../../Environment/WorldEnvironment")
+sun = NodePath("../../Environment/Sun")
 
 [node name="Player" parent="." node_paths=PackedStringArray("input_controller") instance=ExtResource("4_player")]
 input_controller = NodePath("../Systems/ControlManager")
@@ -114,7 +125,7 @@ presets = Array[ExtResource("10_preset_script")]([ExtResource("11_default"), Ext
 script = ExtResource("17_metrics")
 player = NodePath("../../Player")
 
-[node name="TestRoomManager" type="Node" parent="Systems" node_paths=PackedStringArray("settings", "player", "camera_rig", "platform_set", "metrics")]
+[node name="TestRoomManager" type="Node" parent="Systems" node_paths=PackedStringArray("settings", "player", "camera_rig", "platform_set", "metrics", "theme_controller")]
 script = ExtResource("18_manager")
 settings = NodePath("../TestSettingsManager")
 layout = ExtResource("19_layout")
@@ -122,3 +133,4 @@ player = NodePath("../../Player")
 camera_rig = NodePath("../../CameraRig")
 platform_set = NodePath("../../World/Platforms")
 metrics = NodePath("../JumpMetrics")
+theme_controller = NodePath("../../World/ThemeController")

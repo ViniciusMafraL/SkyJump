@@ -38,6 +38,12 @@ func _on_setup() -> void:
 	_build_visual()
 
 
+func _on_theme_applied() -> void:
+	for point in _points:
+		point.apply_theme(_theme)
+	_build_visual()
+
+
 func _point_radius() -> float:
 	return current_radius + (config.point_depth - data.depth) * 0.5
 
@@ -75,9 +81,9 @@ func _build_visual() -> void:
 	if config == null or config.point_count <= 0:
 		return
 	var stem_material := StandardMaterial3D.new()
-	stem_material.albedo_color = stem_color
+	stem_material.albedo_color = theme_secondary_color(stem_color)
 	var leaf_material := StandardMaterial3D.new()
-	leaf_material.albedo_color = leaf_color
+	leaf_material.albedo_color = theme_primary_color(leaf_color)
 	var stem_mesh := CylinderMesh.new()
 	stem_mesh.top_radius = 1.0
 	stem_mesh.bottom_radius = 1.0

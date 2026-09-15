@@ -58,3 +58,7 @@ func _on_setup() -> void:
 	_solid = true
 	collision.size = Vector2(data.width, data.depth)
 	visual.apply(data, _theme)
+
+
+func _on_theme_applied() -> void:
+	visual.apply(data, _theme)

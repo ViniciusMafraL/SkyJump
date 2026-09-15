@@ -9,9 +9,10 @@ var platforms: Array[Platform] = []
 var objects: Array[GameplayObject] = []
 
 
-func build(chunk_data: LevelChunkData, default_platform_scene: PackedScene) -> void:
+## `theme` = tema ativo (materiais das plataformas e objetos).
+func build(chunk_data: LevelChunkData, default_platform_scene: PackedScene, theme: ThemeData) -> void:
 	data = chunk_data
 	for platform_data in data.platforms:
-		var object := PlatformFactory.create_object(platform_data, default_platform_scene, data.theme, self)
+		var object := PlatformFactory.create_object(platform_data, default_platform_scene, theme, self)
 		objects.append(object)
 		platforms.append_array(object.get_platforms())

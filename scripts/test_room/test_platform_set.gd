@@ -7,6 +7,8 @@ extends PlatformSource
 
 ## Configurações ativas da sala: cada objeto recebe a seção indicada por get_settings_section().
 var active_config: TestRoomConfig
+## Tema ativo da sala (materiais de plataformas e objetos).
+var active_theme: ThemeData
 var debug_draw_enabled: bool = false
 
 var _platforms: Array[Platform] = []
@@ -24,7 +26,7 @@ func get_active_objects() -> Array[GameplayObject]:
 ## Recria tudo, restaurando os estados iniciais. `station` = null monta o layout padrão.
 func build(layout: TestRoomLayout, station: ObjectTestStation = null) -> void:
 	clear()
-	var theme := layout.get_theme()
+	var theme := active_theme
 	if layout.floor_platform:
 		var floor_width := layout.get_floor_segment_width()
 		for i in layout.floor_segments:
@@ -43,6 +45,13 @@ func clear() -> void:
 			object.queue_free()
 	_objects.clear()
 	_platforms.clear()
+
+
+## Troca de tema sem recriar: estados dos objetos são mantidos.
+func apply_theme(theme: ThemeData) -> void:
+	active_theme = theme
+	for object in _objects:
+		object.apply_theme(theme)
 
 
 func reset_objects() -> void:

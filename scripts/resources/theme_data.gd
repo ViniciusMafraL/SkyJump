@@ -1,21 +1,60 @@
+@tool
 class_name ThemeData
 extends Resource
-## Tema visual de uma região da torre. Apenas apresentação: nenhum dado de gameplay.
-## No protótipo contém somente cores placeholder; materiais, céu, música etc. entram aqui depois.
+## Configuração visual de um tema de nível (identidade visual, cores, materiais e iluminação).
+## Fica centralizada na Theme Scene (LevelTheme.theme_data). Não contém gameplay nem assets de bioma.
 
-@export var display_name: String = "Inicial"
-## Altura (metros) a partir da qual o tema é aplicado.
-@export var start_height: float = 0.0
+const BASIC_PLATFORM_TYPES := [
+	PlatformType.Type.NORMAL, PlatformType.Type.SMALL, PlatformType.Type.LARGE, PlatformType.Type.DANGER,
+]
+
+@export var id: StringName = &""
+@export var display_name: String = ""
+
+@export_group("Background")
+## BASE_COLOR: cor inferior do cenário.
+@export var base_color: Color = Color.WHITE:
+	set(value):
+		base_color = value
+		emit_changed()
+## TOP_COLOR: cor superior do cenário.
+@export var top_color: Color = Color.GRAY:
+	set(value):
+		top_color = value
+		emit_changed()
+## Faixa da altura do fundo onde acontece a transição (0 = base, 1 = topo).
+@export_range(0.0, 1.0, 0.01) var gradient_start: float = 0.2:
+	set(value):
+		gradient_start = value
+		emit_changed()
+@export_range(0.0, 1.0, 0.01) var gradient_end: float = 0.8:
+	set(value):
+		gradient_end = value
+		emit_changed()
+@export_range(0.1, 4.0, 0.05) var gradient_power: float = 1.0:
+	set(value):
+		gradient_power = value
+		emit_changed()
 
 @export_group("Platforms")
-@export var platform_color: Color = Color(0.35, 0.72, 0.45)
-## Cor por tipo (valor de PlatformType.Type -> Color). Tipos ausentes usam platform_color.
-@export var platform_type_colors: Dictionary = {}
+## Plataformas comuns (normal, pequena, grande).
+@export var platform_material: ThemeMaterialSettings
 
-@export_group("Sky")
-@export var sky_top_color: Color = Color(0.25, 0.45, 0.8)
-@export var sky_horizon_color: Color = Color(0.72, 0.82, 0.93)
+@export_group("Special Objects")
+## Plataformas e objetos especiais (móvel, trampolins, parede, tubo, portal, canhão...).
+@export var special_object_material: ThemeMaterialSettings
+
+@export_group("Lighting")
+@export var lighting: ThemeLightingSettings
 
 
-func get_platform_color(type: int) -> Color:
-	return platform_type_colors.get(type, platform_color)
+static func is_basic_platform(type: int) -> bool:
+	return type in BASIC_PLATFORM_TYPES
+
+
+## Materiais que um tipo de plataforma/objeto recebe neste tema.
+func get_material_settings(type: int) -> ThemeMaterialSettings:
+	var basic := is_basic_platform(type)
+	var preferred := platform_material if basic else special_object_material
+	var other := special_object_material if basic else platform_material
+	return preferred if preferred else other

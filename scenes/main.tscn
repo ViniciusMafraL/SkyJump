@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://scripts/world/chunk_manager.gd" id="5_chunks"]
 [ext_resource type="PackedScene" path="res://scenes/world/platform.tscn" id="6_platform"]
 [ext_resource type="Script" path="res://scripts/world/theme_controller.gd" id="7_theme"]
-[ext_resource type="Resource" path="res://config/theme.tres" id="8_theme_config"]
+[ext_resource type="Resource" path="res://config/themes/theme_library.tres" id="8_theme_library"]
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="9_player"]
 [ext_resource type="PackedScene" path="res://scenes/camera/camera_rig.tscn" id="10_camera"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="11_hud"]
@@ -63,15 +63,18 @@ script = ExtResource("2_generator")
 config = ExtResource("3_world")
 movement = ExtResource("4_movement")
 
-[node name="ChunkContainer" type="Node3D" parent="World" node_paths=PackedStringArray("generator")]
+[node name="ChunkContainer" type="Node3D" parent="World" node_paths=PackedStringArray("generator", "theme_controller")]
 script = ExtResource("5_chunks")
 generator = NodePath("../LevelGenerator")
 default_platform_scene = ExtResource("6_platform")
+theme_controller = NodePath("../ThemeController")
 
-[node name="ThemeController" type="Node" parent="World" node_paths=PackedStringArray("world_environment")]
+[node name="ThemeController" type="Node" parent="World" node_paths=PackedStringArray("theme_parent", "world_environment", "sun")]
 script = ExtResource("7_theme")
-theme_config = ExtResource("8_theme_config")
+library = ExtResource("8_theme_library")
+theme_parent = NodePath("..")
 world_environment = NodePath("../../Environment/WorldEnvironment")
+sun = NodePath("../../Environment/Sun")
 
 [node name="Player" parent="." node_paths=PackedStringArray("input_controller") instance=ExtResource("9_player")]
 input_controller = NodePath("../Systems/ControlManager")
@@ -149,5 +152,3 @@ player = NodePath("../../Player")
 game_manager = NodePath("../GameManager")
 score_manager = NodePath("../ScoreManager")
 progression_manager = NodePath("../ProgressionManager")
-
-[connection signal="current_height_changed" from="Systems/ScoreManager" to="World/ThemeController" method="apply_for_height"]
