@@ -5,9 +5,9 @@ extends Resource
 enum LaunchDirection { RIGHT, LEFT }
 
 @export_group("Gameplay")
-@export var vertical_force: float = 18.0
+@export var vertical_force: float = 16.0
 ## Velocidade lateral inicial (vira momentum que decai com launch_momentum_drag do personagem).
-@export var horizontal_force: float = 10.0
+@export var horizontal_force: float = 7.0
 ## Lado do objeto para o qual o personagem é lançado (flip do objeto espelha).
 @export var launch_direction: LaunchDirection = LaunchDirection.RIGHT
 @export var cooldown: float = 0.25

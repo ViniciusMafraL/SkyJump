@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="StairPlacementRule" format=3]
+
+[ext_resource type="Script" path="res://scripts/world/generation/rules/stair_placement_rule.gd" id="1_script"]
+[ext_resource type="Resource" path="res://config/platforms/stair_platform.tres" id="2_platform"]
+[ext_resource type="Resource" path="res://config/objects/stair_config.tres" id="3_config"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"stair"
+display_name = "Plataforma Escada"
+platform_config = ExtResource("2_platform")
+stair_config = ExtResource("3_config")

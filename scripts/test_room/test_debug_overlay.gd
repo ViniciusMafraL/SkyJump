@@ -41,6 +41,9 @@ func _build_text() -> String:
 	lines.append("Vel. vertical %.1f   Vel. tangencial %.1f (+%.1f impulso)" % [_player.vertical_velocity, _player.tangential_speed, _player.launch_tangential_speed])
 	lines.append("Modo: %s" % PlayerController.Mode.keys()[_player.mode])
 	lines.append_array(_object_lines())
+	if _platform_set and not _platform_set.generation_report.is_empty():
+		lines.append("")
+		lines.append_array(_platform_set.generation_report)
 	lines.append("")
 	lines.append("TEÓRICO")
 	lines.append("Pulo: altura %.2f | ar %.2fs" % [movement.get_max_jump_height(), flat_air_time])
@@ -63,7 +66,7 @@ func _object_lines() -> PackedStringArray:
 		var state_name := object.get_state_name()
 		if state_name.is_empty():
 			continue
-		lines.append("%s: %s" % [PlatformType.Type.keys()[object.get_object_type()], state_name])
+		lines.append("%s: %s" % [PlatformType.name_of(object.get_object_type()), state_name])
 		if lines.size() >= 4:
 			break
 	return lines
@@ -73,4 +76,4 @@ func _platform_name() -> String:
 	var platform := _player.current_platform
 	if platform == null or not is_instance_valid(platform) or platform.data == null:
 		return "-"
-	return PlatformType.Type.keys()[platform.data.platform_type]
+	return PlatformType.name_of(platform.data.platform_type)

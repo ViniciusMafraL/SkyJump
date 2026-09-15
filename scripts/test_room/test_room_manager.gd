@@ -42,6 +42,7 @@ func get_stations() -> Array[ObjectTestStation]:
 ## -1 = layout padrão. Reinicia o teste na estação escolhida.
 func select_station(index: int) -> void:
 	selected_station = layout.stations[index] if index >= 0 and index < layout.stations.size() else null
+	platform_set.generation_seed = randi()
 	station_changed.emit(selected_station)
 	restart_test()
 
@@ -80,6 +81,10 @@ func select_theme(index: int) -> void:
 
 func _on_theme_changed(_theme: LevelTheme) -> void:
 	platform_set.apply_theme(theme_controller.get_theme_data())
+	# O mapa gerado depende da distribuição de plataformas do tema: gera de novo.
+	if selected_station and selected_station.generated_map and is_node_ready():
+		platform_set.generation_seed = randi()
+		restart_test()
 
 
 func exit_to_menu() -> void:

@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://b0qhey635ftvp" path="res://scripts/themes/theme_lighting_settings.gd" id="4_lighting"]
 [ext_resource type="Shader" uid="uid://dn81rm8300bii" path="res://art/shaders/theme_background.gdshader" id="5_1aqny"]
 [ext_resource type="Script" uid="uid://dt7247p7u6rkl" path="res://scripts/themes/theme_background.gd" id="5_background"]
+[ext_resource type="Resource" path="res://themes/Castle/Castle_platforms.tres" id="6_platforms"]
 
 [sub_resource type="Resource" id="Resource_lighting"]
 script = ExtResource("4_lighting")
@@ -33,6 +34,7 @@ top_color = Color(0.8, 0.4, 0.6, 1)
 platform_material = SubResource("Resource_platforms")
 special_object_material = SubResource("Resource_special_objects")
 lighting = SubResource("Resource_lighting")
+platform_distribution = ExtResource("6_platforms")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_07i8h"]
 render_priority = 0
@@ -62,7 +64,6 @@ theme_data = SubResource("Resource_theme")
 
 [node name="Background" type="MeshInstance3D" parent="." unique_id=700563431]
 physics_interpolation_mode = 2
-transform = Transform3D(1, 0, 0, 0, 0.16860473, 0, 0, 0, 1, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_07i8h")
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_rppe5")

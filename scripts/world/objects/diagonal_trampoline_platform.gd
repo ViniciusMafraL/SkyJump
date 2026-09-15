@@ -43,7 +43,7 @@ func on_player_landed(player: PlayerController) -> void:
 		return
 	_ready_at_msec = now + roundi(config.cooldown * 1000.0)
 	var launch := get_launch_vector()
-	player.launch(launch.y, launch.x, &"diagonal_trampoline")
+	player.launch(launch.y, launch.x, &"diagonal_trampoline", true)
 	visual.play_bounce()
 	play_sound(Sound.LAUNCH)
 

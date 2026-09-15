@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="PlatformDistribution" format=3]
+
+[ext_resource type="Script" path="res://scripts/world/generation/platform_distribution.gd" id="1_distribution"]
+[ext_resource type="Script" path="res://scripts/world/generation/special_platform_entry.gd" id="2_entry"]
+[ext_resource type="Resource" path="res://config/generation/rules/wall_rule.tres" id="r0"]
+[ext_resource type="Resource" path="res://config/generation/rules/moving_rule.tres" id="r1"]
+[ext_resource type="Resource" path="res://config/generation/rules/trampoline_rule.tres" id="r2"]
+[ext_resource type="Resource" path="res://config/generation/rules/stair_rule.tres" id="r3"]
+[ext_resource type="Resource" path="res://config/generation/rules/cannon_rule.tres" id="r4"]
+[ext_resource type="Resource" path="res://config/generation/rules/tnt_rule.tres" id="r5"]
+
+[sub_resource type="Resource" id="Entry_0"]
+script = ExtResource("2_entry")
+rule = ExtResource("r0")
+weight = 12.0
+
+[sub_resource type="Resource" id="Entry_1"]
+script = ExtResource("2_entry")
+rule = ExtResource("r1")
+weight = 7.0
+
+[sub_resource type="Resource" id="Entry_2"]
+script = ExtResource("2_entry")
+rule = ExtResource("r2")
+weight = 6.0
+
+[sub_resource type="Resource" id="Entry_3"]
+script = ExtResource("2_entry")
+rule = ExtResource("r3")
+weight = 4.0
+
+[sub_resource type="Resource" id="Entry_4"]
+script = ExtResource("2_entry")
+rule = ExtResource("r4")
+weight = 3.0
+
+[sub_resource type="Resource" id="Entry_5"]
+script = ExtResource("2_entry")
+rule = ExtResource("r5")
+weight = 3.0
+
+[resource]
+script = ExtResource("1_distribution")
+common_weight = 65.0
+characteristic = SubResource("Entry_0")
+secondary = Array[ExtResource("2_entry")]([SubResource("Entry_1"), SubResource("Entry_2"), SubResource("Entry_3"), SubResource("Entry_4"), SubResource("Entry_5")])

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PortalPlacementRule" format=3]
+
+[ext_resource type="Script" path="res://scripts/world/generation/rules/portal_placement_rule.gd" id="1_script"]
+[ext_resource type="Resource" path="res://config/platforms/portal_a.tres" id="2_platform"]
+[ext_resource type="Resource" path="res://config/objects/portal_config.tres" id="3_config"]
+[ext_resource type="Resource" path="res://config/platforms/small_platform.tres" id="4_entry"]
+[ext_resource type="Resource" path="res://config/platforms/large_platform.tres" id="5_landing"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"portal"
+display_name = "Portal"
+platform_config = ExtResource("2_platform")
+portal_config = ExtResource("3_config")
+entry_platform = ExtResource("4_entry")
+landing_platform = ExtResource("5_landing")

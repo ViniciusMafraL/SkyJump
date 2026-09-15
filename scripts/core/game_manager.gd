@@ -43,8 +43,9 @@ func start_run() -> void:
 	var spawn_height: float = checkpoint.height if checkpoint else 0.0
 	var spawn_angle: float = checkpoint.angle if checkpoint else deg_to_rad(world_config.start_angle_degrees)
 
-	# Tema sorteado a cada tentativa, antes de gerar o mundo (plataformas nascem com os materiais dele).
-	if theme_controller:
+	# Tema sorteado a cada tentativa, antes de gerar o mundo (materiais e distribuição de plataformas).
+	# Recomeçando de um checkpoint o tema é mantido: a mesma seed precisa gerar o mesmo mundo.
+	if theme_controller and checkpoint == null:
 		theme_controller.apply_random_theme()
 	chunk_manager.reset(world_seed, spawn_height)
 	player.spawn(spawn_angle, spawn_height, world_config.get_player_orbit_radius())

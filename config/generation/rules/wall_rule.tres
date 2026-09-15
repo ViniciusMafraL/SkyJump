@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WallBouncePlacementRule" format=3]
+
+[ext_resource type="Script" path="res://scripts/world/generation/rules/wall_bounce_placement_rule.gd" id="1_script"]
+[ext_resource type="Resource" path="res://config/platforms/wall_platform.tres" id="2_platform"]
+[ext_resource type="Resource" path="res://config/objects/wall_config.tres" id="3_config"]
+[ext_resource type="Resource" path="res://config/platforms/large_platform.tres" id="4_landing"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"wall"
+display_name = "Plataforma-Parede"
+platform_config = ExtResource("2_platform")
+wall_config = ExtResource("3_config")
+landing_platform = ExtResource("4_landing")

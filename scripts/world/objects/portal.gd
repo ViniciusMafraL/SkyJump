@@ -158,6 +158,8 @@ func _complete(player: PlayerController) -> void:
 	var destination := _destination
 	_player = null
 	_destination = null
+	# Sai do TELEPORTING: sem isso o portal de origem ignorava o jogador para sempre (uso único).
+	portal_state = PortalState.COOLDOWN
 	_start_cooldown()
 	if destination == null or not is_instance_valid(destination):
 		# Destino sumiu durante o teleporte: devolve o controle onde está.

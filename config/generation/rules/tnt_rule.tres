@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="StepPlacementRule" format=3]
+
+[ext_resource type="Script" path="res://scripts/world/generation/rules/step_placement_rule.gd" id="1_script"]
+[ext_resource type="Resource" path="res://config/platforms/tnt_platform.tres" id="2_platform"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"tnt"
+display_name = "TNT"
+platform_config = ExtResource("2_platform")

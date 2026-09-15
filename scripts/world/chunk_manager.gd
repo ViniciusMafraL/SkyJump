@@ -27,7 +27,7 @@ func _ready() -> void:
 func reset(world_seed: int, focus_height: float = 0.0) -> void:
 	for index in _chunks.keys():
 		_unload_chunk(index)
-	generator.reset(world_seed)
+	generator.reset(world_seed, _current_distribution())
 	_focus_index = _index_for_height(focus_height)
 	var first_kept := _focus_index - _chunk_config().chunks_behind
 	while generator.get_next_chunk_index() < first_kept:
@@ -92,6 +92,12 @@ func _unload_chunk(index: int) -> void:
 
 func _current_theme() -> ThemeData:
 	return theme_controller.get_theme_data() if theme_controller else null
+
+
+## Plataformas permitidas pelo tema ativo (a distribuição fica no ThemeData).
+func _current_distribution() -> PlatformDistribution:
+	var theme := _current_theme()
+	return theme.platform_distribution if theme else null
 
 
 func _on_theme_changed(_theme: LevelTheme) -> void:

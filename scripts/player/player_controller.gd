@@ -88,8 +88,12 @@ func set_platform_source(source: PlatformSource) -> void:
 ## Lança o personagem sem consumir o pulo do jogador; a gravidade existente continua valendo.
 ## `tangential_boost` segue a convenção de tangential_speed (positivo = direita da tela) e vira
 ## momentum que decai aos poucos, para lançamentos diagonais não serem anulados pelo controle aéreo.
-func launch(vertical_speed: float, tangential_boost: float = 0.0, source: StringName = &"trampoline") -> void:
+## `reset_horizontal` descarta a velocidade de corrida (lançamentos com direção própria, como o
+## trampolim diagonal e o quique na parede, ficam iguais em qualquer situação).
+func launch(vertical_speed: float, tangential_boost: float = 0.0, source: StringName = &"trampoline", reset_horizontal: bool = false) -> void:
 	_detach_from_platform()
+	if reset_horizontal:
+		tangential_speed = 0.0
 	vertical_velocity = clampf(vertical_speed, -movement.fall_speed_limit, movement.max_launch_vertical_speed)
 	launch_tangential_speed = clampf(tangential_boost, -movement.max_launch_tangential_speed, movement.max_launch_tangential_speed)
 	_coyote_timer = 0.0
@@ -248,12 +252,14 @@ func _tick_timers(delta: float, input: PlayerInputState) -> void:
 func _update_horizontal(delta: float, input: PlayerInputState) -> void:
 	var axis := input.move_axis if input else 0.0
 	var acceleration := movement.ground_acceleration if not is_zero_approx(axis) else movement.ground_deceleration
-	var speed_scale := 1.0
 	if state != State.GROUNDED:
 		acceleration *= movement.air_control
-	elif current_platform and is_instance_valid(current_platform):
-		speed_scale = current_platform.get_input_speed_scale()
-	tangential_speed = move_toward(tangential_speed, axis * movement.horizontal_speed * speed_scale, acceleration * delta)
+	# Durante o impulso lateral de um objeto, o input no mesmo sentido não soma velocidade: o voo cai
+	# onde a geração previu. No sentido contrário o jogador ainda consegue frear e corrigir.
+	var target_axis := axis
+	if not is_zero_approx(launch_tangential_speed) and signf(axis) == signf(launch_tangential_speed):
+		target_axis = 0.0
+	tangential_speed = move_toward(tangential_speed, target_axis * movement.horizontal_speed, acceleration * delta)
 	launch_tangential_speed = move_toward(launch_tangential_speed, 0.0, movement.launch_momentum_drag * delta)
 	var total_speed := tangential_speed + launch_tangential_speed
 	var new_angle := wrapf(angle - total_speed / orbit_radius * delta, 0.0, TAU)

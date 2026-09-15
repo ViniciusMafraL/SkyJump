@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="MovingPlacementRule" format=3]
+
+[ext_resource type="Script" path="res://scripts/world/generation/rules/moving_placement_rule.gd" id="1_script"]
+[ext_resource type="Resource" path="res://config/platforms/moving_platform.tres" id="2_platform"]
+[ext_resource type="Resource" path="res://config/objects/moving_platform_config.tres" id="3_config"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"moving"
+display_name = "Plataforma Móvel"
+platform_config = ExtResource("2_platform")
+moving_config = ExtResource("3_config")

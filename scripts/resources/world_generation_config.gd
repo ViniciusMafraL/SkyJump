@@ -27,9 +27,6 @@ extends Resource
 @export var start_platform: PlatformConfig
 ## Plataforma de descanso no início de cada chunk. Vazio = desativado.
 @export var chunk_start_platform: PlatformConfig
-## Mesma configuração usada pelos trampolins em jogo: a força define a altura do atalho
-## até a plataforma seguinte. Vazio = trampolins tratados como plataformas normais.
-@export var trampoline_config: TrampolineConfig
 @export var start_angle_degrees: float = 0.0
 
 @export_group("Distances")
@@ -48,7 +45,7 @@ extends Resource
 ## Maior ângulo entre plataformas consecutivas que ainda fica visível na câmera.
 @export var maximum_visible_angular_distance: float = 60.0
 @export_range(0.0, 1.0) var direction_change_chance: float = 0.25
-## Após um trampolim, a próxima plataforma fica entre esta fração e 100% da altura alcançável.
+## Após um lançamento forçado (trampolim), a próxima plataforma fica entre esta fração e 100% da altura alcançável.
 @export_range(0.2, 1.0) var boost_min_gap_fraction: float = 0.6
 
 @export_group("Difficulty")

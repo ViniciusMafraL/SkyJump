@@ -1,8 +1,8 @@
 class_name WallPlatform
 extends GameplayObject
-## PLATAFORMA-PAREDE: elemento vertical que bloqueia a passagem lateral. No ar, o personagem
-## gruda na face, escorrega devagar durante o tempo de apoio e salta sozinho (apertar pulo
-## antecipa). Duas paredes frente a frente formam uma sequência de saltos.
+## PLATAFORMA-PAREDE: pilar vertical que bloqueia a passagem lateral. No ar, ao encostar na face,
+## o personagem quica na hora para longe do pilar, subindo (support_time = 0). Com support_time > 0
+## ele gruda, escorrega e salta ao fim do apoio (apertar pulo antecipa).
 ## Tudo é calculado no espaço do cilindro (offset tangencial em relação ao centro da parede).
 
 @export var config: WallConfig
@@ -117,6 +117,9 @@ func _on_blocked(player: PlayerController, side: float) -> void:
 		return
 	if Time.get_ticks_msec() < _ready_at_msec:
 		return
+	if config.support_time <= 0.0:
+		_bounce(player, side)
+		return
 	_stuck_player = player
 	_stick_side = side
 	_stick_time = 0.0
@@ -125,11 +128,16 @@ func _on_blocked(player: PlayerController, side: float) -> void:
 
 
 func _wall_jump(player: PlayerController) -> void:
-	var jump := get_jump_vector(_stick_side)
+	_bounce(player, _stick_side)
+
+
+## Lança o personagem para longe da face `side`. A velocidade de corrida contra o pilar é descartada.
+func _bounce(player: PlayerController, side: float) -> void:
+	var jump := get_jump_vector(side)
 	player.consume_jump_buffer()
 	_release_stuck()
 	_ready_at_msec = Time.get_ticks_msec() + roundi(config.cooldown * 1000.0)
-	player.launch(jump.y, jump.x, &"wall")
+	player.launch(jump.y, jump.x, &"wall", true)
 	play_sound(Sound.LAUNCH)
 
 

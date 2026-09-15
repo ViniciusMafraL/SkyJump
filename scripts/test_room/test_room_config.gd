@@ -6,12 +6,12 @@ extends Resource
 ## Seções endereçáveis por caminho "<seção>.<propriedade>" (ex.: "movement.jump_force").
 const SECTIONS := [
 	&"movement", &"trampoline", &"camera", &"item", &"ability",
-	&"moving", &"diagonal_trampoline", &"wall", &"bubble", &"sliding", &"stair",
+	&"moving", &"diagonal_trampoline", &"wall", &"bubble", &"stair",
 	&"tube", &"vine", &"portal", &"tnt", &"cannon",
 ]
 ## Seções de objetos especiais: o painel só mostra a do objeto selecionado na sala.
 const OBJECT_SECTIONS := [
-	&"moving", &"diagonal_trampoline", &"wall", &"bubble", &"sliding", &"stair",
+	&"moving", &"diagonal_trampoline", &"wall", &"bubble", &"stair",
 	&"tube", &"vine", &"portal", &"tnt", &"cannon",
 ]
 
@@ -26,7 +26,6 @@ const OBJECT_SECTIONS := [
 @export var diagonal_trampoline_config: DiagonalTrampolineConfig
 @export var wall_config: WallConfig
 @export var bubble_config: BubblePlatformConfig
-@export var sliding_config: SlidingPlatformConfig
 @export var stair_config: StairConfig
 @export var tube_config: TubeConfig
 @export var vine_config: VineConfig

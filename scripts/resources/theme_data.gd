@@ -47,6 +47,10 @@ const BASIC_PLATFORM_TYPES := [
 @export_group("Lighting")
 @export var lighting: ThemeLightingSettings
 
+@export_group("Generation")
+## Plataformas que o gerador usa neste tema: comum predominante, especial característica e secundárias.
+@export var platform_distribution: PlatformDistribution
+
 
 static func is_basic_platform(type: int) -> bool:
 	return type in BASIC_PLATFORM_TYPES

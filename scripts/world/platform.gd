@@ -24,12 +24,6 @@ func is_moving() -> bool:
 	return false
 
 
-## Fração da velocidade de caminhada do personagem sobre esta plataforma (0 = fica parado
-## em relação a ela, ex.: plataforma deslizante levando o personagem como um trenó).
-func get_input_speed_scale() -> float:
-	return 1.0
-
-
 func is_solid() -> bool:
 	return _solid
 

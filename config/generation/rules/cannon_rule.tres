@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CannonPlacementRule" format=3]
+
+[ext_resource type="Script" path="res://scripts/world/generation/rules/cannon_placement_rule.gd" id="1_script"]
+[ext_resource type="Resource" path="res://config/platforms/cannon.tres" id="2_platform"]
+[ext_resource type="Resource" path="res://config/objects/cannon_config.tres" id="3_config"]
+[ext_resource type="Resource" path="res://config/platforms/small_platform.tres" id="4_entry"]
+[ext_resource type="Resource" path="res://config/platforms/large_platform.tres" id="5_landing"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"cannon"
+display_name = "Canhão Móvel"
+platform_config = ExtResource("2_platform")
+cannon_config = ExtResource("3_config")
+entry_platform = ExtResource("4_entry")
+landing_platform = ExtResource("5_landing")

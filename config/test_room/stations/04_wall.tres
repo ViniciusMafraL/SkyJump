@@ -4,28 +4,22 @@
 [ext_resource type="Script" path="res://scripts/test_room/object_placement.gd" id="2_placement"]
 [ext_resource type="Script" path="res://scripts/test_room/platform_placement.gd" id="3_base"]
 [ext_resource type="Resource" path="res://config/platforms/wall_platform.tres" id="c0"]
-[ext_resource type="Resource" path="res://config/platforms/normal_platform.tres" id="c1"]
+[ext_resource type="Resource" path="res://config/platforms/large_platform.tres" id="c1"]
 
-[sub_resource type="Resource" id="Resource_p0"]
+[sub_resource type="Resource" id="Resource_wall"]
 script = ExtResource("2_placement")
 platform_config = ExtResource("c0")
-height = 0.0
+height = -1.0
 angle_degrees = 40.0
 
-[sub_resource type="Resource" id="Resource_p1"]
-script = ExtResource("2_placement")
-platform_config = ExtResource("c0")
-height = 0.0
-angle_degrees = 83.6
-
-[sub_resource type="Resource" id="Resource_p2"]
+[sub_resource type="Resource" id="Resource_landing"]
 script = ExtResource("2_placement")
 platform_config = ExtResource("c1")
-height = 8.0
-angle_degrees = 61.8
+height = 4.0
+angle_degrees = 333.0
 
 [resource]
 script = ExtResource("1_station")
 display_name = "Plataforma-Parede"
 settings_section = &"wall"
-placements = Array[ExtResource("3_base")]([SubResource("Resource_p0"), SubResource("Resource_p1"), SubResource("Resource_p2")])
+placements = Array[ExtResource("3_base")]([SubResource("Resource_wall"), SubResource("Resource_landing")])

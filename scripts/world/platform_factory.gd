@@ -15,8 +15,10 @@ static func create_object(data: PlatformData, default_scene: PackedScene, theme:
 	if data.config and data.config.scene_override:
 		scene = data.config.scene_override
 	var object: GameplayObject = scene.instantiate()
+	object.flip = data.flip
 	if data.config:
 		_apply_properties(object, data.config.object_properties)
+	_apply_properties(object, data.object_properties)
 	_apply_properties(object, properties)
 	if configure.is_valid():
 		configure.call(object)

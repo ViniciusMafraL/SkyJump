@@ -15,13 +15,19 @@ enum Type {
 	## Plataforma bolha / temporária.
 	BUBBLE,
 	DANGER,
-	WALL,
-	DIAGONAL_TRAMPOLINE,
-	TUBE,
-	SLIDING,
-	VINE,
-	STAIR,
-	PORTAL,
-	TNT,
-	CANNON,
+	WALL = 7,
+	DIAGONAL_TRAMPOLINE = 8,
+	TUBE = 9,
+	## 10 era a plataforma deslizante (removida): o valor fica livre para não alterar os .tres salvos.
+	VINE = 11,
+	STAIR = 12,
+	PORTAL = 13,
+	TNT = 14,
+	CANNON = 15,
 }
+
+
+## Nome do tipo pelo valor (os valores não são sequenciais: não usar Type.keys()[valor]).
+static func name_of(type: int) -> String:
+	var key = Type.find_key(type)
+	return String(key) if key != null else str(type)

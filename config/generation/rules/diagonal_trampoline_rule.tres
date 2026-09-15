@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="DiagonalTrampolinePlacementRule" format=3]
+
+[ext_resource type="Script" path="res://scripts/world/generation/rules/diagonal_trampoline_placement_rule.gd" id="1_script"]
+[ext_resource type="Resource" path="res://config/platforms/diagonal_trampoline.tres" id="2_platform"]
+[ext_resource type="Resource" path="res://config/objects/diagonal_trampoline_config.tres" id="3_config"]
+[ext_resource type="Resource" path="res://config/platforms/normal_platform.tres" id="4_landing"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"diagonal_trampoline"
+display_name = "Trampolim Diagonal"
+platform_config = ExtResource("2_platform")
+diagonal_config = ExtResource("3_config")
+landing_platform = ExtResource("4_landing")

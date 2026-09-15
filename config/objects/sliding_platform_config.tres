@@ -1,6 +1,0 @@
-[gd_resource type="Resource" script_class="SlidingPlatformConfig" format=3]
-
-[ext_resource type="Script" path="res://scripts/resources/objects/sliding_platform_config.gd" id="1_script"]
-
-[resource]
-script = ExtResource("1_script")

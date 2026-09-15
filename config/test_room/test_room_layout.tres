@@ -12,13 +12,13 @@
 [ext_resource type="Resource" path="res://config/test_room/stations/03_diagonal_trampoline.tres" id="st_03_diagonal_trampoline"]
 [ext_resource type="Resource" path="res://config/test_room/stations/04_wall.tres" id="st_04_wall"]
 [ext_resource type="Resource" path="res://config/test_room/stations/05_bubble.tres" id="st_05_bubble"]
-[ext_resource type="Resource" path="res://config/test_room/stations/06_sliding.tres" id="st_06_sliding"]
 [ext_resource type="Resource" path="res://config/test_room/stations/07_stair.tres" id="st_07_stair"]
 [ext_resource type="Resource" path="res://config/test_room/stations/08_tube.tres" id="st_08_tube"]
 [ext_resource type="Resource" path="res://config/test_room/stations/09_vine.tres" id="st_09_vine"]
 [ext_resource type="Resource" path="res://config/test_room/stations/10_portal.tres" id="st_10_portal"]
 [ext_resource type="Resource" path="res://config/test_room/stations/11_tnt.tres" id="st_11_tnt"]
 [ext_resource type="Resource" path="res://config/test_room/stations/12_cannon.tres" id="st_12_cannon"]
+[ext_resource type="Resource" path="res://config/test_room/stations/13_theme_map.tres" id="st_13_theme_map"]
 
 [sub_resource type="Resource" id="Resource_step_1"]
 script = ExtResource("2_placement")
@@ -71,4 +71,4 @@ angle_degrees = 300.0
 script = ExtResource("1_layout")
 floor_platform = ExtResource("3_normal")
 placements = Array[ExtResource("2_placement")]([SubResource("Resource_step_1"), SubResource("Resource_step_2"), SubResource("Resource_step_3"), SubResource("Resource_step_4"), SubResource("Resource_step_5"), SubResource("Resource_trampoline"), SubResource("Resource_trampoline_landing"), SubResource("Resource_trampoline_high")])
-stations = Array[ExtResource("8_station")]([ExtResource("st_01_moving"), ExtResource("st_02_trampoline"), ExtResource("st_03_diagonal_trampoline"), ExtResource("st_04_wall"), ExtResource("st_05_bubble"), ExtResource("st_06_sliding"), ExtResource("st_07_stair"), ExtResource("st_08_tube"), ExtResource("st_09_vine"), ExtResource("st_10_portal"), ExtResource("st_11_tnt"), ExtResource("st_12_cannon")])
+stations = Array[ExtResource("8_station")]([ExtResource("st_01_moving"), ExtResource("st_02_trampoline"), ExtResource("st_03_diagonal_trampoline"), ExtResource("st_04_wall"), ExtResource("st_05_bubble"), ExtResource("st_07_stair"), ExtResource("st_08_tube"), ExtResource("st_09_vine"), ExtResource("st_10_portal"), ExtResource("st_11_tnt"), ExtResource("st_12_cannon"), ExtResource("st_13_theme_map")])

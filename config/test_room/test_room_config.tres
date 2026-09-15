@@ -10,7 +10,6 @@
 [ext_resource type="Resource" path="res://config/objects/diagonal_trampoline_config.tres" id="8_diagonal"]
 [ext_resource type="Resource" path="res://config/objects/wall_config.tres" id="9_wall"]
 [ext_resource type="Resource" path="res://config/objects/bubble_platform_config.tres" id="10_bubble"]
-[ext_resource type="Resource" path="res://config/objects/sliding_platform_config.tres" id="11_sliding"]
 [ext_resource type="Resource" path="res://config/objects/stair_config.tres" id="12_stair"]
 [ext_resource type="Resource" path="res://config/objects/tube_config.tres" id="13_tube"]
 [ext_resource type="Resource" path="res://config/objects/vine_config.tres" id="14_vine"]
@@ -29,7 +28,6 @@ moving_config = ExtResource("7_moving")
 diagonal_trampoline_config = ExtResource("8_diagonal")
 wall_config = ExtResource("9_wall")
 bubble_config = ExtResource("10_bubble")
-sliding_config = ExtResource("11_sliding")
 stair_config = ExtResource("12_stair")
 tube_config = ExtResource("13_tube")
 vine_config = ExtResource("14_vine")

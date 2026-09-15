@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="TubePlacementRule" format=3]
+
+[ext_resource type="Script" path="res://scripts/world/generation/rules/tube_placement_rule.gd" id="1_script"]
+[ext_resource type="Resource" path="res://config/platforms/tube_straight.tres" id="2_platform"]
+[ext_resource type="Resource" path="res://config/objects/tube_config.tres" id="3_config"]
+[ext_resource type="Resource" path="res://config/platforms/small_platform.tres" id="4_entry"]
+[ext_resource type="Resource" path="res://config/platforms/normal_platform.tres" id="5_landing"]
+[ext_resource type="Curve3D" path="res://config/objects/tube_curves/straight.tres" id="c1"]
+[ext_resource type="Curve3D" path="res://config/objects/tube_curves/diagonal.tres" id="c2"]
+[ext_resource type="Curve3D" path="res://config/objects/tube_curves/curve.tres" id="c3"]
+[ext_resource type="Curve3D" path="res://config/objects/tube_curves/s_shape.tres" id="c4"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"tube"
+display_name = "Tubo Transportador"
+platform_config = ExtResource("2_platform")
+tube_config = ExtResource("3_config")
+curves = Array[Curve3D]([ExtResource("c1"), ExtResource("c2"), ExtResource("c3"), ExtResource("c4")])
+entry_platform = ExtResource("4_entry")
+landing_platform = ExtResource("5_landing")

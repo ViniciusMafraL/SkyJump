@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://b0qhey635ftvp" path="res://scripts/themes/theme_lighting_settings.gd" id="4_lighting"]
 [ext_resource type="Shader" uid="uid://dn81rm8300bii" path="res://art/shaders/theme_background.gdshader" id="5_807g5"]
 [ext_resource type="Script" uid="uid://dt7247p7u6rkl" path="res://scripts/themes/theme_background.gd" id="5_background"]
+[ext_resource type="Resource" path="res://themes/MudWorld/MudWorld_platforms.tres" id="6_platforms"]
 
 [sub_resource type="Resource" id="Resource_lighting"]
 script = ExtResource("4_lighting")
@@ -34,6 +35,7 @@ top_color = Color(0.4, 0.2, 0, 1)
 platform_material = SubResource("Resource_platforms")
 special_object_material = SubResource("Resource_special_objects")
 lighting = SubResource("Resource_lighting")
+platform_distribution = ExtResource("6_platforms")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5jqmk"]
 render_priority = 0

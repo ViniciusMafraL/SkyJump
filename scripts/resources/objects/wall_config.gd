@@ -12,8 +12,9 @@ enum JumpDirection { AWAY_FROM_WALL, OBJECT_RIGHT, OBJECT_LEFT }
 @export var body_height: float = 0.7
 
 @export_group("Support")
-## Tempo (s) grudado na parede antes do salto automático. Apertar pulo antecipa.
-@export var support_time: float = 0.3
+## Tempo (s) grudado na parede antes do salto. 0 = quica na hora do contato (padrão).
+## Com apoio, apertar pulo antecipa o salto.
+@export var support_time: float = 0.0
 ## Velocidade máxima de queda enquanto grudado.
 @export var slide_speed: float = 1.5
 

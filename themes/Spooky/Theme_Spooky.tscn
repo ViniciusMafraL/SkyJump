@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://scripts/themes/theme_material_settings.gd" id="3_material"]
 [ext_resource type="Script" path="res://scripts/themes/theme_lighting_settings.gd" id="4_lighting"]
 [ext_resource type="Script" path="res://scripts/themes/theme_background.gd" id="5_background"]
+[ext_resource type="Resource" path="res://themes/Spooky/Spooky_platforms.tres" id="6_platforms"]
 
 [sub_resource type="Resource" id="Resource_platforms"]
 script = ExtResource("3_material")
@@ -37,6 +38,7 @@ top_color = Color(0.2, 0, 0.4, 1)
 platform_material = SubResource("Resource_platforms")
 special_object_material = SubResource("Resource_special_objects")
 lighting = SubResource("Resource_lighting")
+platform_distribution = ExtResource("6_platforms")
 
 [node name="Theme_Spooky" type="Node3D"]
 script = ExtResource("1_theme")

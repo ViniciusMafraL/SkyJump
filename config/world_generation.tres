@@ -8,8 +8,6 @@
 [ext_resource type="Resource" path="res://config/platforms/large_platform.tres" id="6_large"]
 [ext_resource type="Resource" path="res://config/platforms/start_platform.tres" id="7_start"]
 [ext_resource type="Resource" path="res://config/difficulty.tres" id="8_difficulty"]
-[ext_resource type="Resource" path="res://config/platforms/trampoline_platform.tres" id="10_trampoline"]
-[ext_resource type="Resource" path="res://config/trampoline.tres" id="11_trampoline_config"]
 
 [resource]
 script = ExtResource("1_script")
@@ -20,10 +18,9 @@ player_surface_offset = 1.2
 platform_embed_depth = 0.3
 meters_per_world_unit = 1.0
 chunk_config = ExtResource("2_chunk")
-platform_configs = Array[ExtResource("3_platform_script")]([ExtResource("4_normal"), ExtResource("5_small"), ExtResource("6_large"), ExtResource("10_trampoline")])
+platform_configs = Array[ExtResource("3_platform_script")]([ExtResource("4_normal"), ExtResource("5_small"), ExtResource("6_large")])
 start_platform = ExtResource("7_start")
 chunk_start_platform = ExtResource("6_large")
-trampoline_config = ExtResource("11_trampoline_config")
 boost_min_gap_fraction = 0.6
 start_angle_degrees = 0.0
 minimum_vertical_distance = 1.6
