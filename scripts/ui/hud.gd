@@ -73,6 +73,12 @@ func _on_run_finished(run_height: float, best_height: float, is_new_record: bool
 	_result_best_label.text = "Melhor altura: %s" % HeightFormat.meters(best_height)
 
 
+## Textos dos botões da tela de fim de partida (ex.: Desafio Diário: continuar do checkpoint / calendário).
+func set_game_over_actions(restart_text: String, menu_text: String) -> void:
+	_restart_button.text = restart_text
+	_game_over_menu_button.text = menu_text
+
+
 func _open_control_settings() -> void:
 	_pause_panel.visible = false
 	_control_settings_panel.visible = true

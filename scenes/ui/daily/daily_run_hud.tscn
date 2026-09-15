@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/daily/daily_run_hud.gd" id="1_hud"]
+
+[node name="DailyRunHud" type="CanvasLayer"]
+layer = 2
+script = ExtResource("1_hud")

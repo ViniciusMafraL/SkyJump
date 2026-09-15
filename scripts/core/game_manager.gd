@@ -5,8 +5,10 @@ extends Node
 
 signal state_changed(new_state: State, previous_state: State)
 signal run_finished(run_height: float, best_height: float, is_new_record: bool)
+## Objetivo da partida alcançado (ex.: 3º checkpoint do Desafio Diário).
+signal run_completed
 
-enum State { MENU, PLAYING, PAUSED, FALLING, GAME_OVER, RESTARTING }
+enum State { MENU, PLAYING, PAUSED, FALLING, GAME_OVER, RESTARTING, COMPLETED }
 
 @export var rules: GameRulesConfig
 @export var world_config: WorldGenerationConfig
@@ -22,6 +24,8 @@ enum State { MENU, PLAYING, PAUSED, FALLING, GAME_OVER, RESTARTING }
 @export_file("*.tscn") var menu_scene_path: String = "res://scenes/ui/main_menu.tscn"
 
 var state: State = State.MENU
+## Partida definida por outro modo (seed, tema e ponto de partida). null = partida normal.
+var run_override: RunOverride
 
 var _fall_timer: float = 0.0
 var _run_new_record: bool = false
@@ -38,15 +42,20 @@ func start_run() -> void:
 	_set_state(State.RESTARTING)
 	get_tree().paused = false
 
-	var checkpoint := checkpoint_manager.get_restart_checkpoint()
-	var world_seed: int = checkpoint.world_seed if checkpoint else _roll_world_seed()
-	var spawn_height: float = checkpoint.height if checkpoint else 0.0
-	var spawn_angle: float = checkpoint.angle if checkpoint else deg_to_rad(world_config.start_angle_degrees)
+	var override := run_override
+	var checkpoint := checkpoint_manager.get_restart_checkpoint() if override == null else null
+	var world_seed: int = override.world_seed if override else (checkpoint.world_seed if checkpoint else _roll_world_seed())
+	var spawn_height: float = override.spawn_height if override else (checkpoint.height if checkpoint else 0.0)
+	var spawn_angle: float = override.spawn_angle if override else (checkpoint.angle if checkpoint else deg_to_rad(world_config.start_angle_degrees))
 
-	# Tema sorteado a cada tentativa, antes de gerar o mundo (materiais e distribuição de plataformas).
-	# Recomeçando de um checkpoint o tema é mantido: a mesma seed precisa gerar o mesmo mundo.
-	if theme_controller and checkpoint == null:
-		theme_controller.apply_random_theme()
+	# Tema antes de gerar o mundo (materiais e distribuição de plataformas): o do modo especial, ou
+	# sorteado a cada tentativa. Recomeçando de um checkpoint o tema é mantido (mesma seed, mesmo mundo).
+	if theme_controller:
+		if override and override.theme_scene:
+			theme_controller.apply_theme(override.theme_scene)
+		elif override == null and checkpoint == null:
+			theme_controller.apply_random_theme()
+	score_manager.records_enabled = override == null or override.records_enabled
 	chunk_manager.reset(world_seed, spawn_height)
 	player.spawn(spawn_angle, spawn_height, world_config.get_player_orbit_radius())
 	score_manager.reset_run(spawn_height)
@@ -137,6 +146,17 @@ func _finish_run() -> void:
 	player.disable()
 	_set_state(State.GAME_OVER)
 	run_finished.emit(score_manager.run_height, score_manager.best_height, _run_new_record)
+
+
+## Objetivo alcançado: encerra a partida sem queda (ex.: Desafio Diário concluído).
+func complete_run() -> void:
+	if state != State.PLAYING:
+		return
+	score_manager.finish_run()
+	player.disable()
+	camera_rig.set_follow_enabled(false)
+	_set_state(State.COMPLETED)
+	run_completed.emit()
 
 
 func _roll_world_seed() -> int:

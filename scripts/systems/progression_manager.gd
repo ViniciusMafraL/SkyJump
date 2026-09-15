@@ -92,7 +92,8 @@ func _update_heights(height: float, run_max: float, saved_best: float) -> void:
 		milestone_changed.emit(previous_milestone, current_milestone)
 	_update_progress()
 	# Primeira partida (sem recorde anterior) não anuncia "novo recorde".
-	if not _record_announced and _best_at_run_start > 0.0 and floori(run_max_height) > floori(_best_at_run_start):
+	var records_enabled := score_manager == null or score_manager.records_enabled
+	if records_enabled and not _record_announced and _best_at_run_start > 0.0 and floori(run_max_height) > floori(_best_at_run_start):
 		_record_announced = true
 		new_record.emit(run_max_height)
 

@@ -10,6 +10,10 @@
 [ext_resource type="Script" path="res://scripts/controls/button_control.gd" id="8_buttons"]
 [ext_resource type="PackedScene" path="res://scenes/ui/skin_selector.tscn" id="9_skin_selector"]
 [ext_resource type="Script" path="res://scripts/ui/safe_area_offsets.gd" id="10_safe_area"]
+[ext_resource type="Script" path="res://scripts/ui/daily/star_counter.gd" id="11_star_counter"]
+[ext_resource type="Script" path="res://scripts/ui/daily/streak_badge.gd" id="12_streak_badge"]
+[ext_resource type="PackedScene" path="res://scenes/ui/daily/daily_calendar.tscn" id="13_calendar"]
+[ext_resource type="Script" path="res://scripts/ui/daily/star_reward_feedback.gd" id="14_reward_feedback"]
 
 [sub_resource type="Gradient" id="Gradient_sky"]
 colors = PackedColorArray(0.12, 0.22, 0.48, 1, 0.72, 0.82, 0.93, 1)
@@ -70,6 +74,26 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 18
 
+[node name="TopRow" type="HBoxContainer" parent="MainScreen/Content"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="StarCounter" type="HBoxContainer" parent="MainScreen/Content/TopRow"]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("11_star_counter")
+
+[node name="TopSpacer" type="Control" parent="MainScreen/Content/TopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="StreakBadge" type="HBoxContainer" parent="MainScreen/Content/TopRow"]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("12_streak_badge")
+show_best = false
+
 [node name="Title" type="Label" parent="MainScreen/Content"]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0.05, 0.07, 0.12, 1)
@@ -99,6 +123,14 @@ focus_mode = 0
 theme_override_font_sizes/font_size = 48
 text = "JOGAR"
 
+[node name="DailyButton" type="Button" parent="MainScreen/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "DESAFIO DIÁRIO"
+
 [node name="SettingsButton" type="Button" parent="MainScreen/Content"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 90)
@@ -127,6 +159,22 @@ text = "TESTE DE TRANSIÇÕES (DEV)"
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
+
+[node name="CalendarScreen" parent="." instance=ExtResource("13_calendar")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[node name="LoginFeedback" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("14_reward_feedback")
 
 [node name="Systems" type="Node" parent="."]
 

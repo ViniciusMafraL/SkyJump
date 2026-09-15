@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 TransitionManager="*res://scenes/autoload/transition_manager.tscn"
 SkinManager="*res://scenes/autoload/skin_manager.tscn"
 DevOverlay="*res://scenes/autoload/dev_overlay.tscn"
+DailyChallenge="*res://scenes/autoload/daily_challenge.tscn"
 
 [display]
 

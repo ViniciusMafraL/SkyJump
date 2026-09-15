@@ -23,6 +23,8 @@
 [ext_resource type="Script" path="res://scripts/core/game_manager.gd" id="16_game"]
 [ext_resource type="Script" path="res://scripts/systems/progression_manager.gd" id="24_progression"]
 [ext_resource type="Resource" path="res://config/progression/progression_config.tres" id="25_progression_config"]
+[ext_resource type="Script" path="res://scripts/daily/daily_run_controller.gd" id="26_daily_controller"]
+[ext_resource type="PackedScene" path="res://scenes/ui/daily/daily_run_hud.tscn" id="27_daily_hud"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_main"]
 sky_top_color = Color(0.25, 0.45, 0.8, 1)
@@ -89,6 +91,8 @@ score_manager = NodePath("../Systems/ScoreManager")
 control_manager = NodePath("../Systems/ControlManager")
 progression_manager = NodePath("../Systems/ProgressionManager")
 
+[node name="DailyRunHud" parent="." instance=ExtResource("27_daily_hud")]
+
 [node name="Systems" type="Node" parent="."]
 
 [node name="ControlManager" type="Node" parent="Systems" node_paths=PackedStringArray("controls_ui")]
@@ -144,6 +148,16 @@ score_manager = NodePath("../ScoreManager")
 progression_manager = NodePath("../ProgressionManager")
 checkpoint_manager = NodePath("../CheckpointManager")
 input_controller = NodePath("../ControlManager")
+
+[node name="DailyRunController" type="Node" parent="Systems" node_paths=PackedStringArray("game_manager", "player", "score_manager", "progression_manager", "hud", "run_hud")]
+script = ExtResource("26_daily_controller")
+game_manager = NodePath("../GameManager")
+player = NodePath("../../Player")
+score_manager = NodePath("../ScoreManager")
+progression_manager = NodePath("../ProgressionManager")
+world_config = ExtResource("3_world")
+hud = NodePath("../../UI")
+run_hud = NodePath("../../DailyRunHud")
 
 [node name="HapticManager" type="Node" parent="Systems" node_paths=PackedStringArray("control_manager", "player", "game_manager", "score_manager", "progression_manager")]
 script = ExtResource("22_haptics")

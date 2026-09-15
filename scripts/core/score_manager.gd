@@ -19,6 +19,8 @@ var max_height: float = 0.0
 var run_height: float = 0.0
 ## Recorde local em metros.
 var best_height: float = 0.0
+## Desligado em modos que não contam para o recorde (ex.: Desafio Diário).
+var records_enabled: bool = true
 
 var _best_at_run_start: float = 0.0
 var _tracking: bool = false
@@ -48,6 +50,8 @@ func is_new_record() -> bool:
 ## Encerra a tentativa e salva o recorde. Retorna true se houve novo recorde.
 func finish_run() -> bool:
 	_tracking = false
+	if not records_enabled:
+		return false
 	if best_height > _best_at_run_start:
 		LocalSave.save_best_height(best_height)
 	return is_new_record()
@@ -72,7 +76,7 @@ func _physics_process(_delta: float) -> void:
 	if floori(run_height) != previous_run:
 		run_height_changed.emit(run_height)
 
-	if run_height <= best_height:
+	if not records_enabled or run_height <= best_height:
 		return
 	var previous_best := floori(best_height)
 	best_height = run_height

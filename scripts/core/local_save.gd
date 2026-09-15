@@ -21,10 +21,11 @@ static func save_best_height(value: float) -> void:
 	_save(file)
 
 
-static func load_section(section: String) -> Dictionary:
+## `path` permite saves separados (ex.: testes); o padrão é o save do jogador.
+static func load_section(section: String, path: String = SAVE_PATH) -> Dictionary:
 	var values := {}
 	var file := ConfigFile.new()
-	if file.load(SAVE_PATH) != OK or not file.has_section(section):
+	if file.load(path) != OK or not file.has_section(section):
 		return values
 	for key in file.get_section_keys(section):
 		values[key] = file.get_value(section, key)
@@ -32,17 +33,17 @@ static func load_section(section: String) -> Dictionary:
 
 
 ## Substitui a seção inteira, preservando as demais (ex.: recordes).
-static func save_section(section: String, values: Dictionary) -> void:
+static func save_section(section: String, values: Dictionary, path: String = SAVE_PATH) -> void:
 	var file := ConfigFile.new()
-	file.load(SAVE_PATH)
+	file.load(path)
 	if file.has_section(section):
 		file.erase_section(section)
 	for key in values:
 		file.set_value(section, key, values[key])
-	_save(file)
+	_save(file, path)
 
 
-static func _save(file: ConfigFile) -> void:
-	var error := file.save(SAVE_PATH)
+static func _save(file: ConfigFile, path: String = SAVE_PATH) -> void:
+	var error := file.save(path)
 	if error != OK:
 		push_warning("Falha ao salvar dados locais: %s" % error_string(error))
