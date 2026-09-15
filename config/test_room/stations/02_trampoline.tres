@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="ObjectTestStation" format=3]
+
+[ext_resource type="Script" path="res://scripts/test_room/object_test_station.gd" id="1_station"]
+[ext_resource type="Script" path="res://scripts/test_room/object_placement.gd" id="2_placement"]
+[ext_resource type="Script" path="res://scripts/test_room/platform_placement.gd" id="3_base"]
+[ext_resource type="Resource" path="res://config/platforms/trampoline_low.tres" id="c0"]
+[ext_resource type="Resource" path="res://config/platforms/trampoline_platform.tres" id="c1"]
+[ext_resource type="Resource" path="res://config/platforms/trampoline_high.tres" id="c2"]
+[ext_resource type="Resource" path="res://config/platforms/trampoline_extreme.tres" id="c3"]
+
+[sub_resource type="Resource" id="Resource_p0"]
+script = ExtResource("2_placement")
+platform_config = ExtResource("c0")
+height = 0.5
+angle_degrees = 20.0
+
+[sub_resource type="Resource" id="Resource_p1"]
+script = ExtResource("2_placement")
+platform_config = ExtResource("c1")
+height = 0.5
+angle_degrees = 55.0
+
+[sub_resource type="Resource" id="Resource_p2"]
+script = ExtResource("2_placement")
+platform_config = ExtResource("c2")
+height = 0.5
+angle_degrees = 90.0
+
+[sub_resource type="Resource" id="Resource_p3"]
+script = ExtResource("2_placement")
+platform_config = ExtResource("c3")
+height = 0.5
+angle_degrees = 125.0
+
+[resource]
+script = ExtResource("1_station")
+display_name = "Trampolim"
+settings_section = &"trampoline"
+placements = Array[ExtResource("3_base")]([SubResource("Resource_p0"), SubResource("Resource_p1"), SubResource("Resource_p2"), SubResource("Resource_p3")])

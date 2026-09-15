@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ObjectTestStation" format=3]
+
+[ext_resource type="Script" path="res://scripts/test_room/object_test_station.gd" id="1_station"]
+[ext_resource type="Script" path="res://scripts/test_room/object_placement.gd" id="2_placement"]
+[ext_resource type="Script" path="res://scripts/test_room/platform_placement.gd" id="3_base"]
+[ext_resource type="Resource" path="res://config/platforms/vine_platform.tres" id="c0"]
+
+[sub_resource type="Resource" id="Resource_p0"]
+script = ExtResource("2_placement")
+platform_config = ExtResource("c0")
+height = 1.2
+angle_degrees = 30.0
+
+[resource]
+script = ExtResource("1_station")
+display_name = "Vinhas"
+settings_section = &"vine"
+placements = Array[ExtResource("3_base")]([SubResource("Resource_p0")])

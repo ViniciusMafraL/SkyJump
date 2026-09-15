@@ -28,6 +28,8 @@ var _schemes: Dictionary = {}
 var _current: ControlScheme
 var _state := PlayerInputState.new()
 var _pending_jump: bool = false
+## Toque/clique em área livre da tela: confirmação de objetos (ex.: canhão) em qualquer método.
+var _pending_confirm: bool = false
 var _debug_time_left: float = 0.0
 
 
@@ -136,9 +138,18 @@ func _physics_process(delta: float) -> void:
 			_merge_keyboard()
 		if _pending_jump:
 			_state.jump_pressed = true
+		_state.confirm_pressed = _state.jump_pressed or _pending_confirm
 	_pending_jump = false
+	_pending_confirm = false
 	_state.move_axis = clampf(_state.move_axis, -1.0, 1.0)
 	_update_debug(delta)
+
+
+## Toques que a interface não consumiu (não sobre botões) contam como confirmação.
+func _unhandled_input(event: InputEvent) -> void:
+	if (event is InputEventScreenTouch and event.pressed) \
+			or (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
+		_pending_confirm = true
 
 
 func _notification(what: int) -> void:

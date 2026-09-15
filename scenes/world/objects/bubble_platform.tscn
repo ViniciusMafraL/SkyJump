@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/world/platform.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/world/objects/bubble_platform.gd" id="2_script"]
+[ext_resource type="Resource" path="res://config/objects/bubble_platform_config.tres" id="3_config"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_bubble"]
+radial_segments = 24
+rings = 12
+
+[sub_resource type="TorusMesh" id="TorusMesh_ring"]
+inner_radius = 0.85
+outer_radius = 1.0
+rings = 24
+ring_segments = 6
+
+[node name="BubblePlatform" instance=ExtResource("1_base")]
+script = ExtResource("2_script")
+config = ExtResource("3_config")
+object_type = 5
+
+[node name="Visual" parent="." index="1"]
+thickness = 0.7
+
+[node name="Mesh" parent="Visual" index="0"]
+cast_shadow = 0
+mesh = SubResource("SphereMesh_bubble")
+
+[node name="Ring" type="MeshInstance3D" parent="Visual" index="1"]
+cast_shadow = 0
+mesh = SubResource("TorusMesh_ring")

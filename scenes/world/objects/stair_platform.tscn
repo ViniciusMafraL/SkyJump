@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/objects/stair_platform.gd" id="1_script"]
+[ext_resource type="Resource" path="res://config/objects/stair_config.tres" id="2_config"]
+[ext_resource type="PackedScene" path="res://scenes/world/platform.tscn" id="3_step"]
+
+[node name="StairPlatform" type="Node3D"]
+script = ExtResource("1_script")
+config = ExtResource("2_config")
+step_scene = ExtResource("3_step")
+object_type = 12

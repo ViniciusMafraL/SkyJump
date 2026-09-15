@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="ObjectTestStation" format=3]
+
+[ext_resource type="Script" path="res://scripts/test_room/object_test_station.gd" id="1_station"]
+[ext_resource type="Script" path="res://scripts/test_room/object_placement.gd" id="2_placement"]
+[ext_resource type="Script" path="res://scripts/test_room/platform_placement.gd" id="3_base"]
+[ext_resource type="Resource" path="res://config/platforms/tnt_platform.tres" id="c0"]
+[ext_resource type="Resource" path="res://config/platforms/normal_platform.tres" id="c1"]
+
+[sub_resource type="Resource" id="Resource_p0"]
+script = ExtResource("2_placement")
+platform_config = ExtResource("c0")
+height = 0.5
+angle_degrees = 25.0
+
+[sub_resource type="Resource" id="Resource_p1"]
+script = ExtResource("2_placement")
+platform_config = ExtResource("c0")
+height = 0.5
+angle_degrees = 60.0
+
+[sub_resource type="Resource" id="Resource_p2"]
+script = ExtResource("2_placement")
+platform_config = ExtResource("c1")
+height = 7.0
+angle_degrees = 95.0
+
+[resource]
+script = ExtResource("1_station")
+display_name = "TNT"
+settings_section = &"tnt"
+placements = Array[ExtResource("3_base")]([SubResource("Resource_p0"), SubResource("Resource_p1"), SubResource("Resource_p2")])

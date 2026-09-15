@@ -105,7 +105,7 @@ func _launch_speed_for(platform: PlatformData) -> float:
 
 
 func _is_launcher(platform: PlatformData) -> bool:
-	return platform.platform_type == PlatformType.Type.BOOST and config.trampoline_config != null
+	return platform.platform_type == PlatformType.Type.TRAMPOLINE and config.trampoline_config != null
 
 
 func _make_platform(platform_config: PlatformConfig, size_multiplier: float) -> PlatformData:
@@ -169,7 +169,7 @@ func _pick_platform_config(height_m: float) -> PlatformConfig:
 	for platform_config in config.platform_configs:
 		if platform_config == null or platform_config.weight <= 0.0 or not platform_config.is_available_at(height_m):
 			continue
-		if avoid_launcher and platform_config.platform_type == PlatformType.Type.BOOST:
+		if avoid_launcher and platform_config.platform_type == PlatformType.Type.TRAMPOLINE:
 			continue
 		candidates.append(platform_config)
 		total_weight += platform_config.weight

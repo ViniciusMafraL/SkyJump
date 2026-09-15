@@ -19,6 +19,11 @@ var _follow_enabled: bool = true
 @onready var _camera: Camera3D = $CameraPivot/Camera3D
 
 
+func _ready() -> void:
+	if target:
+		target.teleported.connect(snap_to_target)
+
+
 func setup(orbit_radius: float) -> void:
 	_orbit_radius = orbit_radius
 	_camera.fov = config.camera_fov

@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bba4b4ml7ys38" path="res://scripts/player/ground_detector.gd" id="4_ground"]
 [ext_resource type="Script" path="res://scripts/player/player_appearance.gd" id="5_appearance"]
 [ext_resource type="PackedScene" path="res://scenes/player/models/player_ball.tscn" id="6_ball"]
+[ext_resource type="Script" path="res://scripts/player/interaction_detector.gd" id="7_interaction"]
 
 [node name="Player" type="Node3D" unique_id=786688603]
 script = ExtResource("1_player")
@@ -21,5 +22,8 @@ script = ExtResource("5_appearance")
 
 [node name="GroundDetector" type="Node" parent="." unique_id=776935144]
 script = ExtResource("4_ground")
+
+[node name="InteractionDetector" type="Node" parent="."]
+script = ExtResource("7_interaction")
 
 [node name="OptionalEffects" type="Node3D" parent="." unique_id=1780220741]

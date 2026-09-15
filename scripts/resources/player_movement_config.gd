@@ -25,6 +25,13 @@ extends Resource
 ## Tolerância lateral dos pés ao verificar se o personagem está sobre uma plataforma.
 @export var foot_radius: float = 0.3
 
+@export_group("Launch")
+## Desaceleração (unidades/s²) do impulso lateral recebido de objetos (trampolim diagonal, TNT, canhão).
+@export var launch_momentum_drag: float = 6.0
+## Limites de segurança para qualquer lançamento de objeto.
+@export var max_launch_vertical_speed: float = 60.0
+@export var max_launch_tangential_speed: float = 30.0
+
 
 ## Altura do pulo derivada de jump_force e gravity (h = F² / 2g).
 ## Não é salva: alterar este valor recalcula jump_force mantendo a gravidade.

@@ -1,0 +1,59 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/objects/cannon.gd" id="1_script"]
+[ext_resource type="Resource" path="res://config/objects/cannon_config.tres" id="2_config"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_base"]
+size = Vector3(1.4, 0.5, 1.4)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_barrel"]
+top_radius = 0.38
+bottom_radius = 0.45
+height = 1.0
+radial_segments = 16
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_shaft"]
+top_radius = 0.06
+bottom_radius = 0.06
+height = 1.2
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_head"]
+top_radius = 0.0
+bottom_radius = 0.22
+height = 0.4
+radial_segments = 10
+rings = 1
+
+[node name="Cannon" type="Node3D"]
+script = ExtResource("1_script")
+config = ExtResource("2_config")
+object_type = 15
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="Base" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("BoxMesh_base")
+
+[node name="BarrelPivot" type="Node3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Barrel" type="MeshInstance3D" parent="Visual/BarrelPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+mesh = SubResource("CylinderMesh_barrel")
+
+[node name="ArrowPivot" type="Node3D" parent="Visual"]
+visible = false
+
+[node name="Shaft" type="MeshInstance3D" parent="Visual/ArrowPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_shaft")
+
+[node name="Head" type="MeshInstance3D" parent="Visual/ArrowPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65, 0)
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_head")

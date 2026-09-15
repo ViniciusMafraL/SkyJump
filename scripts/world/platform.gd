@@ -1,32 +1,33 @@
 class_name Platform
-extends Node3D
+extends GameplayObject
 ## Plataforma de gameplay. A colisão é calculada em coordenadas cilíndricas e não depende do Visual.
 ## Tipos especiais estendem este script e sobrescrevem os métodos de interação.
 
 @onready var collision: PlatformCollision = $Collision
 @onready var visual: PlatformVisual = $Visual
 
-var data: PlatformData
-## Estado atual (pode diferir de `data` em plataformas móveis).
-var current_angle: float = 0.0
-var current_radius: float = 0.0
-
 var _solid: bool = true
 
 
-func setup(platform_data: PlatformData, theme: ThemeData) -> void:
-	data = platform_data
-	current_angle = data.angle
-	current_radius = data.radius
-	_solid = true
-	collision.size = Vector2(data.width, data.depth)
-	_sync_transform(data.height)
-	visual.apply(data, theme)
-	reset_physics_interpolation()
-
-
 func get_top_height() -> float:
-	return position.y
+	return current_height
+
+
+## Topo no frame de física anterior. Plataformas que se movem retornam a altura antiga para a
+## detecção de pouso não deixar o personagem atravessar uma plataforma subindo.
+func get_previous_top_height() -> float:
+	return current_height
+
+
+## Verdadeiro enquanto a plataforma se desloca (o personagem entra no modo ON_MOVING_PLATFORM).
+func is_moving() -> bool:
+	return false
+
+
+## Fração da velocidade de caminhada do personagem sobre esta plataforma (0 = fica parado
+## em relação a ela, ex.: plataforma deslizante levando o personagem como um trenó).
+func get_input_speed_scale() -> float:
+	return 1.0
 
 
 func is_solid() -> bool:
@@ -41,6 +42,10 @@ func allows_auto_jump() -> bool:
 	return data == null or data.config == null or data.config.auto_jump_enabled
 
 
+func get_platforms() -> Array[Platform]:
+	return [self]
+
+
 func on_player_landed(_player: PlayerController) -> void:
 	pass
 
@@ -49,7 +54,7 @@ func on_player_left(_player: PlayerController) -> void:
 	pass
 
 
-func _sync_transform(top_height: float) -> void:
-	# Eixo local X aponta para fora do cilindro; eixo Z segue a tangente.
-	position = Vector3(cos(current_angle) * current_radius, top_height, sin(current_angle) * current_radius)
-	rotation = Vector3(0.0, -current_angle, 0.0)
+func _on_setup() -> void:
+	_solid = true
+	collision.size = Vector2(data.width, data.depth)
+	visual.apply(data, _theme)

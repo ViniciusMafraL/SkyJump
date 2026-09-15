@@ -1,0 +1,79 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/world/platform.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/world/objects/tnt_platform.gd" id="2_script"]
+[ext_resource type="Resource" path="res://config/objects/tnt_config.tres" id="3_config"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_spark"]
+radius = 0.05
+height = 0.1
+radial_segments = 6
+rings = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_spark"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_blast"]
+radius = 0.5
+height = 1.0
+radial_segments = 24
+rings = 12
+
+[sub_resource type="SphereMesh" id="SphereMesh_debris"]
+radius = 0.12
+height = 0.24
+radial_segments = 6
+rings = 3
+
+[node name="TntPlatform" instance=ExtResource("1_base")]
+script = ExtResource("2_script")
+config = ExtResource("3_config")
+object_type = 14
+
+[node name="Visual" parent="." index="1"]
+thickness = 0.9
+
+[node name="Countdown" type="Label3D" parent="Visual"]
+billboard = 1
+font_size = 72
+outline_size = 14
+modulate = Color(1, 0.95, 0.6, 1)
+text = "2.0"
+
+[node name="Fuse" type="CPUParticles3D" parent="Visual"]
+emitting = false
+amount = 16
+lifetime = 0.35
+mesh = SubResource("SphereMesh_spark")
+material_override = SubResource("StandardMaterial3D_spark")
+direction = Vector3(0, 1, 0)
+spread = 50.0
+gravity = Vector3(0, -3, 0)
+initial_velocity_min = 1.5
+initial_velocity_max = 3.0
+color = Color(1, 0.8, 0.2, 1)
+
+[node name="Light" type="OmniLight3D" parent="Visual"]
+light_color = Color(1, 0.6, 0.2, 1)
+light_energy = 0.0
+omni_range = 4.0
+
+[node name="Blast" type="MeshInstance3D" parent="Visual"]
+visible = false
+cast_shadow = 0
+mesh = SubResource("SphereMesh_blast")
+
+[node name="Burst" type="CPUParticles3D" parent="Visual"]
+emitting = false
+amount = 40
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+mesh = SubResource("SphereMesh_debris")
+material_override = SubResource("StandardMaterial3D_spark")
+spread = 180.0
+gravity = Vector3(0, -12, 0)
+initial_velocity_min = 4.0
+initial_velocity_max = 8.0
+color = Color(1, 0.45, 0.15, 1)

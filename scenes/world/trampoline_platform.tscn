@@ -4,6 +4,18 @@
 [ext_resource type="Script" path="res://scripts/world/trampoline_platform.gd" id="2_script"]
 [ext_resource type="Resource" path="res://config/trampoline.tres" id="3_config"]
 
+[sub_resource type="CylinderMesh" id="CylinderMesh_arrow"]
+top_radius = 0.0
+bottom_radius = 0.35
+height = 1.0
+radial_segments = 12
+rings = 1
+
 [node name="TrampolinePlatform" instance=ExtResource("1_base")]
 script = ExtResource("2_script")
 config = ExtResource("3_config")
+object_type = 4
+
+[node name="Arrow" type="MeshInstance3D" parent="Visual"]
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_arrow")

@@ -18,7 +18,8 @@ func find_landing(previous_height: float, new_height: float, angle: float, radiu
 		if not platform.is_solid():
 			continue
 		var top := platform.get_top_height()
-		if top > previous_height + HEIGHT_TOLERANCE or top < new_height or top <= best_top:
+		# Varredura: compara o topo anterior com os pés anteriores (plataformas subindo não atravessam).
+		if platform.get_previous_top_height() > previous_height + HEIGHT_TOLERANCE or top < new_height or top <= best_top:
 			continue
 		if platform.contains(angle, radius, margin):
 			best = platform

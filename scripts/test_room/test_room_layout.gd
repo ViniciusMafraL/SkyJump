@@ -26,6 +26,10 @@ extends Resource
 @export var placements: Array[PlatformPlacement] = []
 @export var theme_config: ThemeConfig
 
+@export_group("Object Stations")
+## Testes individuais dos objetos especiais, selecionáveis na sala (ordem do seletor).
+@export var stations: Array[ObjectTestStation] = []
+
 
 func get_player_orbit_radius() -> float:
 	return pillar_radius + player_surface_offset

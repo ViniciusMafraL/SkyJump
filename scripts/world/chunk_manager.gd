@@ -11,6 +11,7 @@ signal chunk_unloaded(index: int)
 
 var _chunks: Dictionary = {}
 var _active_platforms: Array[Platform] = []
+var _active_objects: Array[GameplayObject] = []
 var _focus_index: int = 0
 
 
@@ -38,6 +39,10 @@ func get_active_platforms() -> Array[Platform]:
 	return _active_platforms
 
 
+func get_active_objects() -> Array[GameplayObject]:
+	return _active_objects
+
+
 ## Altura abaixo da qual não há mais plataformas carregadas. -INF enquanto o chunk 0 existir.
 func get_lowest_loaded_height() -> float:
 	if _chunks.is_empty() or _chunks.has(0):
@@ -62,6 +67,7 @@ func _load_chunk(data: LevelChunkData) -> void:
 	chunk.build(data, default_platform_scene)
 	_chunks[data.index] = chunk
 	_active_platforms.append_array(chunk.platforms)
+	_active_objects.append_array(chunk.objects)
 	chunk_loaded.emit(chunk)
 
 
@@ -70,6 +76,8 @@ func _unload_chunk(index: int) -> void:
 	_chunks.erase(index)
 	for platform in chunk.platforms:
 		_active_platforms.erase(platform)
+	for object in chunk.objects:
+		_active_objects.erase(object)
 	remove_child(chunk)
 	chunk.queue_free()
 	chunk_unloaded.emit(index)

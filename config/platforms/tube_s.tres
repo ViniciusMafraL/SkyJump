@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="PlatformConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/platform_config.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/world/objects/tube_transport.tscn" id="2_scene"]
+[ext_resource type="Curve3D" path="res://config/objects/tube_curves/s_shape.tres" id="3_curve"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"tube_s"
+platform_type = 9
+width = 1.0
+depth = 3.0
+min_width = 1.0
+weight = 0.0
+auto_jump_enabled = false
+scene_override = ExtResource("2_scene")
+object_properties = {
+"path_curve_override": ExtResource("3_curve")
+}

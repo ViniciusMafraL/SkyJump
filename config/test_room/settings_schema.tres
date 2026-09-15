@@ -210,6 +210,648 @@ path = "ability.allowed_abilities"
 kind = 2
 hint = "Infraestrutura apenas: nenhuma habilidade implementada ainda."
 
+[sub_resource type="Resource" id="Resource_obj_trampoline_low_multiplier"]
+script = ExtResource("2_definition")
+section_title = "TRAMPOLIM"
+label = "Mult. LOW"
+path = "trampoline.low_multiplier"
+min_value = 0.1
+max_value = 4
+step = 0.05
+
+[sub_resource type="Resource" id="Resource_obj_trampoline_normal_multiplier"]
+script = ExtResource("2_definition")
+section_title = "TRAMPOLIM"
+label = "Mult. NORMAL"
+path = "trampoline.normal_multiplier"
+min_value = 0.1
+max_value = 4
+step = 0.05
+
+[sub_resource type="Resource" id="Resource_obj_trampoline_high_multiplier"]
+script = ExtResource("2_definition")
+section_title = "TRAMPOLIM"
+label = "Mult. HIGH"
+path = "trampoline.high_multiplier"
+min_value = 0.1
+max_value = 4
+step = 0.05
+
+[sub_resource type="Resource" id="Resource_obj_trampoline_extreme_multiplier"]
+script = ExtResource("2_definition")
+section_title = "TRAMPOLIM"
+label = "Mult. EXTREME"
+path = "trampoline.extreme_multiplier"
+min_value = 0.1
+max_value = 4
+step = 0.05
+
+[sub_resource type="Resource" id="Resource_obj_moving_movement_type"]
+script = ExtResource("2_definition")
+section_title = "PLATAFORMA MÓVEL"
+label = "Tipo de movimento"
+path = "moving.movement_type"
+kind = 3
+
+[sub_resource type="Resource" id="Resource_obj_moving_distance"]
+script = ExtResource("2_definition")
+section_title = "PLATAFORMA MÓVEL"
+label = "Distância"
+path = "moving.distance"
+min_value = 0.5
+max_value = 12
+step = 0.1
+
+[sub_resource type="Resource" id="Resource_obj_moving_diagonal_angle_degrees"]
+script = ExtResource("2_definition")
+section_title = "PLATAFORMA MÓVEL"
+label = "Ângulo diagonal"
+path = "moving.diagonal_angle_degrees"
+min_value = -90
+max_value = 90
+step = 1
+suffix = "°"
+
+[sub_resource type="Resource" id="Resource_obj_moving_speed"]
+script = ExtResource("2_definition")
+section_title = "PLATAFORMA MÓVEL"
+label = "Velocidade"
+path = "moving.speed"
+min_value = 0.2
+max_value = 15
+step = 0.1
+
+[sub_resource type="Resource" id="Resource_obj_moving_acceleration"]
+script = ExtResource("2_definition")
+section_title = "PLATAFORMA MÓVEL"
+label = "Aceleração"
+path = "moving.acceleration"
+min_value = 0
+max_value = 50
+step = 0.5
+
+[sub_resource type="Resource" id="Resource_obj_moving_deceleration"]
+script = ExtResource("2_definition")
+section_title = "PLATAFORMA MÓVEL"
+label = "Desaceleração"
+path = "moving.deceleration"
+min_value = 0
+max_value = 50
+step = 0.5
+
+[sub_resource type="Resource" id="Resource_obj_moving_wait_time"]
+script = ExtResource("2_definition")
+section_title = "PLATAFORMA MÓVEL"
+label = "Tempo de espera"
+path = "moving.wait_time"
+min_value = 0
+max_value = 3
+step = 0.05
+suffix = "s"
+
+[sub_resource type="Resource" id="Resource_obj_moving_ping_pong"]
+script = ExtResource("2_definition")
+section_title = "PLATAFORMA MÓVEL"
+label = "Ping-pong (volta pelo caminho)"
+path = "moving.ping_pong"
+kind = 1
+
+[sub_resource type="Resource" id="Resource_obj_moving_loop"]
+script = ExtResource("2_definition")
+section_title = "PLATAFORMA MÓVEL"
+label = "Loop"
+path = "moving.loop"
+kind = 1
+
+[sub_resource type="Resource" id="Resource_obj_diagonal_trampoline_vertical_force"]
+script = ExtResource("2_definition")
+section_title = "TRAMPOLIM DIAGONAL"
+label = "Força vertical"
+path = "diagonal_trampoline.vertical_force"
+min_value = 0
+max_value = 60
+step = 0.5
+
+[sub_resource type="Resource" id="Resource_obj_diagonal_trampoline_horizontal_force"]
+script = ExtResource("2_definition")
+section_title = "TRAMPOLIM DIAGONAL"
+label = "Força horizontal"
+path = "diagonal_trampoline.horizontal_force"
+min_value = 0
+max_value = 30
+step = 0.5
+
+[sub_resource type="Resource" id="Resource_obj_diagonal_trampoline_launch_direction"]
+script = ExtResource("2_definition")
+section_title = "TRAMPOLIM DIAGONAL"
+label = "Direção"
+path = "diagonal_trampoline.launch_direction"
+kind = 3
+
+[sub_resource type="Resource" id="Resource_obj_diagonal_trampoline_cooldown"]
+script = ExtResource("2_definition")
+section_title = "TRAMPOLIM DIAGONAL"
+label = "Cooldown"
+path = "diagonal_trampoline.cooldown"
+min_value = 0
+max_value = 2
+step = 0.05
+suffix = "s"
+
+[sub_resource type="Resource" id="Resource_obj_wall_wall_height"]
+script = ExtResource("2_definition")
+section_title = "PAREDE"
+label = "Altura da parede"
+path = "wall.wall_height"
+min_value = 1
+max_value = 20
+step = 0.5
+
+[sub_resource type="Resource" id="Resource_obj_wall_support_time"]
+script = ExtResource("2_definition")
+section_title = "PAREDE"
+label = "Tempo de apoio"
+path = "wall.support_time"
+min_value = 0
+max_value = 2
+step = 0.05
+suffix = "s"
+
+[sub_resource type="Resource" id="Resource_obj_wall_slide_speed"]
+script = ExtResource("2_definition")
+section_title = "PAREDE"
+label = "Velocidade de escorregar"
+path = "wall.slide_speed"
+min_value = 0
+max_value = 10
+step = 0.1
+
+[sub_resource type="Resource" id="Resource_obj_wall_jump_force"]
+script = ExtResource("2_definition")
+section_title = "PAREDE"
+label = "Força do salto"
+path = "wall.jump_force"
+min_value = 2
+max_value = 40
+step = 0.5
+
+[sub_resource type="Resource" id="Resource_obj_wall_jump_angle_degrees"]
+script = ExtResource("2_definition")
+section_title = "PAREDE"
+label = "Ângulo do salto"
+path = "wall.jump_angle_degrees"
+min_value = 0
+max_value = 90
+step = 1
+suffix = "°"
+
+[sub_resource type="Resource" id="Resource_obj_wall_jump_direction"]
+script = ExtResource("2_definition")
+section_title = "PAREDE"
+label = "Direção do salto"
+path = "wall.jump_direction"
+kind = 3
+
+[sub_resource type="Resource" id="Resource_obj_wall_cooldown"]
+script = ExtResource("2_definition")
+section_title = "PAREDE"
+label = "Cooldown"
+path = "wall.cooldown"
+min_value = 0
+max_value = 2
+step = 0.05
+suffix = "s"
+
+[sub_resource type="Resource" id="Resource_obj_bubble_activation_time"]
+script = ExtResource("2_definition")
+section_title = "BOLHA"
+label = "Tempo de ativação"
+path = "bubble.activation_time"
+min_value = 0
+max_value = 3
+step = 0.05
+suffix = "s"
+
+[sub_resource type="Resource" id="Resource_obj_bubble_disappear_delay"]
+script = ExtResource("2_definition")
+section_title = "BOLHA"
+label = "Aviso antes de sumir"
+path = "bubble.disappear_delay"
+min_value = 0
+max_value = 3
+step = 0.05
+suffix = "s"
+
+[sub_resource type="Resource" id="Resource_obj_bubble_respawn_time"]
+script = ExtResource("2_definition")
+section_title = "BOLHA"
+label = "Tempo para reaparecer"
+path = "bubble.respawn_time"
+min_value = 0
+max_value = 10
+step = 0.1
+suffix = "s"
+
+[sub_resource type="Resource" id="Resource_obj_bubble_max_uses"]
+script = ExtResource("2_definition")
+section_title = "BOLHA"
+label = "Usos máximos (0 = infinito)"
+path = "bubble.max_uses"
+min_value = 0
+max_value = 10
+step = 1
+
+[sub_resource type="Resource" id="Resource_obj_bubble_auto_respawn"]
+script = ExtResource("2_definition")
+section_title = "BOLHA"
+label = "Reaparecer sozinha"
+path = "bubble.auto_respawn"
+kind = 1
+
+[sub_resource type="Resource" id="Resource_obj_sliding_movement_speed"]
+script = ExtResource("2_definition")
+section_title = "DESLIZANTE"
+label = "Velocidade"
+path = "sliding.movement_speed"
+min_value = 0
+max_value = 15
+step = 0.1
+
+[sub_resource type="Resource" id="Resource_obj_sliding_maximum_distance"]
+script = ExtResource("2_definition")
+section_title = "DESLIZANTE"
+label = "Distância máxima"
+path = "sliding.maximum_distance"
+min_value = 0
+max_value = 12
+step = 0.1
+
+[sub_resource type="Resource" id="Resource_obj_sliding_return_speed"]
+script = ExtResource("2_definition")
+section_title = "DESLIZANTE"
+label = "Velocidade de retorno"
+path = "sliding.return_speed"
+min_value = 0
+max_value = 15
+step = 0.1
+
+[sub_resource type="Resource" id="Resource_obj_sliding_activation_threshold"]
+script = ExtResource("2_definition")
+section_title = "DESLIZANTE"
+label = "Limiar de ativação"
+path = "sliding.activation_threshold"
+min_value = 0
+max_value = 1
+step = 0.05
+
+[sub_resource type="Resource" id="Resource_obj_sliding_return_to_start"]
+script = ExtResource("2_definition")
+section_title = "DESLIZANTE"
+label = "Retornar ao início"
+path = "sliding.return_to_start"
+kind = 1
+
+[sub_resource type="Resource" id="Resource_obj_sliding_cooldown"]
+script = ExtResource("2_definition")
+section_title = "DESLIZANTE"
+label = "Cooldown"
+path = "sliding.cooldown"
+min_value = 0
+max_value = 3
+step = 0.05
+suffix = "s"
+
+[sub_resource type="Resource" id="Resource_obj_stair_stair_type"]
+script = ExtResource("2_definition")
+section_title = "ESCADA"
+label = "Tipo"
+path = "stair.stair_type"
+kind = 3
+
+[sub_resource type="Resource" id="Resource_obj_stair_step_count"]
+script = ExtResource("2_definition")
+section_title = "ESCADA"
+label = "Degraus"
+path = "stair.step_count"
+min_value = 1
+max_value = 20
+step = 1
+
+[sub_resource type="Resource" id="Resource_obj_stair_step_width"]
+script = ExtResource("2_definition")
+section_title = "ESCADA"
+label = "Tamanho do degrau"
+path = "stair.step_width"
+min_value = 0.4
+max_value = 4
+step = 0.1
+
+[sub_resource type="Resource" id="Resource_obj_stair_horizontal_distance"]
+script = ExtResource("2_definition")
+section_title = "ESCADA"
+label = "Distância horizontal"
+path = "stair.horizontal_distance"
+min_value = 0
+max_value = 5
+step = 0.1
+
+[sub_resource type="Resource" id="Resource_obj_stair_vertical_distance"]
+script = ExtResource("2_definition")
+section_title = "ESCADA"
+label = "Distância vertical"
+path = "stair.vertical_distance"
+min_value = 0.2
+max_value = 4
+step = 0.1
+
+[sub_resource type="Resource" id="Resource_obj_stair_rotation_degrees"]
+script = ExtResource("2_definition")
+section_title = "ESCADA"
+label = "Rotação"
+path = "stair.rotation_degrees"
+min_value = -90
+max_value = 90
+step = 1
+suffix = "°"
+
+[sub_resource type="Resource" id="Resource_obj_tube_speed"]
+script = ExtResource("2_definition")
+section_title = "TUBO"
+label = "Velocidade"
+path = "tube.speed"
+min_value = 1
+max_value = 40
+step = 0.5
+
+[sub_resource type="Resource" id="Resource_obj_tube_exit_force"]
+script = ExtResource("2_definition")
+section_title = "TUBO"
+label = "Força de saída"
+path = "tube.exit_force"
+min_value = 0
+max_value = 40
+step = 0.5
+
+[sub_resource type="Resource" id="Resource_obj_tube_exit_direction_degrees"]
+script = ExtResource("2_definition")
+section_title = "TUBO"
+label = "Direção de saída"
+path = "tube.exit_direction_degrees"
+min_value = -180
+max_value = 180
+step = 1
+suffix = "°"
+
+[sub_resource type="Resource" id="Resource_obj_tube_preserve_velocity"]
+script = ExtResource("2_definition")
+section_title = "TUBO"
+label = "Preservar velocidade do tubo"
+path = "tube.preserve_velocity"
+kind = 1
+
+[sub_resource type="Resource" id="Resource_obj_tube_capture_radius"]
+script = ExtResource("2_definition")
+section_title = "TUBO"
+label = "Raio de entrada"
+path = "tube.capture_radius"
+min_value = 0.2
+max_value = 3
+step = 0.05
+
+[sub_resource type="Resource" id="Resource_obj_vine_point_count"]
+script = ExtResource("2_definition")
+section_title = "VINHAS"
+label = "Pontos"
+path = "vine.point_count"
+min_value = 1
+max_value = 20
+step = 1
+
+[sub_resource type="Resource" id="Resource_obj_vine_spacing"]
+script = ExtResource("2_definition")
+section_title = "VINHAS"
+label = "Espaçamento"
+path = "vine.spacing"
+min_value = 0.5
+max_value = 4
+step = 0.1
+
+[sub_resource type="Resource" id="Resource_obj_vine_point_size"]
+script = ExtResource("2_definition")
+section_title = "VINHAS"
+label = "Tamanho do ponto"
+path = "vine.point_size"
+min_value = 0.3
+max_value = 3
+step = 0.05
+
+[sub_resource type="Resource" id="Resource_obj_vine_direction"]
+script = ExtResource("2_definition")
+section_title = "VINHAS"
+label = "Direção"
+path = "vine.direction"
+kind = 3
+
+[sub_resource type="Resource" id="Resource_obj_vine_inclination_degrees"]
+script = ExtResource("2_definition")
+section_title = "VINHAS"
+label = "Inclinação"
+path = "vine.inclination_degrees"
+min_value = -60
+max_value = 60
+step = 1
+suffix = "°"
+
+[sub_resource type="Resource" id="Resource_obj_portal_velocity_mode"]
+script = ExtResource("2_definition")
+section_title = "PORTAL"
+label = "Velocidade após teleporte"
+path = "portal.velocity_mode"
+kind = 3
+
+[sub_resource type="Resource" id="Resource_obj_portal_redirect_min_speed"]
+script = ExtResource("2_definition")
+section_title = "PORTAL"
+label = "Velocidade mínima (redirect)"
+path = "portal.redirect_min_speed"
+min_value = 0
+max_value = 40
+step = 0.5
+
+[sub_resource type="Resource" id="Resource_obj_portal_redirect_max_speed"]
+script = ExtResource("2_definition")
+section_title = "PORTAL"
+label = "Velocidade máxima (redirect)"
+path = "portal.redirect_max_speed"
+min_value = 0
+max_value = 60
+step = 0.5
+
+[sub_resource type="Resource" id="Resource_obj_portal_teleport_delay"]
+script = ExtResource("2_definition")
+section_title = "PORTAL"
+label = "Duração do teleporte"
+path = "portal.teleport_delay"
+min_value = 0
+max_value = 1
+step = 0.01
+suffix = "s"
+
+[sub_resource type="Resource" id="Resource_obj_portal_cooldown"]
+script = ExtResource("2_definition")
+section_title = "PORTAL"
+label = "Cooldown"
+path = "portal.cooldown"
+min_value = 0
+max_value = 3
+step = 0.05
+suffix = "s"
+
+[sub_resource type="Resource" id="Resource_obj_portal_trigger_radius"]
+script = ExtResource("2_definition")
+section_title = "PORTAL"
+label = "Raio de ativação"
+path = "portal.trigger_radius"
+min_value = 0.2
+max_value = 3
+step = 0.05
+
+[sub_resource type="Resource" id="Resource_obj_portal_rearm_requires_landing"]
+script = ExtResource("2_definition")
+section_title = "PORTAL"
+label = "Rearmar só após pousar"
+path = "portal.rearm_requires_landing"
+kind = 1
+
+[sub_resource type="Resource" id="Resource_obj_tnt_fuse_time"]
+script = ExtResource("2_definition")
+section_title = "TNT"
+label = "Tempo do pavio"
+path = "tnt.fuse_time"
+min_value = 0
+max_value = 6
+step = 0.05
+suffix = "s"
+
+[sub_resource type="Resource" id="Resource_obj_tnt_explosion_force"]
+script = ExtResource("2_definition")
+section_title = "TNT"
+label = "Força da explosão"
+path = "tnt.explosion_force"
+min_value = 0
+max_value = 4
+step = 0.05
+
+[sub_resource type="Resource" id="Resource_obj_tnt_vertical_force"]
+script = ExtResource("2_definition")
+section_title = "TNT"
+label = "Força vertical"
+path = "tnt.vertical_force"
+min_value = 0
+max_value = 60
+step = 0.5
+
+[sub_resource type="Resource" id="Resource_obj_tnt_horizontal_force"]
+script = ExtResource("2_definition")
+section_title = "TNT"
+label = "Força horizontal"
+path = "tnt.horizontal_force"
+min_value = 0
+max_value = 30
+step = 0.5
+
+[sub_resource type="Resource" id="Resource_obj_tnt_explosion_radius"]
+script = ExtResource("2_definition")
+section_title = "TNT"
+label = "Raio da explosão"
+path = "tnt.explosion_radius"
+min_value = 0.5
+max_value = 10
+step = 0.1
+
+[sub_resource type="Resource" id="Resource_obj_tnt_cooldown"]
+script = ExtResource("2_definition")
+section_title = "TNT"
+label = "Cooldown"
+path = "tnt.cooldown"
+min_value = 0
+max_value = 5
+step = 0.1
+suffix = "s"
+
+[sub_resource type="Resource" id="Resource_obj_tnt_destroy_after_use"]
+script = ExtResource("2_definition")
+section_title = "TNT"
+label = "Destruir após usar"
+path = "tnt.destroy_after_use"
+kind = 1
+
+[sub_resource type="Resource" id="Resource_obj_tnt_respawn"]
+script = ExtResource("2_definition")
+section_title = "TNT"
+label = "Reaparecer"
+path = "tnt.respawn"
+kind = 1
+
+[sub_resource type="Resource" id="Resource_obj_tnt_respawn_time"]
+script = ExtResource("2_definition")
+section_title = "TNT"
+label = "Tempo para reaparecer"
+path = "tnt.respawn_time"
+min_value = 0
+max_value = 10
+step = 0.1
+suffix = "s"
+
+[sub_resource type="Resource" id="Resource_obj_cannon_aim_speed"]
+script = ExtResource("2_definition")
+section_title = "CANHÃO"
+label = "Velocidade da mira"
+path = "cannon.aim_speed"
+min_value = 5
+max_value = 360
+step = 1
+suffix = "°/s"
+
+[sub_resource type="Resource" id="Resource_obj_cannon_launch_force"]
+script = ExtResource("2_definition")
+section_title = "CANHÃO"
+label = "Força do disparo"
+path = "cannon.launch_force"
+min_value = 5
+max_value = 60
+step = 0.5
+
+[sub_resource type="Resource" id="Resource_obj_cannon_min_angle"]
+script = ExtResource("2_definition")
+section_title = "CANHÃO"
+label = "Ângulo mínimo"
+path = "cannon.min_angle"
+min_value = -90
+max_value = 90
+step = 1
+suffix = "°"
+
+[sub_resource type="Resource" id="Resource_obj_cannon_max_angle"]
+script = ExtResource("2_definition")
+section_title = "CANHÃO"
+label = "Ângulo máximo"
+path = "cannon.max_angle"
+min_value = -90
+max_value = 90
+step = 1
+suffix = "°"
+
+[sub_resource type="Resource" id="Resource_obj_cannon_max_aim_time"]
+script = ExtResource("2_definition")
+section_title = "CANHÃO"
+label = "Auto-disparo (0 = nunca)"
+path = "cannon.max_aim_time"
+min_value = 0
+max_value = 10
+step = 0.1
+suffix = "s"
+
 [resource]
 script = ExtResource("1_schema")
-settings = Array[ExtResource("2_definition")]([SubResource("Resource_speed"), SubResource("Resource_acceleration"), SubResource("Resource_deceleration"), SubResource("Resource_air_control"), SubResource("Resource_jump_height"), SubResource("Resource_jump_force"), SubResource("Resource_jump_cooldown"), SubResource("Resource_coyote"), SubResource("Resource_buffer"), SubResource("Resource_gravity"), SubResource("Resource_fall_limit"), SubResource("Resource_trampoline_force"), SubResource("Resource_trampoline_horizontal"), SubResource("Resource_trampoline_cooldown"), SubResource("Resource_trampoline_bounce"), SubResource("Resource_camera_distance"), SubResource("Resource_camera_height"), SubResource("Resource_camera_offset"), SubResource("Resource_camera_fov"), SubResource("Resource_camera_smoothing"), SubResource("Resource_camera_rotation"), SubResource("Resource_items_enabled"), SubResource("Resource_item_categories"), SubResource("Resource_abilities_enabled"), SubResource("Resource_ability_list")])
+settings = Array[ExtResource("2_definition")]([SubResource("Resource_speed"), SubResource("Resource_acceleration"), SubResource("Resource_deceleration"), SubResource("Resource_air_control"), SubResource("Resource_jump_height"), SubResource("Resource_jump_force"), SubResource("Resource_jump_cooldown"), SubResource("Resource_coyote"), SubResource("Resource_buffer"), SubResource("Resource_gravity"), SubResource("Resource_fall_limit"), SubResource("Resource_trampoline_force"), SubResource("Resource_trampoline_horizontal"), SubResource("Resource_trampoline_cooldown"), SubResource("Resource_trampoline_bounce"), SubResource("Resource_obj_trampoline_low_multiplier"), SubResource("Resource_obj_trampoline_normal_multiplier"), SubResource("Resource_obj_trampoline_high_multiplier"), SubResource("Resource_obj_trampoline_extreme_multiplier"), SubResource("Resource_obj_moving_movement_type"), SubResource("Resource_obj_moving_distance"), SubResource("Resource_obj_moving_diagonal_angle_degrees"), SubResource("Resource_obj_moving_speed"), SubResource("Resource_obj_moving_acceleration"), SubResource("Resource_obj_moving_deceleration"), SubResource("Resource_obj_moving_wait_time"), SubResource("Resource_obj_moving_ping_pong"), SubResource("Resource_obj_moving_loop"), SubResource("Resource_obj_diagonal_trampoline_vertical_force"), SubResource("Resource_obj_diagonal_trampoline_horizontal_force"), SubResource("Resource_obj_diagonal_trampoline_launch_direction"), SubResource("Resource_obj_diagonal_trampoline_cooldown"), SubResource("Resource_obj_wall_wall_height"), SubResource("Resource_obj_wall_support_time"), SubResource("Resource_obj_wall_slide_speed"), SubResource("Resource_obj_wall_jump_force"), SubResource("Resource_obj_wall_jump_angle_degrees"), SubResource("Resource_obj_wall_jump_direction"), SubResource("Resource_obj_wall_cooldown"), SubResource("Resource_obj_bubble_activation_time"), SubResource("Resource_obj_bubble_disappear_delay"), SubResource("Resource_obj_bubble_respawn_time"), SubResource("Resource_obj_bubble_max_uses"), SubResource("Resource_obj_bubble_auto_respawn"), SubResource("Resource_obj_sliding_movement_speed"), SubResource("Resource_obj_sliding_maximum_distance"), SubResource("Resource_obj_sliding_return_speed"), SubResource("Resource_obj_sliding_activation_threshold"), SubResource("Resource_obj_sliding_return_to_start"), SubResource("Resource_obj_sliding_cooldown"), SubResource("Resource_obj_stair_stair_type"), SubResource("Resource_obj_stair_step_count"), SubResource("Resource_obj_stair_step_width"), SubResource("Resource_obj_stair_horizontal_distance"), SubResource("Resource_obj_stair_vertical_distance"), SubResource("Resource_obj_stair_rotation_degrees"), SubResource("Resource_obj_tube_speed"), SubResource("Resource_obj_tube_exit_force"), SubResource("Resource_obj_tube_exit_direction_degrees"), SubResource("Resource_obj_tube_preserve_velocity"), SubResource("Resource_obj_tube_capture_radius"), SubResource("Resource_obj_vine_point_count"), SubResource("Resource_obj_vine_spacing"), SubResource("Resource_obj_vine_point_size"), SubResource("Resource_obj_vine_direction"), SubResource("Resource_obj_vine_inclination_degrees"), SubResource("Resource_obj_portal_velocity_mode"), SubResource("Resource_obj_portal_redirect_min_speed"), SubResource("Resource_obj_portal_redirect_max_speed"), SubResource("Resource_obj_portal_teleport_delay"), SubResource("Resource_obj_portal_cooldown"), SubResource("Resource_obj_portal_trigger_radius"), SubResource("Resource_obj_portal_rearm_requires_landing"), SubResource("Resource_obj_tnt_fuse_time"), SubResource("Resource_obj_tnt_explosion_force"), SubResource("Resource_obj_tnt_vertical_force"), SubResource("Resource_obj_tnt_horizontal_force"), SubResource("Resource_obj_tnt_explosion_radius"), SubResource("Resource_obj_tnt_cooldown"), SubResource("Resource_obj_tnt_destroy_after_use"), SubResource("Resource_obj_tnt_respawn"), SubResource("Resource_obj_tnt_respawn_time"), SubResource("Resource_obj_cannon_aim_speed"), SubResource("Resource_obj_cannon_launch_force"), SubResource("Resource_obj_cannon_min_angle"), SubResource("Resource_obj_cannon_max_angle"), SubResource("Resource_obj_cannon_max_aim_time"), SubResource("Resource_camera_distance"), SubResource("Resource_camera_height"), SubResource("Resource_camera_offset"), SubResource("Resource_camera_fov"), SubResource("Resource_camera_smoothing"), SubResource("Resource_camera_rotation"), SubResource("Resource_items_enabled"), SubResource("Resource_item_categories"), SubResource("Resource_abilities_enabled"), SubResource("Resource_ability_list")])

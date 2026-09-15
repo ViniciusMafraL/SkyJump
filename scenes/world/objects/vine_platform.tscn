@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/objects/vine_platform.gd" id="1_script"]
+[ext_resource type="Resource" path="res://config/objects/vine_config.tres" id="2_config"]
+[ext_resource type="PackedScene" path="res://scenes/world/objects/vine_point.tscn" id="3_point"]
+
+[node name="VinePlatform" type="Node3D"]
+script = ExtResource("1_script")
+config = ExtResource("2_config")
+point_scene = ExtResource("3_point")
+object_type = 11
+
+[node name="Points" type="Node3D" parent="."]
+
+[node name="Visual" type="Node3D" parent="."]

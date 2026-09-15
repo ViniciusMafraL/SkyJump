@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/world/platform.tscn" id="1_base"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_point"]
+radial_segments = 16
+rings = 8
+
+[node name="VinePoint" instance=ExtResource("1_base")]
+object_type = 11
+
+[node name="Visual" parent="." index="1"]
+thickness = 0.35
+
+[node name="Mesh" parent="Visual" index="0"]
+mesh = SubResource("SphereMesh_point")

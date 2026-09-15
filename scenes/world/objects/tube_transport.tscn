@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/objects/tube_transport.gd" id="1_script"]
+[ext_resource type="Resource" path="res://config/objects/tube_config.tres" id="2_config"]
+[ext_resource type="Script" path="res://scripts/world/objects/tube_exit_point.gd" id="3_exit"]
+
+[sub_resource type="Curve3D" id="Curve3D_default"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[node name="TubeTransport" type="Node3D"]
+script = ExtResource("1_script")
+config = ExtResource("2_config")
+object_type = 9
+
+[node name="Path" type="Path3D" parent="."]
+curve = SubResource("Curve3D_default")
+
+[node name="ExitPoint" type="Marker3D" parent="."]
+script = ExtResource("3_exit")

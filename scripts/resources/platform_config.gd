@@ -20,6 +20,9 @@ extends Resource
 @export var auto_jump_enabled: bool = true
 ## Cena de gameplay alternativa (script que estende Platform). Vazio = cena padrão.
 @export var scene_override: PackedScene
+## Propriedades aplicadas à instância antes do setup (ex.: {"intensity": 2}).
+## Permite variações de um mesmo objeto sem criar cenas novas.
+@export var object_properties: Dictionary = {}
 
 
 func is_available_at(height_m: float) -> bool:

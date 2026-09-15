@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/world/platform.tscn" id="1_base"]
+[ext_resource type="Script" path="res://scripts/world/objects/moving_platform.gd" id="2_script"]
+[ext_resource type="Resource" path="res://config/objects/moving_platform_config.tres" id="3_config"]
+
+[node name="MovingPlatform" instance=ExtResource("1_base")]
+script = ExtResource("2_script")
+config = ExtResource("3_config")
+object_type = 3

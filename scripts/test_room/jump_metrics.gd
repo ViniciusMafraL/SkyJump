@@ -25,7 +25,7 @@ var _previous_angle: float = 0.0
 
 func _ready() -> void:
 	player.jumped.connect(_begin_air.bind("Pulo"))
-	player.launched.connect(func(_speed: float) -> void: _begin_air("Trampolim"))
+	player.launched.connect(func(_speed: float) -> void: _begin_air(String(player.last_launch_source).capitalize()))
 	player.left_ground.connect(_begin_air.bind("Queda"))
 	player.landed.connect(_on_landed)
 

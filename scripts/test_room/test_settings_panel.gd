@@ -16,6 +16,7 @@ var _settings: TestSettingsManager
 var _refreshers: Array[Callable] = []
 var _refreshing: bool = false
 var _save_confirm_pending: bool = false
+var _object_section: StringName = &""
 
 @onready var _rows: VBoxContainer = %Rows
 @onready var _preset_option: OptionButton = %PresetOption
@@ -52,10 +53,28 @@ func _build_presets() -> void:
 	_load_preset_button.disabled = _settings.presets.is_empty()
 
 
+## Mostra apenas os parâmetros da seção de objeto indicada (vazio = nenhum objeto).
+func set_object_section(section: StringName) -> void:
+	if section == _object_section:
+		return
+	_object_section = section
+	if _settings == null:
+		return
+	for child in _rows.get_children():
+		_rows.remove_child(child)
+		child.queue_free()
+	_refreshers.clear()
+	_build_rows()
+	_refresh()
+
+
 func _build_rows() -> void:
 	var current_title := ""
 	for definition in schema.settings:
 		if definition == null:
+			continue
+		var section := definition.get_section()
+		if section in TestRoomConfig.OBJECT_SECTIONS and section != _object_section:
 			continue
 		if definition.section_title != current_title:
 			current_title = definition.section_title
@@ -67,6 +86,8 @@ func _build_rows() -> void:
 				_add_toggle_row(definition)
 			SettingDefinition.Kind.FLAGS:
 				_add_flags_row(definition)
+			SettingDefinition.Kind.ENUM:
+				_add_enum_row(definition)
 		if not definition.hint.is_empty():
 			var hint := Label.new()
 			hint.text = definition.hint
@@ -147,6 +168,28 @@ func _add_flags_row(definition: SettingDefinition) -> void:
 		var mask := int(_settings.get_value(definition.path))
 		for i in boxes.size():
 			boxes[i].button_pressed = (mask & (1 << i)) != 0
+	_refreshers.append(refresh)
+
+
+## Opções lidas do hint do @export de enum ("NOME:valor,...").
+func _add_enum_row(definition: SettingDefinition) -> void:
+	var row := HBoxContainer.new()
+	var name_label := Label.new()
+	name_label.text = definition.label
+	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var option := OptionButton.new()
+	option.focus_mode = Control.FOCUS_NONE
+	option.custom_minimum_size = Vector2(240.0, 52.0)
+	var entries: PackedStringArray = str(_settings.get_property_info(definition.path).get("hint_string", "")).split(",", false)
+	for i in entries.size():
+		var parts := entries[i].split(":")
+		var value := int(parts[1]) if parts.size() > 1 else i
+		option.add_item(parts[0].strip_edges().to_upper(), value)
+	row.add_child(name_label)
+	row.add_child(option)
+	_rows.add_child(row)
+	option.item_selected.connect(func(index: int) -> void: _on_control_changed(definition.path, option.get_item_id(index)))
+	var refresh := func() -> void: option.select(option.get_item_index(int(_settings.get_value(definition.path))))
 	_refreshers.append(refresh)
 
 

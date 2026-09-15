@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="PlatformConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/platform_config.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/world/objects/portal.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"portal_b"
+platform_type = 13
+width = 1.0
+depth = 3.0
+min_width = 1.0
+weight = 0.0
+scene_override = ExtResource("2_scene")
+object_properties = {
+"destination_id": &"A",
+"exit_direction_degrees": 60.0,
+"portal_color": Color(0.25, 0.6, 1, 1),
+"portal_id": &"B"
+}
