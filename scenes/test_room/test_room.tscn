@@ -94,17 +94,17 @@ controls_ui = NodePath("../../UI/ControlsUI")
 [node name="TouchInvisibleControl" type="Node" parent="Systems/ControlManager"]
 script = ExtResource("21_touch")
 scheme_id = &"touch_invisible"
-display_name = "Toque + Pulo Automático"
+display_name = "Touch + Auto jump"
 
 [node name="GyroscopeControl" type="Node" parent="Systems/ControlManager"]
 script = ExtResource("22_gyro")
 scheme_id = &"gyroscope"
-display_name = "Giroscópio + Pulo Automático"
+display_name = "Gyroscope + Auto jump"
 
 [node name="ButtonControl" type="Node" parent="Systems/ControlManager"]
 script = ExtResource("23_buttons")
 scheme_id = &"buttons"
-display_name = "Botões + Pulo Manual"
+display_name = "Buttons + Manual jump"
 
 [node name="AutoJumpController" type="Node" parent="Systems" node_paths=PackedStringArray("player", "control_manager")]
 script = ExtResource("24_auto_jump")

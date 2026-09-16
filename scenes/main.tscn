@@ -103,17 +103,17 @@ controls_ui = NodePath("../../UI/ControlsUI")
 [node name="TouchInvisibleControl" type="Node" parent="Systems/ControlManager"]
 script = ExtResource("18_touch")
 scheme_id = &"touch_invisible"
-display_name = "Toque + Pulo Automático"
+display_name = "Touch + Auto jump"
 
 [node name="GyroscopeControl" type="Node" parent="Systems/ControlManager"]
 script = ExtResource("19_gyro")
 scheme_id = &"gyroscope"
-display_name = "Giroscópio + Pulo Automático"
+display_name = "Gyroscope + Auto jump"
 
 [node name="ButtonControl" type="Node" parent="Systems/ControlManager"]
 script = ExtResource("20_buttons")
 scheme_id = &"buttons"
-display_name = "Botões + Pulo Manual"
+display_name = "Buttons + Manual jump"
 
 [node name="AutoJumpController" type="Node" parent="Systems" node_paths=PackedStringArray("player", "control_manager")]
 script = ExtResource("21_auto_jump")
@@ -149,9 +149,10 @@ progression_manager = NodePath("../ProgressionManager")
 checkpoint_manager = NodePath("../CheckpointManager")
 input_controller = NodePath("../ControlManager")
 
-[node name="DailyRunController" type="Node" parent="Systems" node_paths=PackedStringArray("game_manager", "player", "score_manager", "progression_manager", "hud", "run_hud")]
+[node name="DailyRunController" type="Node" parent="Systems" node_paths=PackedStringArray("game_manager", "level_generator", "player", "score_manager", "progression_manager", "hud", "run_hud")]
 script = ExtResource("26_daily_controller")
 game_manager = NodePath("../GameManager")
+level_generator = NodePath("../../World/LevelGenerator")
 player = NodePath("../../Player")
 score_manager = NodePath("../ScoreManager")
 progression_manager = NodePath("../ProgressionManager")

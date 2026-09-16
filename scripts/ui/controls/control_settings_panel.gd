@@ -1,12 +1,12 @@
 class_name ControlSettingsPanel
 extends Control
-## Menu CONTROLES: escolha do método e ajustes relevantes apenas ao método selecionado.
-## Edita uma cópia da configuração; APLICAR entrega ao ControlManager, que salva localmente.
+## Menu OPTIONS: escolha do método de controle e ajustes relevantes apenas ao método selecionado.
+## Edita uma cópia da configuração; APPLY entrega ao ControlManager, que salva localmente.
 
 signal close_requested
 
 @export var calibration_delay: float = 1.5
-@export var section_title_color: Color = Color(1.0, 0.82, 0.35)
+@export var section_title_color: Color = SkyJumpColors.YELLOW
 
 var _manager: ControlManager
 var _draft: ControlConfig
@@ -25,6 +25,8 @@ func setup(manager: ControlManager) -> void:
 	_manager = manager
 	_apply_button.pressed.connect(_on_apply_pressed)
 	_close_button.pressed.connect(close_requested.emit)
+	UiFeedback.attach(_apply_button)
+	UiFeedback.attach(_close_button)
 	visibility_changed.connect(_on_visibility_changed)
 
 
@@ -43,14 +45,15 @@ func _rebuild() -> void:
 	_scheme_options.clear()
 	_scheme_sections.clear()
 
-	_add_section_title(_content, "MÉTODO DE CONTROLE")
+	_add_section_title(_content, "CONTROL METHOD")
 	var group := ButtonGroup.new()
 	for scheme in _manager.get_schemes():
 		var option := CheckBox.new()
 		option.text = scheme.display_name
+		option.theme_type_variation = &"SettingsCheckBox"
 		option.button_group = group
 		option.focus_mode = Control.FOCUS_NONE
-		option.custom_minimum_size.y = 56.0
+		option.custom_minimum_size.y = 60.0
 		option.toggled.connect(_on_scheme_toggled.bind(scheme.scheme_id))
 		_content.add_child(option)
 		_scheme_options[scheme.scheme_id] = option
@@ -61,11 +64,11 @@ func _rebuild() -> void:
 			_content.add_child(section)
 			_scheme_sections[scheme.scheme_id] = section
 
-	var general := _new_section("GERAL")
-	_add_toggle(general, "Pulo automático (métodos sem botão de pulo)", "auto_jump_enabled")
-	_add_toggle(general, "Girar câmera arrastando / teclas", "camera_control_enabled")
-	_add_toggle(general, "Vibração", "haptics_enabled")
-	_add_toggle(general, "Mostrar Debug dos Controles", "show_control_debug")
+	var general := _new_section("GENERAL")
+	_add_toggle(general, "Auto jump (methods without a jump button)", "auto_jump_enabled")
+	_add_toggle(general, "Rotate camera by dragging / keys", "camera_control_enabled")
+	_add_toggle(general, "Vibration", "haptics_enabled")
+	_add_toggle(general, "Show controls debug", "show_control_debug")
 	_content.add_child(general)
 	_refresh()
 
@@ -73,33 +76,31 @@ func _rebuild() -> void:
 ## Seções específicas por tipo de método. Métodos sem ajustes próprios não têm seção.
 func _build_section_for(scheme: ControlScheme) -> Control:
 	if scheme is TouchInvisibleControl:
-		var touch := _new_section("TOQUE")
-		_add_slider(touch, "Sensibilidade", "touch.touch_sensitivity", 0.1, 1.0, 0.05)
-		_add_toggle(touch, "Mostrar dica < >", "touch.control_hint_enabled")
-		_add_slider(touch, "Duração da dica (s)", "touch.control_hint_timeout", 0.5, 10.0, 0.5)
-		_add_slider(touch, "Repetir dica após (s, 0 = nunca)", "touch.control_hint_repeat_delay", 0.0, 30.0, 1.0)
-		_add_toggle(touch, "Brilho ao tocar", "touch.feedback_enabled")
+		var touch := _new_section("TOUCH")
+		_add_slider(touch, "Sensitivity", "touch.touch_sensitivity", 0.1, 1.0, 0.05)
+		_add_toggle(touch, "Show < > hint", "touch.control_hint_enabled")
+		_add_slider(touch, "Hint duration (s)", "touch.control_hint_timeout", 0.5, 10.0, 0.5)
+		_add_slider(touch, "Repeat hint after (s, 0 = never)", "touch.control_hint_repeat_delay", 0.0, 30.0, 1.0)
+		_add_toggle(touch, "Glow on touch", "touch.feedback_enabled")
 		return touch
 	if scheme is GyroscopeControl:
-		var gyro := _new_section("GIROSCÓPIO")
-		var sensor_label := Label.new()
-		sensor_label.text = "Sensor: %s" % (scheme as GyroscopeControl).get_sensor_description()
+		var gyro := _new_section("GYROSCOPE")
+		var sensor_label := _new_label("Sensor: %s" % (scheme as GyroscopeControl).get_sensor_description())
 		sensor_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		sensor_label.add_theme_font_size_override("font_size", 20)
 		gyro.add_child(sensor_label)
-		_add_slider(gyro, "Sensibilidade", "gyroscope.gyro_sensitivity", 0.1, 5.0, 0.05)
-		_add_slider(gyro, "Zona morta", "gyroscope.gyro_dead_zone", 0.0, 0.9, 0.01)
-		_add_slider(gyro, "Suavização", "gyroscope.gyro_smoothing", 0.0, 30.0, 0.5)
-		_add_slider(gyro, "Inclinação máxima (°)", "gyroscope.max_tilt_degrees", 5.0, 80.0, 1.0)
-		_add_toggle(gyro, "Inverter direção", "gyroscope.invert")
-		_add_toggle(gyro, "Mostrar indicador de inclinação", "gyroscope.show_indicator")
+		_add_slider(gyro, "Sensitivity", "gyroscope.gyro_sensitivity", 0.1, 5.0, 0.05)
+		_add_slider(gyro, "Dead zone", "gyroscope.gyro_dead_zone", 0.0, 0.9, 0.01)
+		_add_slider(gyro, "Smoothing", "gyroscope.gyro_smoothing", 0.0, 30.0, 0.5)
+		_add_slider(gyro, "Max tilt (°)", "gyroscope.max_tilt_degrees", 5.0, 80.0, 1.0)
+		_add_toggle(gyro, "Invert direction", "gyroscope.invert")
+		_add_toggle(gyro, "Show tilt indicator", "gyroscope.show_indicator")
 		_add_calibration(gyro)
 		return gyro
 	if scheme is ButtonControl:
-		var buttons := _new_section("BOTÕES")
-		_add_slider(buttons, "Tamanho dos botões", "button.button_size", 80.0, 320.0, 5.0)
-		_add_slider(buttons, "Tamanho do botão de pulo", "button.jump_button_size", 80.0, 360.0, 5.0)
-		_add_slider(buttons, "Opacidade", "button.button_opacity", 0.05, 1.0, 0.05)
+		var buttons := _new_section("BUTTONS")
+		_add_slider(buttons, "Button size", "button.button_size", 80.0, 320.0, 5.0)
+		_add_slider(buttons, "Jump button size", "button.jump_button_size", 80.0, 360.0, 5.0)
+		_add_slider(buttons, "Opacity", "button.button_opacity", 0.05, 1.0, 0.05)
 		return buttons
 	return null
 
@@ -124,17 +125,18 @@ func _on_scheme_toggled(pressed: bool, scheme_id: StringName) -> void:
 func _on_apply_pressed() -> void:
 	_manager.apply_config(_draft)
 	var scheme := _manager.get_current_scheme()
-	_status_label.text = "Controles aplicados: %s" % (scheme.display_name if scheme else "-")
+	_status_label.text = "Controls applied: %s" % (scheme.display_name if scheme else "-")
 
 
 func _add_calibration(parent: Control) -> void:
 	var button := Button.new()
-	button.text = "CALIBRAR"
+	button.text = "Calibrate"
+	button.theme_type_variation = &"ButtonBlue"
 	button.focus_mode = Control.FOCUS_NONE
-	button.custom_minimum_size.y = 64.0
-	var label := Label.new()
+	button.custom_minimum_size.y = 80.0
+	UiFeedback.attach(button)
+	var label := _new_label("")
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label.add_theme_font_size_override("font_size", 20)
 	button.pressed.connect(_on_calibrate_pressed.bind(button, label))
 	parent.add_child(button)
 	parent.add_child(label)
@@ -142,7 +144,7 @@ func _add_calibration(parent: Control) -> void:
 
 func _on_calibrate_pressed(button: Button, label: Label) -> void:
 	button.disabled = true
-	label.text = "Segure o celular na posição desejada..."
+	label.text = "Hold the phone in the desired position..."
 	await get_tree().create_timer(calibration_delay).timeout
 	if not is_instance_valid(button):
 		return
@@ -150,16 +152,18 @@ func _on_calibrate_pressed(button: Button, label: Label) -> void:
 	var neutral := _manager.config.gyroscope_config.neutral_orientation
 	_draft.gyroscope_config.neutral_orientation = neutral
 	if has_sensor:
-		label.text = "Posição neutra registrada (%.1f°)." % neutral
+		label.text = "Neutral position saved (%.1f°)." % neutral
 	else:
-		label.text = "Sem sensor neste aparelho: calibrada a inclinação simulada (A/D)."
+		label.text = "No sensor on this device: simulated tilt (A/D) calibrated."
 	button.disabled = false
 
 
 func _new_section(title: String) -> VBoxContainer:
 	var section := VBoxContainer.new()
 	section.add_theme_constant_override("separation", 8)
-	section.add_child(HSeparator.new())
+	var separator := HSeparator.new()
+	separator.theme_type_variation = &"SettingsSeparator"
+	section.add_child(separator)
 	_add_section_title(section, title)
 	return section
 
@@ -167,22 +171,29 @@ func _new_section(title: String) -> VBoxContainer:
 func _add_section_title(parent: Control, title: String) -> void:
 	var label := Label.new()
 	label.text = title
+	label.theme_type_variation = &"Body"
 	label.add_theme_color_override("font_color", section_title_color)
-	label.add_theme_font_size_override("font_size", 28)
 	parent.add_child(label)
+
+
+func _new_label(text: String) -> Label:
+	var label := Label.new()
+	label.text = text
+	label.theme_type_variation = &"Caption"
+	return label
 
 
 func _add_slider(parent: Control, label_text: String, path: String, min_value: float, max_value: float, step: float) -> void:
 	var header := HBoxContainer.new()
-	var label := Label.new()
-	label.text = label_text
+	var label := _new_label(label_text)
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	var value_label := Label.new()
+	var value_label := _new_label("")
 	value_label.custom_minimum_size.x = 90.0
 	value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	header.add_child(label)
 	header.add_child(value_label)
 	var slider := HSlider.new()
+	slider.theme_type_variation = &"SettingsSlider"
 	slider.min_value = min_value
 	slider.max_value = max_value
 	slider.step = step
@@ -204,7 +215,9 @@ func _add_slider(parent: Control, label_text: String, path: String, min_value: f
 func _add_toggle(parent: Control, label_text: String, path: String) -> void:
 	var toggle := CheckButton.new()
 	toggle.text = label_text
+	toggle.theme_type_variation = &"SettingsCheckButton"
 	toggle.focus_mode = Control.FOCUS_NONE
+	toggle.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	parent.add_child(toggle)
 	toggle.toggled.connect(func(pressed: bool) -> void:
 		if not _refreshing:

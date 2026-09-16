@@ -1,9 +1,12 @@
 extends Node
 ## Autoload DailyChallenge (Daily Manager): ponto central do Desafio Diário.
 ## Compõe partes independentes: data (DailyDateManager), seed e rotação de temas (DailySeed,
-## ThemeRotation), save (DailySaveStore), estrelas (StarWallet) e sequência (StreakTracker).
+## ThemeRotation), save (DailySaveStore), moedas (CurrencyWallet) e sequência (StreakTracker).
 ## Não gera mapas nem controla a partida: a cena de gameplay lê a sessão ativa (DailyRunController).
 
+## Qualquer moeda mudou (CurrencyWallet.Currency).
+signal currency_changed(currency: int, total: int, delta: int, reason: StringName)
+## Só estrelas (atalho de currency_changed).
 signal stars_changed(total: int, delta: int, reason: StringName)
 ## Progresso de um Daily mudou (início, checkpoint, conclusão, reset).
 signal daily_updated(date_key: String)
@@ -19,7 +22,7 @@ const DAY_CHECK_INTERVAL := 1.0
 
 var dates := DailyDateManager.new()
 var store := DailySaveStore.new()
-var wallet: StarWallet
+var wallet: CurrencyWallet
 ## Daily sendo jogado (lido pela cena de gameplay). null = partida normal.
 var active_session: DailyInfo
 ## Estrelas de login ganhas e ainda não mostradas (o menu exibe o feedback).
@@ -35,8 +38,8 @@ var _day_check_timer: float = 0.0
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_cache_themes()
-	wallet = StarWallet.new(store, config.login_reward_stars, config.checkpoint_reward_stars)
-	wallet.stars_changed.connect(func(total: int, delta: int, reason: StringName) -> void: stars_changed.emit(total, delta, reason))
+	wallet = CurrencyWallet.new(store, config.login_reward_stars, config.checkpoint_reward_amount, config.checkpoint_currencies)
+	wallet.currency_changed.connect(_emit_currency)
 	use_save_path(save_path)
 
 
@@ -196,6 +199,15 @@ func get_stars() -> int:
 	return wallet.get_stars()
 
 
+func get_currency(currency: CurrencyWallet.Currency) -> int:
+	return wallet.get_amount(currency)
+
+
+## Moeda concedida pelo checkpoint `index` (0..2).
+func get_checkpoint_currency(index: int) -> CurrencyWallet.Currency:
+	return wallet.get_checkpoint_currency(index)
+
+
 ## Vector2i(atual, melhor).
 func get_streak() -> Vector2i:
 	return Vector2i(store.current_streak, store.best_streak)
@@ -301,7 +313,8 @@ func debug_reset_all() -> void:
 	store.clear()
 	active_session = null
 	refresh_streak()
-	stars_changed.emit(0, 0, StarWallet.REASON_DEBUG)
+	for currency: CurrencyWallet.Currency in CurrencyWallet.Currency.values():
+		_emit_currency(currency, 0, 0, CurrencyWallet.REASON_DEBUG)
 	daily_updated.emit("")
 
 
@@ -319,6 +332,12 @@ func _state_for(date: DailyDate, progress: DailyProgress, daily_seed: int) -> Da
 	if get_today().days_until(date) == 0:
 		return DailyState.State.AVAILABLE
 	return DailyState.State.ENDED
+
+
+func _emit_currency(currency: CurrencyWallet.Currency, total: int, delta: int, reason: StringName) -> void:
+	currency_changed.emit(currency, total, delta, reason)
+	if currency == CurrencyWallet.Currency.STAR:
+		stars_changed.emit(total, delta, reason)
 
 
 func _cache_themes() -> void:

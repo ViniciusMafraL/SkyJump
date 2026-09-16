@@ -1,27 +1,26 @@
 class_name DailyRunHud
 extends CanvasLayer
-## HUD do Desafio Diário na partida: estrelas dos 3 checkpoints do dia, total de estrelas, feedback
-## "+1 ⭐" ao coletar e o painel de conclusão com a sequência. Só reage a sinais.
+## HUD do Desafio Diário na partida: medalhas dos 3 checkpoints do dia (bronze, prata, estrela),
+## moedas do jogador, feedback "+1 [moeda]" ao coletar e o painel de conclusão com a sequência.
+## Só reage a sinais.
 
-@export var top_offset: float = 150.0
+## Abaixo do aviso de meta da ProgressHUD.
+@export var top_offset: float = 196.0
 @export var side_margin: float = 24.0
-@export var star_size: float = 46.0
-@export var star_color: Color = Color(1.0, 0.8, 0.15)
-@export var star_outline_color: Color = Color(0.12, 0.1, 0.1)
-@export var empty_star_color: Color = Color(0.25, 0.27, 0.32, 0.9)
-@export var empty_star_outline_color: Color = Color(0.85, 0.87, 0.9, 0.9)
-@export var completed_title: String = "DESAFIO CONCLUÍDO!"
-@export var calendar_text: String = "CALENDÁRIO"
+@export var medal_size: float = 50.0
+@export var completed_title: String = "Daily complete!"
+@export var calendar_text: String = "Calendar"
+@export var checkpoint_caption: String = "Checkpoint %d"
+@export_range(0.0, 1.0, 0.01) var missing_medal_alpha: float = 0.25
 
 var session: DailyInfo
 
-var _stars: Array[PixelIcon] = []
-var _complete_stars: Array[PixelIcon] = []
-var _top_row: HBoxContainer
+var _medals: Array[TextureRect] = []
+var _complete_medals: Array[TextureRect] = []
+var _top_box: VBoxContainer
 var _feedback: StarRewardFeedback
 var _complete_panel: Control
 var _complete_detail: Label
-var _complete_streak: Label
 var _calendar_button: Button
 
 
@@ -31,49 +30,44 @@ func _ready() -> void:
 
 func setup(daily: DailyInfo, game_manager: GameManager) -> void:
 	session = daily
-	_complete_detail.text = "%02d/%02d/%d  -  %s" % [daily.date.day, daily.date.month, daily.date.year, daily.theme_name.to_upper()]
-	DailyChallenge.stars_changed.connect(_on_stars_changed)
+	_complete_detail.text = "%02d/%02d/%d  -  %s" % [daily.date.day, daily.date.month, daily.date.year, daily.theme_name]
+	DailyChallenge.currency_changed.connect(_on_currency_changed)
 	game_manager.state_changed.connect(_on_state_changed)
 	_calendar_button.pressed.connect(game_manager.return_to_menu)
-	_refresh_stars()
+	_refresh_medals()
 
 
 func get_feedback() -> StarRewardFeedback:
 	return _feedback
 
 
-func get_star_icons() -> Array[PixelIcon]:
-	return _stars
+func get_medal_icons() -> Array[TextureRect]:
+	return _medals
 
 
 func is_complete_panel_visible() -> bool:
 	return _complete_panel.visible
 
 
-func _on_stars_changed(_total: int, delta: int, reason: StringName) -> void:
-	if reason != StarWallet.REASON_CHECKPOINT or session == null:
+func _on_currency_changed(currency: int, _total: int, delta: int, reason: StringName) -> void:
+	if reason != CurrencyWallet.REASON_CHECKPOINT or session == null:
 		return
-	_refresh_stars()
-	_feedback.show_reward(delta, "CHECKPOINT %d" % session.get_collected_count())
+	_refresh_medals()
+	_feedback.show_reward(delta, checkpoint_caption % session.get_collected_count(), UiIcons.for_currency(currency))
 
 
 func _on_state_changed(new_state: GameManager.State, _previous_state: GameManager.State) -> void:
-	_top_row.visible = new_state != GameManager.State.GAME_OVER and new_state != GameManager.State.COMPLETED
+	_top_box.visible = new_state != GameManager.State.GAME_OVER and new_state != GameManager.State.COMPLETED
 	_complete_panel.visible = new_state == GameManager.State.COMPLETED
 	if new_state == GameManager.State.COMPLETED:
-		_refresh_stars()
-		var streak := DailyChallenge.get_streak().x
-		_complete_streak.text = "SEQUÊNCIA: %d %s" % [streak, "DIA" if streak == 1 else "DIAS"]
+		_refresh_medals()
 
 
-func _refresh_stars() -> void:
-	var collected := session.get_collected_count() if session else 0
-	for icons: Array[PixelIcon] in [_stars, _complete_stars]:
+func _refresh_medals() -> void:
+	for icons: Array[TextureRect] in [_medals, _complete_medals]:
 		for i in icons.size():
-			if i < collected:
-				icons[i].set_colors(star_color, star_outline_color)
-			else:
-				icons[i].set_colors(empty_star_color, empty_star_outline_color)
+			var collected := session != null and session.progress != null and session.progress.has_checkpoint(i)
+			icons[i].modulate = Color.WHITE if collected else Color(1.0, 1.0, 1.0, missing_medal_alpha)
 
 
 func _build() -> void:
@@ -82,29 +76,37 @@ func _build() -> void:
 	safe.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(safe)
 
-	_top_row = HBoxContainer.new()
 	# Canto superior direito, abaixo do botão ALT: a esquerda é da barra de altitude e o centro do aviso de meta.
-	_top_row.set_anchors_preset(Control.PRESET_TOP_RIGHT)
-	_top_row.offset_left = -480.0
-	_top_row.offset_right = -side_margin
-	_top_row.offset_top = top_offset
-	_top_row.offset_bottom = top_offset + star_size
-	_top_row.alignment = BoxContainer.ALIGNMENT_END
-	_top_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_top_row.add_theme_constant_override(&"separation", 6)
-	safe.add_child(_top_row)
+	_top_box = VBoxContainer.new()
+	_top_box.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	_top_box.offset_left = -480.0
+	_top_box.offset_right = -side_margin
+	_top_box.offset_top = top_offset
+	_top_box.offset_bottom = top_offset + medal_size * 2.4
+	_top_box.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	_top_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_top_box.add_theme_constant_override(&"separation", 6)
+	safe.add_child(_top_box)
+	var pill := PanelContainer.new()
+	pill.theme_type_variation = &"PillPanel"
+	pill.size_flags_horizontal = Control.SIZE_SHRINK_END
+	pill.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_top_box.add_child(pill)
+	var medal_row := HBoxContainer.new()
+	medal_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	medal_row.add_theme_constant_override(&"separation", 6)
+	pill.add_child(medal_row)
 	for i in DailyProgress.CHECKPOINT_COUNT:
-		var star := _make_star(star_size)
-		_stars.append(star)
-		_top_row.add_child(star)
-	var gap := Control.new()
-	gap.custom_minimum_size = Vector2(20.0, 0.0)
-	gap.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_top_row.add_child(gap)
-	var counter := StarCounter.new()
-	counter.icon_size = 40.0
-	counter.font_size = 32
-	_top_row.add_child(counter)
+		var medal := UiIcons.make_icon(UiIcons.for_currency(DailyChallenge.get_checkpoint_currency(i)), medal_size)
+		_medals.append(medal)
+		medal_row.add_child(medal)
+	var bar := CurrencyBar.new()
+	bar.icon_size = 34.0
+	bar.label_variation = &"Body"
+	bar.spacing = 14
+	bar.alignment = BoxContainer.ALIGNMENT_END
+	bar.size_flags_horizontal = Control.SIZE_SHRINK_END
+	_top_box.add_child(bar)
 
 	_feedback = StarRewardFeedback.new()
 	_feedback.vertical_anchor = 0.28
@@ -116,53 +118,50 @@ func _build() -> void:
 	_complete_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(_complete_panel)
 	var dim := ColorRect.new()
-	dim.color = Color(0.03, 0.05, 0.1, 0.75)
+	dim.color = SkyJumpColors.DIM
 	dim.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_complete_panel.add_child(dim)
 	var box := VBoxContainer.new()
 	box.set_anchors_preset(Control.PRESET_CENTER)
-	box.offset_left = -300.0
-	box.offset_right = 300.0
-	box.offset_top = -300.0
-	box.offset_bottom = 300.0
+	box.offset_left = -320.0
+	box.offset_right = 320.0
+	box.offset_top = -340.0
+	box.offset_bottom = 340.0
+	box.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	box.grow_vertical = Control.GROW_DIRECTION_BOTH
 	box.alignment = BoxContainer.ALIGNMENT_CENTER
 	box.add_theme_constant_override(&"separation", 22)
 	_complete_panel.add_child(box)
-	box.add_child(_make_label(completed_title, 54, Color(1.0, 0.82, 0.25)))
-	_complete_detail = _make_label("", 30, Color.WHITE)
+	var title := _make_label(completed_title, &"Title")
+	title.add_theme_color_override(&"font_color", SkyJumpColors.YELLOW)
+	box.add_child(title)
+	_complete_detail = _make_label("", &"Body")
 	box.add_child(_complete_detail)
-	var stars_row := HBoxContainer.new()
-	stars_row.alignment = BoxContainer.ALIGNMENT_CENTER
-	stars_row.add_theme_constant_override(&"separation", 12)
-	box.add_child(stars_row)
+	var medals_row := HBoxContainer.new()
+	medals_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	medals_row.add_theme_constant_override(&"separation", 18)
+	box.add_child(medals_row)
 	for i in DailyProgress.CHECKPOINT_COUNT:
-		var star := _make_star(88.0)
-		_complete_stars.append(star)
-		stars_row.add_child(star)
-	_complete_streak = _make_label("", 34, Color(1.0, 0.6, 0.3))
-	box.add_child(_complete_streak)
+		var medal := UiIcons.make_icon(UiIcons.for_currency(DailyChallenge.get_checkpoint_currency(i)), 104.0)
+		_complete_medals.append(medal)
+		medals_row.add_child(medal)
+	var streak := StreakBadge.new()
+	streak.icon_size = 56.0
+	streak.label_variation = &"Heading"
+	box.add_child(streak)
 	_calendar_button = Button.new()
 	_calendar_button.text = calendar_text
-	_calendar_button.custom_minimum_size = Vector2(0.0, 100.0)
+	_calendar_button.theme_type_variation = &"ButtonYellow"
+	_calendar_button.custom_minimum_size = Vector2(440.0, 100.0)
+	_calendar_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	_calendar_button.focus_mode = Control.FOCUS_NONE
-	_calendar_button.add_theme_font_size_override(&"font_size", 38)
 	box.add_child(_calendar_button)
+	UiFeedback.attach(_calendar_button)
 
 
-func _make_star(side: float) -> PixelIcon:
-	var star := PixelIcon.new()
-	star.icon = PixelIcon.Icon.STAR
-	star.custom_minimum_size = Vector2(side, side)
-	star.set_colors(empty_star_color, empty_star_outline_color)
-	return star
-
-
-func _make_label(text: String, font_size: int, color: Color) -> Label:
+func _make_label(text: String, variation: StringName) -> Label:
 	var label := Label.new()
 	label.text = text
+	label.theme_type_variation = variation
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.add_theme_font_size_override(&"font_size", font_size)
-	label.add_theme_color_override(&"font_color", color)
-	label.add_theme_color_override(&"font_outline_color", Color(0.05, 0.07, 0.12))
-	label.add_theme_constant_override(&"outline_size", 10)
 	return label

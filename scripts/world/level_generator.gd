@@ -8,6 +8,8 @@ extends Node
 const COMMON_KEY := &"common"
 const MAX_FOOTPRINTS := 80
 const PLACEMENT_ATTEMPTS := 4
+## Folga vertical mínima entre um anel de checkpoint e a plataforma logo abaixo dele.
+const CHECKPOINT_CLEARANCE := 1.2
 
 @export var config: WorldGenerationConfig
 ## Usado para limitar distâncias ao que o personagem consegue alcançar.
@@ -20,6 +22,9 @@ var distribution: PlatformDistribution
 var selection_counts: Dictionary = {}
 ## Sequência das escolhas desde o reset.
 var selection_history: Array[StringName] = []
+## Alturas (unidades do mundo, crescentes) dos anéis de checkpoint. Vazio = sem checkpoints (modo
+## normal). Definida por quem usa o gerador (Desafio Diário); o reset não a limpa.
+var checkpoint_heights: PackedFloat32Array = PackedFloat32Array()
 
 var _world_seed: int = 0
 var _next_chunk_index: int = 0
@@ -29,6 +34,7 @@ var _lock_direction: bool = false
 var _commons_since_special: int = 0
 var _footprints: Array[GenerationFootprint] = []
 var _unique_id: int = 0
+var _next_checkpoint: int = 0
 
 
 func reset(world_seed: int, platform_distribution: PlatformDistribution = null) -> void:
@@ -45,6 +51,7 @@ func reset(world_seed: int, platform_distribution: PlatformDistribution = null) 
 	selection_counts.clear()
 	selection_history.clear()
 	_unique_id = 0
+	_next_checkpoint = 0
 
 
 func get_next_chunk_index() -> int:
@@ -61,10 +68,16 @@ func generate_next_chunk() -> LevelChunkData:
 	rng.seed = chunk.chunk_seed
 	_next_chunk_index += 1
 
-	if _anchor == null:
+	var first_chunk := _anchor == null
+	if first_chunk:
 		_add_start_platform(chunk)
-	elif config.chunk_start_platform:
-		_try_add_common(chunk, config.chunk_start_platform, false)
+	match _try_place_checkpoint(chunk):
+		PlacementRule.Result.CHUNK_END:
+			return chunk
+		PlacementRule.Result.FAILED:
+			# O anel de checkpoint já serve de descanso; sem ele, a plataforma de início de chunk.
+			if not first_chunk and config.chunk_start_platform:
+				_try_add_common(chunk, config.chunk_start_platform, false)
 
 	while _try_next(chunk):
 		pass
@@ -131,6 +144,11 @@ func get_safe_jump_height() -> float:
 	return movement.get_max_jump_height() * config.reachability_margin
 
 
+## Altura do próximo anel de checkpoint ainda não gerado (NAN se não houver).
+func get_pending_checkpoint_height() -> float:
+	return checkpoint_heights[_next_checkpoint] if _next_checkpoint < checkpoint_heights.size() else NAN
+
+
 func make_platform(platform_config: PlatformConfig, size_multiplier: float = 1.0) -> PlatformData:
 	var data := PlatformData.new()
 	data.config = platform_config
@@ -164,6 +182,7 @@ func landing_offset(launch: Vector2, height_gap: float) -> float:
 func place_step(data: PlatformData, chunk: LevelChunkData) -> bool:
 	var origin := _anchor
 	data.height = maxf(origin.height + _roll_vertical_gap(origin, chunk.difficulty), chunk.start_height)
+	data.height = _clear_below_checkpoint(origin.height, data.height)
 	if data.height >= chunk.end_height:
 		return false
 	var vertical_gap := data.height - origin.height
@@ -232,6 +251,11 @@ func pick_common_config(height_m: float) -> PlatformConfig:
 # ---------------------------------------------------------------- Interno
 
 func _try_next(chunk: LevelChunkData) -> bool:
+	match _try_place_checkpoint(chunk):
+		PlacementRule.Result.PLACED:
+			return true
+		PlacementRule.Result.CHUNK_END:
+			return false
 	var entry := _pick_special_entry()
 	if entry:
 		match place_rule(entry.rule, chunk):
@@ -243,7 +267,7 @@ func _try_next(chunk: LevelChunkData) -> bool:
 
 
 func _pick_special_entry() -> SpecialPlatformEntry:
-	if distribution == null or _commons_since_special < distribution.min_common_between_specials:
+	if distribution == null or _is_near_checkpoint() or _commons_since_special < distribution.min_common_between_specials:
 		return null
 	return distribution.pick(rng, config.to_meters(_anchor.height))
 
@@ -271,7 +295,7 @@ func _try_add_common(chunk: LevelChunkData, platform_config: PlatformConfig, cou
 	if counted:
 		_commons_since_special += 1
 		_count(COMMON_KEY)
-	if rng.randf() < chunk.difficulty.branch_platform_chance:
+	if not _is_near_checkpoint() and rng.randf() < chunk.difficulty.branch_platform_chance:
 		_try_add_branch(chunk, origin)
 	return true
 
@@ -318,6 +342,54 @@ func _roll_angular_step(origin: GenerationAnchor, width: float, vertical_gap: fl
 	min_step = maxf(min_step, (half_widths + config.minimum_edge_gap) / orbit_radius)
 	min_step = minf(min_step, max_step)
 	return rng.randf_range(min_step, max_step)
+
+
+## Anel de checkpoint (volta inteira no cilindro) quando o próximo checkpoint cabe no alcance da âncora.
+## Como ocupa todos os ângulos, basta estar no máximo um salto acima para ser alcançável.
+func _try_place_checkpoint(chunk: LevelChunkData) -> PlacementRule.Result:
+	var target := get_pending_checkpoint_height()
+	if is_nan(target) or _anchor == null or config.checkpoint_platform == null:
+		return PlacementRule.Result.FAILED
+	var height := target
+	if _anchor.height > target - CHECKPOINT_CLEARANCE:
+		# Salvaguarda (não deveria acontecer): a âncora chegou ao checkpoint; o anel entra logo acima dela.
+		push_warning("Checkpoint %d gerado acima da altura prevista (âncora %.2f)" % [_next_checkpoint, _anchor.height])
+		height = _anchor.height + CHECKPOINT_CLEARANCE
+	elif target - _anchor.height > _anchor_reach_height():
+		return PlacementRule.Result.FAILED
+	if height >= chunk.end_height:
+		return PlacementRule.Result.CHUNK_END
+	var data := make_platform(config.checkpoint_platform)
+	data.height = maxf(height, chunk.start_height)
+	data.angle = _anchor.angle
+	data.object_properties = {"checkpoint_index": _next_checkpoint}
+	data.hints = {"checkpoint_index": _next_checkpoint, "anchor_height": _anchor.height, "anchor_launch_speed": _anchor.launch_speed}
+	commit(chunk, data, [GenerationFootprint.box(data.angle, PI * get_orbit_radius(), data.height - 0.3, data.height + 0.3)])
+	# O próximo passo parte do anel com distâncias de uma plataforma comum.
+	set_anchor_at(data.angle, data.height, config.start_platform.width)
+	_next_checkpoint += 1
+	return PlacementRule.Result.PLACED
+
+
+## Perto do próximo checkpoint só entram passos comuns (especiais podem subir além do anel).
+func _is_near_checkpoint() -> bool:
+	var target := get_pending_checkpoint_height()
+	return not is_nan(target) and _anchor != null and target - _anchor.height <= config.checkpoint_special_clearance
+
+
+func _anchor_reach_height() -> float:
+	if _anchor.launch_speed > movement.jump_force:
+		return JumpReach.apex_height(movement, _anchor.launch_speed) * config.reachability_margin
+	return get_safe_jump_height()
+
+
+## Um passo que pararia colado embaixo do próximo anel desce para deixar a folga. Só acontece com o
+## anel ainda fora do alcance da âncora, então o passo continua alcançável.
+func _clear_below_checkpoint(origin_height: float, height: float) -> float:
+	var target := get_pending_checkpoint_height()
+	if is_nan(target) or origin_height >= target or height <= target - CHECKPOINT_CLEARANCE:
+		return height
+	return maxf(target - CHECKPOINT_CLEARANCE, origin_height)
 
 
 func _count(key: StringName) -> void:

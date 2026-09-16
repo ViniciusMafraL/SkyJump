@@ -10,20 +10,10 @@
 [ext_resource type="Script" path="res://scripts/controls/button_control.gd" id="8_buttons"]
 [ext_resource type="PackedScene" path="res://scenes/ui/skin_selector.tscn" id="9_skin_selector"]
 [ext_resource type="Script" path="res://scripts/ui/safe_area_offsets.gd" id="10_safe_area"]
-[ext_resource type="Script" path="res://scripts/ui/daily/star_counter.gd" id="11_star_counter"]
+[ext_resource type="PackedScene" path="res://scenes/ui/currency_bar.tscn" id="11_currency_bar"]
 [ext_resource type="Script" path="res://scripts/ui/daily/streak_badge.gd" id="12_streak_badge"]
 [ext_resource type="PackedScene" path="res://scenes/ui/daily/daily_calendar.tscn" id="13_calendar"]
 [ext_resource type="Script" path="res://scripts/ui/daily/star_reward_feedback.gd" id="14_reward_feedback"]
-
-[sub_resource type="Gradient" id="Gradient_sky"]
-colors = PackedColorArray(0.12, 0.22, 0.48, 1, 0.72, 0.82, 0.93, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_sky"]
-gradient = SubResource("Gradient_sky")
-width = 8
-height = 256
-fill_from = Vector2(0.5, 0)
-fill_to = Vector2(0.5, 1)
 
 [node name="MainMenu" type="Control" node_paths=PackedStringArray("control_manager")]
 layout_mode = 3
@@ -35,7 +25,8 @@ grow_vertical = 2
 script = ExtResource("1_menu")
 control_manager = NodePath("Systems/ControlManager")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -43,8 +34,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = SubResource("GradientTexture2D_sky")
-expand_mode = 1
 
 [node name="ControlsUI" parent="." instance=ExtResource("2_controls_ui")]
 visible = false
@@ -66,94 +55,117 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 40.0
-offset_top = 48.0
-offset_right = -40.0
-offset_bottom = -48.0
+offset_left = 48.0
+offset_top = 36.0
+offset_right = -48.0
+offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 18
+theme_override_constants/separation = 6
 
-[node name="TopRow" type="HBoxContainer" parent="MainScreen/Content"]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="StarCounter" type="HBoxContainer" parent="MainScreen/Content/TopRow"]
+[node name="CurrencyBar" parent="MainScreen/Content" instance=ExtResource("11_currency_bar")]
 unique_name_in_owner = true
 layout_mode = 2
-script = ExtResource("11_star_counter")
 
-[node name="TopSpacer" type="Control" parent="MainScreen/Content/TopRow"]
+[node name="TitleSpacer" type="Control" parent="MainScreen/Content"]
+custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
-size_flags_horizontal = 3
 mouse_filter = 2
-
-[node name="StreakBadge" type="HBoxContainer" parent="MainScreen/Content/TopRow"]
-unique_name_in_owner = true
-layout_mode = 2
-script = ExtResource("12_streak_badge")
-show_best = false
 
 [node name="Title" type="Label" parent="MainScreen/Content"]
 layout_mode = 2
-theme_override_colors/font_outline_color = Color(0.05, 0.07, 0.12, 1)
-theme_override_constants/outline_size = 14
-theme_override_font_sizes/font_size = 64
-text = "SKY JUMP"
+theme_type_variation = &"TitleLarge"
+text = "Sky Jump"
 horizontal_alignment = 1
 
 [node name="BestLabel" type="Label" parent="MainScreen/Content"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_outline_color = Color(0.05, 0.07, 0.12, 1)
-theme_override_constants/outline_size = 8
-theme_override_font_sizes/font_size = 30
-text = "Recorde: 0 m"
+theme_type_variation = &"Caption"
+text = "Best 0 m"
 horizontal_alignment = 1
 
 [node name="SkinSelector" parent="MainScreen/Content" instance=ExtResource("9_skin_selector")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="PlayButton" type="Button" parent="MainScreen/Content"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 120)
+[node name="ButtonsMargin" type="MarginContainer" parent="MainScreen/Content"]
 layout_mode = 2
-focus_mode = 0
-theme_override_font_sizes/font_size = 48
-text = "JOGAR"
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 64
 
-[node name="DailyButton" type="Button" parent="MainScreen/Content"]
+[node name="Buttons" type="VBoxContainer" parent="MainScreen/Content/ButtonsMargin"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="DayGroup" type="VBoxContainer" parent="MainScreen/Content/ButtonsMargin/Buttons"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="DailyButton" type="Button" parent="MainScreen/Content/ButtonsMargin/Buttons/DayGroup"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 focus_mode = 0
-theme_override_font_sizes/font_size = 40
-text = "DESAFIO DIÁRIO"
+theme_type_variation = &"ButtonYellow"
+text = "Day"
 
-[node name="SettingsButton" type="Button" parent="MainScreen/Content"]
+[node name="StreakBadge" type="HBoxContainer" parent="MainScreen/Content/ButtonsMargin/Buttons/DayGroup"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+script = ExtResource("12_streak_badge")
+icon_size = 42.0
+
+[node name="PlayButton" type="Button" parent="MainScreen/Content/ButtonsMargin/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 focus_mode = 0
-theme_override_font_sizes/font_size = 36
-text = "CONTROLES"
+theme_type_variation = &"ButtonCoral"
+text = "Infinity"
 
-[node name="TestRoomButton" type="Button" parent="MainScreen/Content"]
+[node name="TestRoomButton" type="Button" parent="MainScreen/Content/ButtonsMargin/Buttons"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 72)
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 focus_mode = 0
-theme_override_font_sizes/font_size = 28
-text = "SALA DE TESTES (DEV)"
+theme_type_variation = &"ButtonGreen"
+text = "Training"
 
-[node name="TransitionTestButton" type="Button" parent="MainScreen/Content"]
+[node name="SettingsButton" type="Button" parent="MainScreen/Content/ButtonsMargin/Buttons"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 72)
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 focus_mode = 0
-theme_override_font_sizes/font_size = 28
-text = "TESTE DE TRANSIÇÕES (DEV)"
+theme_type_variation = &"ButtonPurple"
+text = "Options"
+
+[node name="TransitionTestButton" type="Button" parent="MainScreen/Content/ButtonsMargin/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"ButtonSmall"
+text = "Transitions (DEV)"
+
+[node name="VersionLabel" type="Label" parent="MainScreen"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.7)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -36.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_type_variation = &"Caption"
+theme_override_font_sizes/font_size = 20
+text = "v0.0"
+horizontal_alignment = 1
 
 [node name="ControlSettingsPanel" parent="." instance=ExtResource("3_control_panel")]
 unique_name_in_owner = true
@@ -186,14 +198,14 @@ controls_ui = NodePath("../../ControlsUI")
 [node name="TouchInvisibleControl" type="Node" parent="Systems/ControlManager"]
 script = ExtResource("6_touch")
 scheme_id = &"touch_invisible"
-display_name = "Toque + Pulo Automático"
+display_name = "Touch + Auto jump"
 
 [node name="GyroscopeControl" type="Node" parent="Systems/ControlManager"]
 script = ExtResource("7_gyro")
 scheme_id = &"gyroscope"
-display_name = "Giroscópio + Pulo Automático"
+display_name = "Gyroscope + Auto jump"
 
 [node name="ButtonControl" type="Node" parent="Systems/ControlManager"]
 script = ExtResource("8_buttons")
 scheme_id = &"buttons"
-display_name = "Botões + Pulo Manual"
+display_name = "Buttons + Manual jump"

@@ -9,6 +9,7 @@ extends CanvasLayer
 @export var progression_manager: ProgressionManager
 @export var fall_flash_color: Color = Color(1.0, 0.25, 0.2, 0.4)
 @export var fall_flash_duration: float = 0.6
+@export var best_text: String = "Best: %s"
 
 var _flash_tween: Tween
 
@@ -32,6 +33,9 @@ var _flash_tween: Tween
 
 
 func _ready() -> void:
+	UiGlyph.fill_button(_pause_button, UiGlyph.Glyph.PAUSE, 22.0)
+	_new_record_label.add_theme_color_override(&"font_color", SkyJumpColors.YELLOW)
+	UiFeedback.attach_all(self)
 	game_manager.state_changed.connect(_on_state_changed)
 	game_manager.run_finished.connect(_on_run_finished)
 	_progress_hud.setup(progression_manager)
@@ -70,7 +74,7 @@ func _on_state_changed(new_state: GameManager.State, _previous_state: GameManage
 func _on_run_finished(run_height: float, best_height: float, is_new_record: bool) -> void:
 	_result_height_label.text = HeightFormat.meters(run_height)
 	_new_record_label.visible = is_new_record
-	_result_best_label.text = "Melhor altura: %s" % HeightFormat.meters(best_height)
+	_result_best_label.text = best_text % HeightFormat.meters(best_height)
 
 
 ## Textos dos botões da tela de fim de partida (ex.: Desafio Diário: continuar do checkpoint / calendário).

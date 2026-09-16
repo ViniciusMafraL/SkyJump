@@ -1,7 +1,7 @@
 class_name DailySaveStore
 extends RefCounted
 ## Persistência local do Desafio Diário, sobre o save existente (LocalSave):
-## seção "daily_player" (estrelas, login e sequência) e seção "daily_history" (progresso por data).
+## seção "daily_player" (moedas bronze/prata/estrela, login e sequência) e seção "daily_history" (progresso por data).
 ## Save inexistente ou corrompido carrega valores padrão; carregar nunca concede recompensas.
 
 const PLAYER_SECTION := "daily_player"
@@ -11,6 +11,8 @@ const HISTORY_ENTRIES_KEY := "entries"
 var save_path: String = LocalSave.SAVE_PATH
 
 var total_stars: int = 0
+var total_bronze: int = 0
+var total_silver: int = 0
 ## Data ("YYYY-MM-DD") da última estrela de login concedida. Vazio = nunca.
 var last_daily_login_reward: String = ""
 var current_streak: int = 0
@@ -22,6 +24,8 @@ var history: Dictionary = {}
 func load_data() -> void:
 	var player := LocalSave.load_section(PLAYER_SECTION, save_path)
 	total_stars = maxi(DailyProgress._to_int(player.get("total_stars"), 0), 0)
+	total_bronze = maxi(DailyProgress._to_int(player.get("total_bronze"), 0), 0)
+	total_silver = maxi(DailyProgress._to_int(player.get("total_silver"), 0), 0)
 	var login_key := str(player.get("last_daily_login_reward", ""))
 	last_daily_login_reward = login_key if DailyDate.from_key(login_key) else ""
 	current_streak = maxi(DailyProgress._to_int(player.get("current_streak"), 0), 0)
@@ -38,6 +42,8 @@ func load_data() -> void:
 func save_player() -> void:
 	LocalSave.save_section(PLAYER_SECTION, {
 		"total_stars": total_stars,
+		"total_bronze": total_bronze,
+		"total_silver": total_silver,
 		"last_daily_login_reward": last_daily_login_reward,
 		"current_streak": current_streak,
 		"best_streak": best_streak,
@@ -80,6 +86,8 @@ func remove_progress(date_key: String) -> void:
 ## Apaga todo o progresso do Desafio Diário (ferramenta de debug).
 func clear() -> void:
 	total_stars = 0
+	total_bronze = 0
+	total_silver = 0
 	last_daily_login_reward = ""
 	current_streak = 0
 	best_streak = 0

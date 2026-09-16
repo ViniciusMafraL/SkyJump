@@ -6,7 +6,7 @@
 script = ExtResource("1_script")
 bar_width = 72.0
 bar_height_ratio = 0.55
-bar_top_offset = 150.0
+bar_top_offset = 215.0
 bar_margin = 16.0
 past_zone_fraction = 0.3
 max_past_milestones_shown = 3

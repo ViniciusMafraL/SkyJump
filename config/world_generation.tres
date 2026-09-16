@@ -8,6 +8,7 @@
 [ext_resource type="Resource" path="res://config/platforms/large_platform.tres" id="6_large"]
 [ext_resource type="Resource" path="res://config/platforms/start_platform.tres" id="7_start"]
 [ext_resource type="Resource" path="res://config/difficulty.tres" id="8_difficulty"]
+[ext_resource type="Resource" path="res://config/platforms/checkpoint_ring.tres" id="9_checkpoint"]
 
 [resource]
 script = ExtResource("1_script")
@@ -32,4 +33,6 @@ maximum_horizontal_jump_distance = 0.0
 reachability_margin = 0.85
 maximum_visible_angular_distance = 60.0
 direction_change_chance = 0.25
+checkpoint_platform = ExtResource("9_checkpoint")
+checkpoint_special_clearance = 30.0
 difficulty = ExtResource("8_difficulty")

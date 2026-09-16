@@ -32,7 +32,7 @@ offset_left = 16.0
 offset_top = 890.0
 offset_right = 296.0
 offset_bottom = 940.0
-text = "RECORDE
+text = "BEST
 0 m"
 
 [node name="FeedbackLabel" type="Label" parent="."]
@@ -41,18 +41,19 @@ layout_mode = 0
 offset_top = 40.0
 offset_right = 720.0
 offset_bottom = 100.0
-text = "META 1.000 m!"
+text = "Goal 1,000 m!"
 horizontal_alignment = 1
 
 [node name="DebugToggle" type="Button" parent="."]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 60)
 layout_mode = 0
 offset_left = 590.0
 offset_top = 20.0
 offset_right = 700.0
 offset_bottom = 80.0
 focus_mode = 0
-theme_override_font_sizes/font_size = 22
+theme_type_variation = &"ButtonSmall"
 toggle_mode = true
 text = "ALT"
 
@@ -70,33 +71,33 @@ theme_override_constants/separation = 8
 custom_minimum_size = Vector2(140, 56)
 layout_mode = 2
 focus_mode = 0
-theme_override_font_sizes/font_size = 22
+theme_type_variation = &"ButtonSmall"
 text = "-100 m"
 
 [node name="Plus100" type="Button" parent="DebugPanel"]
 custom_minimum_size = Vector2(140, 56)
 layout_mode = 2
 focus_mode = 0
-theme_override_font_sizes/font_size = 22
+theme_type_variation = &"ButtonSmall"
 text = "+100 m"
 
 [node name="Plus500" type="Button" parent="DebugPanel"]
 custom_minimum_size = Vector2(140, 56)
 layout_mode = 2
 focus_mode = 0
-theme_override_font_sizes/font_size = 22
+theme_type_variation = &"ButtonSmall"
 text = "+500 m"
 
 [node name="Plus1000" type="Button" parent="DebugPanel"]
 custom_minimum_size = Vector2(140, 56)
 layout_mode = 2
 focus_mode = 0
-theme_override_font_sizes/font_size = 22
+theme_type_variation = &"ButtonSmall"
 text = "+1000 m"
 
 [node name="Real" type="Button" parent="DebugPanel"]
 custom_minimum_size = Vector2(140, 56)
 layout_mode = 2
 focus_mode = 0
-theme_override_font_sizes/font_size = 22
+theme_type_variation = &"ButtonSmall"
 text = "REAL"

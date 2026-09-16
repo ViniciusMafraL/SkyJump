@@ -24,6 +24,8 @@ enum Type {
 	PORTAL = 13,
 	TNT = 14,
 	CANNON = 15,
+	## Anel de checkpoint do Desafio Diário (volta inteira no cilindro).
+	CHECKPOINT = 16,
 }
 
 

@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/daily/currency_bar.gd" id="1_bar"]
+
+[node name="CurrencyBar" type="HBoxContainer"]
+alignment = 1
+script = ExtResource("1_bar")

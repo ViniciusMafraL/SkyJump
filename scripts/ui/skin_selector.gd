@@ -3,8 +3,8 @@ extends VBoxContainer
 ## Interface de seleção de skin do menu: setas, preview 3D e nome. Os dados vêm do SkinManager
 ## e de cada PlayerSkin; nenhum nome de skin fica neste script.
 
-@export var locked_text: String = "BLOQUEADA"
-@export_range(0.5, 1.0, 0.01) var press_scale: float = 0.85
+@export var locked_text: String = "LOCKED"
+@export var arrow_margin: float = 30.0
 
 @onready var _previous_button: Button = %PreviousButton
 @onready var _next_button: Button = %NextButton
@@ -15,10 +15,13 @@ extends VBoxContainer
 
 func _ready() -> void:
 	SkinManager.reset_focus()
+	UiGlyph.fill_button(_previous_button, UiGlyph.Glyph.ARROW_LEFT, arrow_margin)
+	UiGlyph.fill_button(_next_button, UiGlyph.Glyph.ARROW_RIGHT, arrow_margin)
+	_status_label.add_theme_color_override(&"font_color", SkyJumpColors.YELLOW)
 	_previous_button.pressed.connect(show_previous)
 	_next_button.pressed.connect(show_next)
-	for button in [_previous_button, _next_button]:
-		button.button_down.connect(_play_press_feedback.bind(button))
+	for button: Button in [_previous_button, _next_button]:
+		UiFeedback.attach(button, 1.1, 0.85)
 	_refresh(false)
 
 
@@ -59,10 +62,3 @@ func _refresh(animate: bool) -> void:
 	_status_label.text = " " if unlocked else locked_text
 	_preview.show_skin(skin, animate)
 	_preview.set_locked(not unlocked)
-
-
-func _play_press_feedback(button: Button) -> void:
-	button.pivot_offset = button.size * 0.5
-	var tween := button.create_tween()
-	tween.tween_property(button, "scale", Vector2.ONE * press_scale, 0.06)
-	tween.tween_property(button, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)

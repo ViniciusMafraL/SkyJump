@@ -48,6 +48,13 @@ extends Resource
 ## Após um lançamento forçado (trampolim), a próxima plataforma fica entre esta fração e 100% da altura alcançável.
 @export_range(0.2, 1.0) var boost_min_gap_fraction: float = 0.6
 
+@export_group("Checkpoints")
+## Anel em volta do cilindro gerado em cada altura de LevelGenerator.checkpoint_heights (Desafio Diário).
+@export var checkpoint_platform: PlatformConfig
+## Abaixo de um checkpoint, dentro desta distância (unidades do mundo), só entram plataformas comuns:
+## nenhum especial ou plataforma lateral pode levar o jogador acima do anel antes de ele existir.
+@export var checkpoint_special_clearance: float = 30.0
+
 @export_group("Difficulty")
 @export var difficulty: DifficultyConfig
 

@@ -1,6 +1,10 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/daily/daily_calendar.gd" id="1_calendar"]
+[ext_resource type="Texture2D" path="res://art/backgrounds/BackgroundAgenda.png" id="2_background"]
+[ext_resource type="Script" path="res://scripts/ui/safe_area_offsets.gd" id="3_safe_area"]
+[ext_resource type="PackedScene" path="res://scenes/ui/currency_bar.tscn" id="4_currency_bar"]
+[ext_resource type="Script" path="res://scripts/ui/daily/streak_badge.gd" id="5_streak"]
 
 [node name="DailyCalendar" type="Control"]
 layout_mode = 3
@@ -10,3 +14,213 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_calendar")
+
+[node name="Background" type="NinePatchRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_background")
+patch_margin_left = 48
+patch_margin_top = 160
+patch_margin_right = 48
+patch_margin_bottom = 60
+
+[node name="SafeArea" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_safe_area")
+
+[node name="Layout" type="VBoxContainer" parent="SafeArea"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="HeaderMargin" type="MarginContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 136
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 10
+
+[node name="Header" type="VBoxContainer" parent="SafeArea/Layout/HeaderMargin"]
+layout_mode = 2
+theme_override_constants/separation = -14
+
+[node name="MonthRow" type="HBoxContainer" parent="SafeArea/Layout/HeaderMargin/Header"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="PreviousButton" type="Button" parent="SafeArea/Layout/HeaderMargin/Header/MonthRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_type_variation = &"GlyphButton"
+
+[node name="MonthLabel" type="Label" parent="SafeArea/Layout/HeaderMargin/Header/MonthRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_type_variation = &"Title"
+text = "September"
+horizontal_alignment = 1
+
+[node name="NextButton" type="Button" parent="SafeArea/Layout/HeaderMargin/Header/MonthRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_type_variation = &"GlyphButton"
+
+[node name="YearLabel" type="Label" parent="SafeArea/Layout/HeaderMargin/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Body"
+text = "2026"
+horizontal_alignment = 1
+
+[node name="PaperMargin" type="MarginContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Paper" type="PanelContainer" parent="SafeArea/Layout/PaperMargin"]
+layout_mode = 2
+theme_type_variation = &"PaperPanel"
+
+[node name="Inner" type="MarginContainer" parent="SafeArea/Layout/PaperMargin/Paper"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 22
+
+[node name="Body" type="VBoxContainer" parent="SafeArea/Layout/PaperMargin/Paper/Inner"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="CurrencyBar" parent="SafeArea/Layout/PaperMargin/Paper/Inner/Body" instance=ExtResource("4_currency_bar")]
+unique_name_in_owner = true
+layout_mode = 2
+icon_size = 44.0
+label_variation = &"InkCounter"
+
+[node name="WeekdayRow" type="HBoxContainer" parent="SafeArea/Layout/PaperMargin/Paper/Inner/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Grid" type="GridContainer" parent="SafeArea/Layout/PaperMargin/Paper/Inner/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 6.0
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 7
+
+[node name="StreakBadge" type="HBoxContainer" parent="SafeArea/Layout/PaperMargin/Paper/Inner/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+script = ExtResource("5_streak")
+icon_size = 50.0
+
+[node name="Spacer" type="Control" parent="SafeArea/Layout/PaperMargin/Paper/Inner/Body"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Footer" type="HBoxContainer" parent="SafeArea/Layout/PaperMargin/Paper/Inner/Body"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="DateBox" type="VBoxContainer" parent="SafeArea/Layout/PaperMargin/Paper/Inner/Body/Footer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="DateLabel" type="Label" parent="SafeArea/Layout/PaperMargin/Paper/Inner/Body/Footer/DateBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Subheading"
+text = "15 September"
+
+[node name="MedalRow" type="HBoxContainer" parent="SafeArea/Layout/PaperMargin/Paper/Inner/Body/Footer/DateBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ThemeLabel" type="Label" parent="SafeArea/Layout/PaperMargin/Paper/Inner/Body/Footer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"AccentLabel"
+text = "Theme: Jungle"
+horizontal_alignment = 2
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="ActionMargin" type="MarginContainer" parent="SafeArea/Layout/PaperMargin/Paper/Inner/Body"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 50
+
+[node name="ActionButton" type="Button" parent="SafeArea/Layout/PaperMargin/Paper/Inner/Body/ActionMargin"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"ButtonYellow"
+text = "Play"
+
+[node name="CloseButton" type="Button" parent="SafeArea"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(76, 76)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_top = 70.0
+offset_right = -24.0
+offset_bottom = 146.0
+grow_horizontal = 0
+focus_mode = 0
+theme_type_variation = &"GlyphButton"
+
+[node name="DevButton" type="Button" parent="SafeArea"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 24.0
+offset_top = 76.0
+offset_right = 124.0
+offset_bottom = 136.0
+focus_mode = 0
+theme_type_variation = &"ButtonSmall"
+text = "DEV"

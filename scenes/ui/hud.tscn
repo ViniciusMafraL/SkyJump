@@ -18,13 +18,13 @@ unique_name_in_owner = true
 
 [node name="PauseButton" type="Button" parent="." unique_id=1837017150]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(88, 88)
 offset_left = 20.0
 offset_top = 20.0
-offset_right = 100.0
-offset_bottom = 100.0
+offset_right = 108.0
+offset_bottom = 108.0
 focus_mode = 0
-theme_override_font_sizes/font_size = 34
-text = "II"
+theme_type_variation = &"ButtonBlue"
 script = ExtResource("5_safe_area")
 
 [node name="FallFlash" type="ColorRect" parent="." unique_id=516205861]
@@ -54,7 +54,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.03, 0.05, 0.1, 0.6)
+color = Color(0, 0, 0, 0.6)
 
 [node name="Content" type="VBoxContainer" parent="PausePanel" unique_id=1127335150]
 layout_mode = 1
@@ -63,10 +63,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -260.0
-offset_top = -320.0
-offset_right = 260.0
-offset_bottom = 320.0
+offset_left = -250.0
+offset_top = -340.0
+offset_right = 250.0
+offset_bottom = 340.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
@@ -74,49 +74,49 @@ alignment = 1
 
 [node name="Title" type="Label" parent="PausePanel/Content" unique_id=398949327]
 layout_mode = 2
-theme_override_font_sizes/font_size = 52
-text = "PAUSADO"
+theme_type_variation = &"Title"
+text = "Paused"
 horizontal_alignment = 1
 
 [node name="ResumeButton" type="Button" parent="PausePanel/Content" unique_id=1470609523]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 90)
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 focus_mode = 0
-theme_override_font_sizes/font_size = 36
-text = "CONTINUAR"
+theme_type_variation = &"ButtonGreen"
+text = "Resume"
 
 [node name="PauseRestartButton" type="Button" parent="PausePanel/Content" unique_id=1609904236]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 90)
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 focus_mode = 0
-theme_override_font_sizes/font_size = 36
-text = "RECOMEÇAR"
+theme_type_variation = &"ButtonCoral"
+text = "Restart"
 
 [node name="ControlsButton" type="Button" parent="PausePanel/Content" unique_id=1034674179]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 90)
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 focus_mode = 0
-theme_override_font_sizes/font_size = 36
-text = "CONTROLES"
-
-[node name="TestRoomButton" type="Button" parent="PausePanel/Content" unique_id=1940043208]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 72)
-layout_mode = 2
-focus_mode = 0
-theme_override_font_sizes/font_size = 28
-text = "SALA DE TESTES (DEV)"
+theme_type_variation = &"ButtonPurple"
+text = "Options"
 
 [node name="PauseMenuButton" type="Button" parent="PausePanel/Content" unique_id=1917569450]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 90)
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 focus_mode = 0
-theme_override_font_sizes/font_size = 36
-text = "MENU PRINCIPAL"
+theme_type_variation = &"ButtonBlue"
+text = "Main menu"
+
+[node name="TestRoomButton" type="Button" parent="PausePanel/Content" unique_id=1940043208]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"ButtonSmall"
+text = "Test room (DEV)"
 
 [node name="ControlSettingsPanel" parent="." unique_id=1939024224 instance=ExtResource("3_control_panel")]
 unique_name_in_owner = true
@@ -139,7 +139,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.03, 0.05, 0.1, 0.7)
+color = Color(0, 0, 0, 0.7)
 
 [node name="Content" type="VBoxContainer" parent="GameOverPanel" unique_id=549368632]
 layout_mode = 1
@@ -149,46 +149,43 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -300.0
-offset_top = -300.0
+offset_top = -320.0
 offset_right = 300.0
-offset_bottom = 300.0
+offset_bottom = 320.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 14
 alignment = 1
 
 [node name="Title" type="Label" parent="GameOverPanel/Content" unique_id=583360419]
 layout_mode = 2
-theme_override_font_sizes/font_size = 36
-text = "ALTURA ALCANÇADA"
+theme_type_variation = &"Heading"
+text = "Height reached"
 horizontal_alignment = 1
 
 [node name="ResultHeightLabel" type="Label" parent="GameOverPanel/Content" unique_id=539306742]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_outline_color = Color(0.05, 0.07, 0.12, 1)
-theme_override_constants/outline_size = 14
-theme_override_font_sizes/font_size = 88
+theme_type_variation = &"TitleLarge"
 text = "0 m"
 horizontal_alignment = 1
 
 [node name="NewRecordLabel" type="Label" parent="GameOverPanel/Content" unique_id=1059197423]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.82, 0.25, 1)
-theme_override_font_sizes/font_size = 44
-text = "NOVO RECORDE!"
+theme_type_variation = &"Heading"
+text = "New record!"
 horizontal_alignment = 1
 
 [node name="ResultBestLabel" type="Label" parent="GameOverPanel/Content" unique_id=153856209]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
-text = "Melhor altura: 0 m"
+theme_type_variation = &"Body"
+text = "Best: 0 m"
 horizontal_alignment = 1
 
 [node name="Spacer" type="Control" parent="GameOverPanel/Content" unique_id=454957302]
-custom_minimum_size = Vector2(0, 16)
+custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 mouse_filter = 2
 
@@ -197,13 +194,13 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 focus_mode = 0
-theme_override_font_sizes/font_size = 38
-text = "TENTAR NOVAMENTE"
+theme_type_variation = &"ButtonCoral"
+text = "Try again"
 
 [node name="GameOverMenuButton" type="Button" parent="GameOverPanel/Content" unique_id=1614237138]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 84)
+custom_minimum_size = Vector2(0, 92)
 layout_mode = 2
 focus_mode = 0
-theme_override_font_sizes/font_size = 32
-text = "MENU"
+theme_type_variation = &"ButtonPurple"
+text = "Menu"

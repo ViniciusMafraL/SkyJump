@@ -3,80 +3,48 @@
 [ext_resource type="Script" path="res://scripts/ui/skin_selector.gd" id="1_selector"]
 [ext_resource type="PackedScene" path="res://scenes/ui/character_preview.tscn" id="2_preview"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_arrow"]
-bg_color = Color(0.03, 0.05, 0.1, 0.35)
-corner_radius_top_left = 24
-corner_radius_top_right = 24
-corner_radius_bottom_right = 24
-corner_radius_bottom_left = 24
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_arrow_hover"]
-bg_color = Color(0.03, 0.05, 0.1, 0.5)
-corner_radius_top_left = 24
-corner_radius_top_right = 24
-corner_radius_bottom_right = 24
-corner_radius_bottom_left = 24
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_arrow_pressed"]
-bg_color = Color(1, 1, 1, 0.35)
-corner_radius_top_left = 24
-corner_radius_top_right = 24
-corner_radius_bottom_right = 24
-corner_radius_bottom_left = 24
-
 [node name="SkinSelector" type="VBoxContainer"]
 size_flags_vertical = 3
-theme_override_constants/separation = 4
+theme_override_constants/separation = 0
 script = ExtResource("1_selector")
 
 [node name="Row" type="HBoxContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
+alignment = 1
 
 [node name="PreviousButton" type="Button" parent="Row"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(112, 180)
+custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
 size_flags_vertical = 4
 focus_mode = 0
-theme_override_font_sizes/font_size = 80
-theme_override_styles/normal = SubResource("StyleBoxFlat_arrow")
-theme_override_styles/hover = SubResource("StyleBoxFlat_arrow_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_arrow_pressed")
-text = "<"
+theme_type_variation = &"GlyphButton"
 
 [node name="CharacterPreview" parent="Row" instance=ExtResource("2_preview")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 240)
 layout_mode = 2
 
 [node name="NextButton" type="Button" parent="Row"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(112, 180)
+custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
 size_flags_vertical = 4
 focus_mode = 0
-theme_override_font_sizes/font_size = 80
-theme_override_styles/normal = SubResource("StyleBoxFlat_arrow")
-theme_override_styles/hover = SubResource("StyleBoxFlat_arrow_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_arrow_pressed")
-text = ">"
+theme_type_variation = &"GlyphButton"
 
 [node name="SkinName" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_outline_color = Color(0.05, 0.07, 0.12, 1)
-theme_override_constants/outline_size = 12
-theme_override_font_sizes/font_size = 48
+theme_type_variation = &"Subheading"
 text = "CLASSIC"
 horizontal_alignment = 1
 
 [node name="SkinStatus" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.82, 0.35, 1)
-theme_override_colors/font_outline_color = Color(0.05, 0.07, 0.12, 1)
-theme_override_constants/outline_size = 8
-theme_override_font_sizes/font_size = 26
+theme_type_variation = &"Caption"
 text = " "
 horizontal_alignment = 1

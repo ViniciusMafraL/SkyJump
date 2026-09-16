@@ -10,9 +10,9 @@ const MAX_QUEUED_FEEDBACK := 2
 @export var config: ProgressBarConfig
 ## Botões de simulação de altitude (só aparecem em builds de debug).
 @export var show_debug_controls: bool = true
-@export var milestone_feedback_text: String = "META %s!"
-@export var new_record_text: String = "NOVO RECORDE!"
-@export var record_label_text: String = "RECORDE\n%s"
+@export var milestone_feedback_text: String = "Goal %s!"
+@export var new_record_text: String = "New record!"
+@export var record_label_text: String = "BEST\n%s"
 
 var progression: ProgressionManager
 
@@ -216,7 +216,7 @@ func _apply_layout() -> void:
 	_bar.size = Vector2(config.bar_width, maxf(minf(view_size.y * config.bar_height_ratio, max_height), 160.0))
 	_record_label.position = Vector2(_bar.position.x, _bar.position.y + _bar.size.y + config.milestone_icon_size + 8.0)
 	_record_label.size = Vector2(280.0, 0.0)
-	_feedback_label.position = Vector2(0.0, margins[1] + 40.0)
+	_feedback_label.position = Vector2(0.0, margins[1] + config.feedback_top_offset)
 	_feedback_label.size = Vector2(view_size.x, 60.0)
 	_debug_toggle.position = Vector2(view_size.x - margins[2] - _debug_toggle.size.x - 20.0, margins[1] + 20.0)
 	_debug_panel.position = Vector2(view_size.x - margins[2] - _debug_panel.size.x - 20.0, _debug_toggle.position.y + _debug_toggle.size.y + 10.0)

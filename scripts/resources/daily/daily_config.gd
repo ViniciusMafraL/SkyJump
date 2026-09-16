@@ -9,8 +9,12 @@ extends Resource
 @export var checkpoint_3_distance: float = 1000.0
 
 @export_group("Rewards")
+## Estrelas do login diário.
 @export var login_reward_stars: int = 1
-@export var checkpoint_reward_stars: int = 1
+## Moeda de cada checkpoint (1º, 2º, 3º).
+@export var checkpoint_currencies: Array[CurrencyWallet.Currency] = [CurrencyWallet.Currency.BRONZE, CurrencyWallet.Currency.SILVER, CurrencyWallet.Currency.STAR]
+## Quantidade da moeda ganha em cada checkpoint.
+@export var checkpoint_reward_amount: int = 1
 
 @export_group("Seed")
 ## Muda toda a sequência de seeds e temas (ex.: numa nova versão do gerador).
